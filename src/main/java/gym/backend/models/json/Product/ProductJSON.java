@@ -3,21 +3,19 @@ package gym.backend.models.json.Product;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 public class ProductJSON {
-    private String id;
     private String model_id;
-    private String name;
-    private String brand;
-    private String category;
-    private String ean;
-    private String image;
-    private String label;
-    private String description;
-    private String weight_kg;
-    private List<TasteJSON> taste;
-    private List<SizeJSON> size;
+    private String brand_id;
+    private String taste_id;
+    private String taste_name;
+    private String size_id;
+    private String size_name;
+    private String available;
+    private String barcode_ean;
+    private String brand_name;
+    private String product_name;
+    private String s;
+    private String regular_price;
 }

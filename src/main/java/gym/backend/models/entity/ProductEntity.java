@@ -1,12 +1,16 @@
 package gym.backend.models.entity;
 
 import gym.backend.models.entity.BaseEntity.BaseEntity;
-import gym.backend.models.entity.BaseEntity.SizeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Table(name = "products")
 @Entity
@@ -25,14 +29,11 @@ public class ProductEntity extends BaseEntity {
     @Column
     private String name;
 
-    @Column
-    private String brand;
+    @ManyToOne
+    private BrandEntity brandEntity;
 
     @Column
     private String category;
-
-    @Column
-    private String ean;
 
     @Column
     private String image;
@@ -43,13 +44,15 @@ public class ProductEntity extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne
-    private TasteEntity taste;
+    @OneToMany
+    private Set<TasteEntity> taste;
 
-    @ManyToOne
-    private SizeEntity size;
+    @OneToMany
+    private Set<SizeEntity> size;
 
     @Column
     private String weightKg;
+
+
 
 }

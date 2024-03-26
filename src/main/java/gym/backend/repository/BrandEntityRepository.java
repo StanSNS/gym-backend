@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface BrandEntityRepository extends JpaRepository<BrandEntity, Long> {
 
+    BrandEntity findByName(String name);
+
 }

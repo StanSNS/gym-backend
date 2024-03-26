@@ -1,4 +1,4 @@
-package gym.backend.models.json.Product;
+package gym.backend.models.json.Taste;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +8,4 @@ import lombok.Setter;
 public class TasteJSON {
     private String id;
     private String name;
-    private String ean;
-
 }

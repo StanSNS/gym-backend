@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import gym.backend.models.entity.BrandEntity;
 import gym.backend.models.json.Brand.BrandJSON;
 import gym.backend.repository.BrandEntityRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -26,8 +25,7 @@ public class BrandInit {
     private final BrandEntityRepository brandEntityRepository;
     private final Gson gson;
 
-    @PostConstruct
-    public void brandsInit() {
+    public void saveBrands() {
         if (brandEntityRepository.count() > 0) {
             System.out.println("Brands already exists");
             return;
@@ -50,6 +48,5 @@ public class BrandInit {
                 brandEntityRepository.save(new BrandEntity(stringStringEntry.getKey(), stringStringEntry.getValue()));
             }
         }
-
     }
 }
