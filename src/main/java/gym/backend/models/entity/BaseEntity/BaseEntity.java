@@ -1,4 +1,4 @@
-package gym.backend.entity.BaseEntity;
+package gym.backend.models.entity.BaseEntity;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
