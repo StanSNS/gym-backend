@@ -7,31 +7,24 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+
 @Component
 @RequiredArgsConstructor
 public class MainProductDataInit {
 
-    private final ProductDataByBrandID tasteAndSizeInit;
-    private final BrandInit brandInit;
-    private final ProductDataFromSheet productDataRegularPrice;
-    private final ProductDataFromWebSite productDataFromWebSite;
+    private final SimpleDataInit simpleDataInit;
+    private final ProductDataInit productDataInit;
+    private final ProductDetailsDataInit productDetailsDataInit;
+
 
     @PostConstruct
     public void dataInit() throws IOException, InvalidFormatException {
+//        simpleDataInit.startInit();
+//
+//        productDataInit.simpleProductInit();
+        productDetailsDataInit.detailsProductInit();
 
-        brandInit.saveBrands();
-
-        tasteAndSizeInit.saveProductDataByBrandID();
-
-        productDataRegularPrice.checkIfProductIsPresent();
-        productDataRegularPrice.modifyExistingProducts();
-
-        productDataFromWebSite.addEnemyPrices();
-
-        System.out.println("Initialization has completed successfully!");
     }
-
-
 }
 
 

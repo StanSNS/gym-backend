@@ -21,6 +21,9 @@ import java.util.Set;
 public class ProductEntity extends BaseEntity {
 
     @Column
+    private String sku;
+
+    @Column
     private String modelId;
 
     @Column
@@ -41,10 +44,10 @@ public class ProductEntity extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<TasteEntity> taste;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<SizeEntity> size;
 
     @Column

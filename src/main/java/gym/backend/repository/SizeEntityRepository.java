@@ -8,9 +8,12 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface SizeEntityRepository extends JpaRepository<SizeEntity,Long> {
+public interface SizeEntityRepository extends JpaRepository<SizeEntity, Long> {
 
-    boolean existsBySilaTasteID(String id);
+    boolean existsBySilaSizeID(String id);
 
-    Optional<SizeEntity> findSizeEntityBySilaTasteID(String tasteID);
+    SizeEntity findBySilaSizeID(String silaSizeID);
+
+    Optional<SizeEntity> findSizeEntityBySilaSizeID(String sizeID);
+
 }

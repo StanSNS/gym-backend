@@ -13,6 +13,8 @@ public interface ProductEntityRepository extends JpaRepository<ProductEntity, Lo
 
     boolean existsByModelId(String modelId);
 
+    boolean existsBySku(String skuNumber);
+
     List<ProductEntity> findAllByEnemyPriceNull();
 
     List<ProductEntity> findAllByBrandEntityName(String name);

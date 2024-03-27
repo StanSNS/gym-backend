@@ -10,10 +10,12 @@ import java.util.List;
 @Getter
 @Setter
 public class ProductJSONFromBrand {
+    private String id;
     private String model_id;
     private String name;
     private String brand;
     private String category;
+    private String ean;
     private String image;
     private List<TasteJSON> taste;
     private List<SizeJSON> size;

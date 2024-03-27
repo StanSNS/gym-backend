@@ -1,6 +1,5 @@
 package gym.backend.models.json.ProductData;
 
-import gym.backend.models.json.Size.SizeJSON;
 import lombok.Getter;
 import lombok.Setter;
 

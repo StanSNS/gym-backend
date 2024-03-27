@@ -10,5 +10,7 @@ import java.util.List;
 public interface BrandEntityRepository extends JpaRepository<BrandEntity, Long> {
 
     BrandEntity findByName(String name);
+    BrandEntity findByBrandID(String brandID);
 
+    boolean existsByBrandID(String brandID);
 }
