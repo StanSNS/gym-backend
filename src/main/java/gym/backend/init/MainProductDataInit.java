@@ -13,6 +13,7 @@ public class MainProductDataInit {
     private final ProductDataByBrandID tasteAndSizeInit;
     private final BrandInit brandInit;
     private final ProductDataFromSheet productDataRegularPrice;
+    private final ProductDataFromWebSite productDataFromWebSite;
 
     @PostConstruct
     public void dataInit() throws IOException {
@@ -23,6 +24,8 @@ public class MainProductDataInit {
 
         productDataRegularPrice.checkIfProductIsPresent();
         productDataRegularPrice.modifyExistingProducts();
+
+        productDataFromWebSite.addEnemyPrices();
 
         System.out.println("Initialization has completed successfully!");
     }

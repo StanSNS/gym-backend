@@ -62,5 +62,7 @@ public class ProductEntity extends BaseEntity {
     @Column
     private Boolean isAvailable;
 
+    @Column
+    private Double enemyPrice;
 
 }
