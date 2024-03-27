@@ -21,9 +21,6 @@ import java.util.Set;
 public class ProductEntity extends BaseEntity {
 
     @Column
-    private String productId;
-
-    @Column
     private String modelId;
 
     @Column
@@ -44,10 +41,10 @@ public class ProductEntity extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany
+    @ManyToMany
     private Set<TasteEntity> taste;
 
-    @OneToMany
+    @ManyToMany
     private Set<SizeEntity> size;
 
     @Column

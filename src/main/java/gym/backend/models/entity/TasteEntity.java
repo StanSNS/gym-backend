@@ -19,22 +19,22 @@ import java.util.Objects;
 @Setter
 public class TasteEntity extends BaseEntity {
 
-    @Column
-    private String tasteId;
+    @Column(unique = true, nullable = false)
+    private String silaTasteID;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        TasteEntity that = (TasteEntity) o;
-//        return Objects.equals(tasteId, that.tasteId) && Objects.equals(name, that.name);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(tasteId, name);
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TasteEntity that = (TasteEntity) o;
+        return Objects.equals(silaTasteID, that.silaTasteID) && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(silaTasteID, name);
+    }
 }

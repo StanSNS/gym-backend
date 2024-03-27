@@ -1,6 +1,7 @@
 package gym.backend.models.entity;
 
 import gym.backend.models.entity.BaseEntity.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SizeEntity extends BaseEntity {
-    private String sizeId;
+
+    @Column(unique = true, nullable = false)
+    private String silaTasteID;;
+
+    @Column(unique = true, nullable = false)
     private String name;
 }
 

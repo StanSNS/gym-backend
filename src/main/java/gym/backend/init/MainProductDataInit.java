@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MainProductDataInit {
 
-    private final TasteAndSizeInit tasteInit;
+    private final ProductDataByBrandID tasteAndSizeInit;
     private final BrandInit brandInit;
 
     @PostConstruct
@@ -16,7 +16,7 @@ public class MainProductDataInit {
 
         brandInit.saveBrands();
 
-        tasteInit.saveBothData();
+        tasteAndSizeInit.saveProductDataByBrandID();
 
 
     }
