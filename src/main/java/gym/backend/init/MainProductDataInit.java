@@ -2,6 +2,7 @@ package gym.backend.init;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class MainProductDataInit {
     private final ProductDataFromWebSite productDataFromWebSite;
 
     @PostConstruct
-    public void dataInit() throws IOException {
+    public void dataInit() throws IOException, InvalidFormatException {
 
         brandInit.saveBrands();
 
