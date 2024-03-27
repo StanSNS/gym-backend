@@ -47,7 +47,7 @@ public class ProductDataByBrandID {
 
     public void saveProductDataByBrandID() {
         if (tasteEntityRepository.count() == 0 && sizeEntityRepository.count() == 0) {
-            System.out.println("Start filling tha DB with Sizes and Tastes data...");
+            System.out.println("Start filling tha DB with Sizes and Tastes data... (This may take a few minutes.)");
             for (int i = 0; i < 3; i++) {
                 for (BrandEntity brandEntity : brandEntityRepository.findAll()) {
                     if (!brandEntity.getBrandID().equals("169")) {
@@ -56,17 +56,23 @@ public class ProductDataByBrandID {
                 }
             }
 
-            System.out.println("Total tastes pushed: " + tasteEntityRepository.count());
-            System.out.println("Total sizes pushed: " + sizeEntityRepository.count());
+            System.out.println("Total Tastes saved in the DB: " + tasteEntityRepository.count());
+            System.out.println("Total Sizes saved in the DB: " + sizeEntityRepository.count());
+        } else {
+            System.out.println("Tastes and Sizes by brand already exist.");
         }
 
-        for (BrandEntity brandEntity : brandEntityRepository.findAll()) {
-            if (!brandEntity.getBrandID().equals("169")) {
-                initProductsByBrand(brandEntity.getBrandID());
+        if (productEntityRepository.count() == 0) {
+            System.out.println("Start filling the DB with Products data...");
+            for (BrandEntity brandEntity : brandEntityRepository.findAll()) {
+                if (!brandEntity.getBrandID().equals("169")) {
+                    initProductsByBrand(brandEntity.getBrandID());
+                }
             }
+            System.out.println("Total products with details pushed: " + productEntityRepository.count());
+        } else {
+            System.out.println("Products by brand already exist.");
         }
-
-        System.out.println("Total products with details pushed: " + productEntityRepository.count());
     }
 
     private void initTestesAndSizesByBrandID(String brandID) {

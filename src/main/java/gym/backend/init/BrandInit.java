@@ -44,6 +44,7 @@ public class BrandInit {
         if (responseEntity.getStatusCode().toString().startsWith("200")) {
             BrandJSON brandJSON = gson.fromJson(responseEntity.getBody(), BrandJSON.class);
 
+            System.out.println("Start filling the DB with brands data...");
             for (Map.Entry<String, String> stringStringEntry : brandJSON.getData().entrySet()) {
                 brandEntityRepository.save(new BrandEntity(stringStringEntry.getKey(), stringStringEntry.getValue()));
             }

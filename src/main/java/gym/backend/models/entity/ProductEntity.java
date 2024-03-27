@@ -50,6 +50,17 @@ public class ProductEntity extends BaseEntity {
     @Column
     private String weightKg;
 
+    @Column
+    private Double regularPrice;
+
+    @Column
+    private Double discountedPrice;
+
+    @Column
+    private String barcode;
+
+    @Column
+    private Boolean isAvailable;
 
 
 }
