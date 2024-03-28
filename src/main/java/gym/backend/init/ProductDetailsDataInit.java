@@ -54,8 +54,6 @@ public class ProductDetailsDataInit {
 
                     for (ProductJSONFromBrand singleProduct : productsJSONFromBrand.getData()) {
                         if (!productEntityRepository.existsByModelId(singleProduct.getModel_id())) {
-                            System.out.println("That shit is missing... " + singleProduct.getModel_id());
-
                             productEntity = modelMapper.map(singleProduct, ProductEntity.class);
                             productEntity.setSku(singleProduct.getId());
                             productEntity.setModelId(singleProduct.getModel_id());
