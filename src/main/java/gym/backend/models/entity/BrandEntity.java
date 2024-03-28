@@ -23,6 +23,5 @@ public class BrandEntity extends BaseEntity {
 
     @Column
     private String name;
-
 }
 

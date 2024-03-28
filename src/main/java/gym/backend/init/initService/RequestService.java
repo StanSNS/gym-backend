@@ -21,28 +21,6 @@ public class RequestService {
     @Value("${sila.bg}")
     private String SILA_BG_API_TOKEN;
 
-
-    public ResponseEntity<String> getAllBrandsData() {
-        String brandURL = ("https://distro.silabg.com/api/v1/brand?api_token=" + SILA_BG_API_TOKEN);
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        HttpHeaders headers = new HttpHeaders();
-
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-
-        return restTemplate.exchange(brandURL, HttpMethod.GET, requestEntity, String.class);
-
-//        if (responseEntity.getStatusCode().toString().startsWith("200")) {
-//            BrandJSON brandJSON = gson.fromJson(responseEntity.getBody(), BrandJSON.class);
-//
-//            System.out.println("Start filling the DB with brands data...");
-//            for (Map.Entry<String, String> stringStringEntry : brandJSON.getData().entrySet()) {
-//                brandEntityRepository.save(new BrandEntity(stringStringEntry.getKey(), stringStringEntry.getValue()));
-//            }
-//        }
-    }
-
     public ResponseEntity<String> getProductDataByBrandID(String brandID) {
         String productsURL = "https://distro.silabg.com/api/v1/brandfeed?api_token=" + SILA_BG_API_TOKEN;
         String jsonData = "{\"brand_id\": \"" + brandID + "\"}";
@@ -90,7 +68,6 @@ public class RequestService {
             if (body != null) {
                 InputStream inputStream = new ByteArrayInputStream(body);
                 XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-//                workbook.close();
                 return workbook.getSheetAt(0);
             }
         } else {

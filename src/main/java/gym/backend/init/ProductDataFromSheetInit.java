@@ -42,12 +42,15 @@ public class ProductDataFromSheetInit {
                     }
 
                     Optional<ProductEntity> productEntityBySku = productEntityRepository.findProductEntityBySku(skuNumber);
-                    if(productEntityBySku.isPresent()){
+                    if (productEntityBySku.isPresent()) {
                         ProductEntity productEntity = productEntityBySku.get();
                         productEntity.setRegularPrice(regularPrice);
                         productEntity.setDiscountedPrice(discountedPrice);
                         productEntity.setIsAvailable(isAvailable);
+                        productEntityRepository.save(productEntity);
                     }
+
+
                 }
             }
         }

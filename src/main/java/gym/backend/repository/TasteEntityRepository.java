@@ -8,9 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface TasteEntityRepository extends JpaRepository<TasteEntity, Long> {
-
     boolean existsBySilaTasteID(String silaTasteID);
 
     Optional<TasteEntity> findTasteEntityBySilaTasteID(String tasteID);
-
 }

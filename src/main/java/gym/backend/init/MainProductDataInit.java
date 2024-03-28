@@ -2,7 +2,6 @@ package gym.backend.init;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,10 +15,11 @@ public class MainProductDataInit {
     private final ProductDataInit productDataInit;
     private final ProductDetailsDataInit productDetailsDataInit;
     private final ProductDataFromSheetInit productDataFromSheetInit;
+    private final ProductDataFromWebSite productDataFromWebSite;
 
 
     @PostConstruct
-    public void dataInit() throws IOException, InvalidFormatException {
+    public void dataInit() throws IOException {
 
         simpleDataInit.startInit();
 
@@ -28,6 +28,8 @@ public class MainProductDataInit {
         productDetailsDataInit.detailsProductInit();
 
         productDataFromSheetInit.startInit();
+
+        productDataFromWebSite.addEnemyPrices();
 
         System.out.println("Initialization has completed without errors.");
     }

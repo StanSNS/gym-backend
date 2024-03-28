@@ -18,7 +18,7 @@ import lombok.Setter;
 public class SizeEntity extends BaseEntity {
 
     @Column(unique = true, nullable = false)
-    private String silaSizeID;;
+    private String silaSizeID;
 
     @Column(unique = true, nullable = false)
     private String name;
