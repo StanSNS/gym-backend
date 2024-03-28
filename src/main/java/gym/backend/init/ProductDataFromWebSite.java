@@ -20,6 +20,9 @@ public class ProductDataFromWebSite {
 
     public void addEnemyPrices() {
         System.out.println("Start adding enemy prices from website to the DB... (This may take a few minutes.)");
+
+        System.out.println("Model ids to scrape: "+ productEntityRepository.findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue().size());
+
         for (ProductEntity productEntity : productEntityRepository.findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue()) {
             productEntity.setEnemyPrice(extractEnemyPriceFromHTML(requestService.getHTMLDocumentByModelID(productEntity.getModelId()), productEntity.getModelId()));
             productEntityRepository.save(productEntity);
