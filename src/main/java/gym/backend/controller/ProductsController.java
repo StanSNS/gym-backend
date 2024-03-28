@@ -2,6 +2,7 @@ package gym.backend.controller;
 
 import gym.backend.models.entity.ProductEntity;
 import gym.backend.repository.ProductEntityRepository;
+import gym.backend.service.GenerateProductsInTXTService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,12 @@ import java.util.List;
 public class ProductsController {
 
     private final ProductEntityRepository productEntityRepository;
+    private final GenerateProductsInTXTService generateProductsInTXTService;
 
     @GetMapping
-    public ResponseEntity<List<ProductEntity>> getAllSellableItems() {
-        return ResponseEntity.ok(productEntityRepository.findAllSellableProducts());
+    public ResponseEntity<StringBuilder> getAllSellableItemsAsPrint() {
+        return ResponseEntity.ok(new StringBuilder(generateProductsInTXTService.generateProductsAsString()));
     }
+
 
 }

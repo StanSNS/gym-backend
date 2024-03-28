@@ -22,11 +22,11 @@ public interface ProductEntityRepository extends JpaRepository<ProductEntity, Lo
 
     @Query(value = "SELECT *\n" +
             "FROM products\n" +
-            "join products_taste pt on products.id = pt.product_entity_id\n" +
             "WHERE discounted_price IS NOT NULL\n" +
-            "  and discounted_price != 0\n" +
+            "  AND discounted_price != 0\n" +
             "  AND enemy_price IS NOT NULL\n" +
-            "  AND is_available = true\n" +
-            "  AND products.discounted_price * 1.5 < enemy_price", nativeQuery = true)
+            "  AND is_available = TRUE\n" +
+            "  AND products.discounted_price * 1.5 < enemy_price\n" +
+            "ORDER BY (products.discounted_price * 1.5 - products.enemy_price) ASC", nativeQuery = true)
     List<ProductEntity> findAllSellableProducts();
 }
