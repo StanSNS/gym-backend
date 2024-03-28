@@ -46,8 +46,8 @@ public class RequestService {
         String url = "https://distro.silabg.com/bg/excel";
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36");
-        headers.set("Referer", "https://distro.silabg.com/bg/list");
+//        headers.set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKitdocker/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36");
+//        headers.set("Referer", "https://distro.silabg.com/bg/list");
 
         MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
         requestBody.add("smail", "stanimirsergev159@gmail.com");
