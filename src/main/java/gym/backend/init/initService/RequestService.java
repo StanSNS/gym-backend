@@ -64,7 +64,7 @@ public class RequestService {
         return restTemplate.exchange(brandURL, HttpMethod.GET, requestEntity, String.class);
     }
 
-    private XSSFSheet getDistroSheet() throws IOException {
+    public XSSFSheet getDistroSheet() throws IOException {
         String url = "https://distro.silabg.com/bg/excel";
 
         HttpHeaders headers = new HttpHeaders();

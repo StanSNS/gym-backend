@@ -89,7 +89,6 @@ public class ProductDetailsDataInit {
         System.out.println("Modifying of products has finished successfully.");
     }
 
-
     private void addTastesInProductEntity(ProductJSONFromBrand singleProduct, ProductEntity productEntity) {
         if (singleProduct.getTaste().size() > 0) {
             for (TasteJSON tasteJSON : singleProduct.getTaste()) {

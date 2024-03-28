@@ -15,6 +15,7 @@ public class MainProductDataInit {
     private final SimpleDataInit simpleDataInit;
     private final ProductDataInit productDataInit;
     private final ProductDetailsDataInit productDetailsDataInit;
+    private final ProductDataFromSheetInit productDataFromSheetInit;
 
 
     @PostConstruct
@@ -26,6 +27,9 @@ public class MainProductDataInit {
 
         productDetailsDataInit.detailsProductInit();
 
+        productDataFromSheetInit.startInit();
+
+        System.out.println("Initialization has completed without errors.");
     }
 }
 

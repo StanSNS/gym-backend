@@ -47,6 +47,7 @@ public class ProductDataInit {
                     if (singleProduct.getSize_id() != null) {
                         productEntity.getSize().add(sizeEntityRepository.findSizeEntityBySilaSizeID(singleProduct.getSize_id()).get());
                     }
+                    productEntity.setBarcode(singleProduct.getBarcode_ean());
                 } else {
                     productEntity.setModelId(singleProduct.getModel_id());
                     productEntity.setName(singleProduct.getProduct_name());
@@ -58,14 +59,10 @@ public class ProductDataInit {
                     productEntity.setTaste(new HashSet<>());
                 }
 
-                productEntity.setBarcode(singleProduct.getBarcode_ean());
-
                 productEntityRepository.save(productEntity);
             }
-
             System.out.println("Successfully added simple product data.");
         }
 
     }
-
 }
