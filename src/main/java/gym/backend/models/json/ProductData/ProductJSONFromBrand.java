@@ -17,9 +17,9 @@ public class ProductJSONFromBrand {
     private String category;
     private String ean;
     private String image;
-    private List<TasteJSON> taste;
-    private List<SizeJSON> size;
     private String label;
     private String description;
+    private List<TasteJSON> taste;
+    private List<SizeJSON> size;
     private String weight_kg;
 }

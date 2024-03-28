@@ -19,9 +19,11 @@ public class MainProductDataInit {
 
     @PostConstruct
     public void dataInit() throws IOException, InvalidFormatException {
-//        simpleDataInit.startInit();
-//
-//        productDataInit.simpleProductInit();
+
+        simpleDataInit.startInit();
+
+        productDataInit.simpleProductInit();
+
         productDetailsDataInit.detailsProductInit();
 
     }

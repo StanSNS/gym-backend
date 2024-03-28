@@ -30,6 +30,8 @@ public class ProductDataInit {
         ResponseEntity<String> responseEntity = requestService.getAllProductsData();
 
         if (responseEntity.getStatusCode().toString().startsWith("200")) {
+            System.out.println("Start filling the DB with Products with simple data entities...");
+
             ProductsJSON productsJSON = gson.fromJson(responseEntity.getBody(), ProductsJSON.class);
 
             for (ProductJSON singleProduct : productsJSON.getData()) {
