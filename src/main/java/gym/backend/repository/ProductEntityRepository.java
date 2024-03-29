@@ -26,6 +26,10 @@ public interface ProductEntityRepository extends JpaRepository<ProductEntity, Lo
             "  AND discounted_price != 0\n" +
             "  AND enemy_price IS NOT NULL\n" +
             "  AND is_available = TRUE\n" +
+            "  AND image IS NOT NULL\n" +
+            "  AND image != ''\n" +
+            "  AND category IS NOT NULL\n" +
+            "  AND category != ''\n" +
             "  AND products.discounted_price * 1.5 < enemy_price\n" +
             "ORDER BY (products.discounted_price * 1.5 - products.enemy_price) ASC", nativeQuery = true)
     List<ProductEntity> findAllSellableProducts();

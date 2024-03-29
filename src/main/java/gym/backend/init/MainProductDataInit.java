@@ -25,7 +25,6 @@ public class MainProductDataInit {
     private final SizeEntityRepository sizeEntityRepository;
     private final TasteEntityRepository tasteEntityRepository;
 
-
     @PostConstruct
     public void dataInit() throws IOException {
 
