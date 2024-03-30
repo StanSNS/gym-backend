@@ -21,16 +21,14 @@ public class ProductDataFromWebSite {
     public void addEnemyPrices() {
         System.out.println("Start adding enemy prices from website to the DB... (This may take a few minutes.)");
 
-        System.out.println("Model ids to scrape: "+ productEntityRepository.findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue().size());
-
         for (ProductEntity productEntity : productEntityRepository.findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue()) {
-            productEntity.setEnemyPrice(extractEnemyPriceFromHTML(requestService.getHTMLDocumentByModelID(productEntity.getModelId()), productEntity.getModelId()));
-            productEntityRepository.save(productEntity);
+            extractEnemyPriceFromHTMLAndRatingDataFromHTML(productEntity);
         }
         System.out.println("Scraping enemy prices has finished!");
     }
 
-    private Double extractEnemyPriceFromHTML(ResponseEntity<String> responseEntity, String modelID) {
+    private void extractEnemyPriceFromHTMLAndRatingDataFromHTML(ProductEntity productEntity) {
+        ResponseEntity<String> responseEntity = requestService.getHTMLDocumentByModelID(productEntity.getModelId());
         if (responseEntity.getStatusCode().toString().startsWith("200") && responseEntity.getBody() != null) {
             Document doc = Jsoup.parse(responseEntity.getBody());
             Elements scriptElements = doc.getElementsByTag("script");
@@ -43,16 +41,30 @@ public class ProductDataFromWebSite {
                     if (endIndex != -1) {
                         String value = scriptText.substring(startIndex, endIndex);
                         if (value.trim().contains(".")) {
-                            return Double.parseDouble(value.trim());
+                            productEntity.setEnemyPrice(Double.parseDouble(value.trim()));
                         }
                     } else {
-                        System.out.println("Value extraction failed for model ID: " + modelID);
+                        System.out.println("Value extraction failed for model ID: " + productEntity.getModelId());
                     }
                     break;
                 }
             }
+
+
+            Elements ratingValues = doc.getElementsByAttributeValue("itemprop", "ratingValue");
+            for (Element span : ratingValues) {
+                productEntity.setRatingValue(Double.parseDouble(span.text()));
+            }
+
+            Elements ratingCounts = doc.getElementsByAttributeValue("itemprop", "ratingCount");
+            for (Element span : ratingCounts) {
+                productEntity.setRatingCount(Integer.parseInt(span.text()));
+            }
+
+            productEntityRepository.save(productEntity);
+
         }
-        return null;
+
     }
 
 }

@@ -59,6 +59,9 @@ public class ProductDataInit {
                     productEntity.setTaste(new HashSet<>());
                 }
 
+                productEntity.setRatingCount(0);
+                productEntity.setRatingValue(0.0);
+
                 productEntityRepository.save(productEntity);
             }
             System.out.println("Successfully added simple product data.");

@@ -65,4 +65,9 @@ public class ProductEntity extends BaseEntity {
     @Column
     private Double enemyPrice;
 
+    @Column
+    private Double ratingValue;
+
+    @Column
+    private Integer ratingCount;
 }

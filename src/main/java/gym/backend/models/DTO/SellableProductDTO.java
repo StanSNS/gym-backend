@@ -17,12 +17,19 @@ public class SellableProductDTO {
     private List<SizeDTO> size;
     private List<TasteDTO> taste;
     private String weightKg;
+    private Double ratingValue;
+    private Integer ratingCount;
 
     public void setDiscountedPrice(Double discountedPrice) {
         this.discountedPrice = discountedPrice * 1.5;
     }
 
     public void setDescription(String description) {
-        this.description = description.substring(0, 200);
+        this.description = description
+                .replaceFirst("<span\\s+style=\"[^\"]*\"[^>]*>", "")
+                .replaceFirst("<h1>", "")
+                .replaceFirst("</h1>", "")
+                .substring(0, 200)
+        ;
     }
 }
