@@ -1,9 +1,11 @@
 package gym.backend.controller;
 
+import gym.backend.models.DTO.HomePageResponseDataDTO;
 import gym.backend.models.DTO.SellableProductDTO;
 import gym.backend.models.entity.ProductEntity;
 import gym.backend.repository.ProductEntityRepository;
 import gym.backend.service.GenerateProductsInTXTService;
+import gym.backend.service.ProductsService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +21,11 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "${my.url}")
 public class ProductsController {
 
-    private final ProductEntityRepository productEntityRepository;
-    private final ModelMapper modelMapper;
+private final ProductsService productsService;
 
     @GetMapping
-    public ResponseEntity<List<SellableProductDTO>> getAllSellableProducts() {
-        return ResponseEntity.ok(productEntityRepository
-                .findAllSellableProducts()
-                .stream()
-                .map(productEntity -> modelMapper.map(productEntity, SellableProductDTO.class)).toList());
+    public ResponseEntity<HomePageResponseDataDTO> getAllSellableProducts() {
+        return ResponseEntity.ok(productsService.getFrontPageData());
     }
 
 
