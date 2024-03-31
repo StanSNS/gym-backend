@@ -23,6 +23,12 @@ public class ProductsService {
 
         for (ProductEntity productEntity : productEntityRepository.findAllSellableProducts()) {
             SellableProductDTO sellableProductDTO = modelMapper.map(productEntity, SellableProductDTO.class);
+
+            double priceDiff = productEntity.getDiscountedPrice() * 1.5 - productEntity.getEnemyPrice();
+
+            sellableProductDTO
+                    .setReducedTotalAmountPercentage(priceDiff / productEntity.getEnemyPrice() * 100);
+
             homePageResponseDataDTO.getProducts().add(sellableProductDTO);
 
             String category = sellableProductDTO.getCategory();

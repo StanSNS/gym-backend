@@ -19,6 +19,8 @@ public class SellableProductDTO {
     private String weightKg;
     private Double ratingValue;
     private Integer ratingCount;
+    private Double enemyPrice;
+    private Double reducedTotalAmountPercentage;
 
     public void setDiscountedPrice(Double discountedPrice) {
         this.discountedPrice = discountedPrice * 1.5;
@@ -29,7 +31,6 @@ public class SellableProductDTO {
                 .replaceFirst("<span\\s+style=\"[^\"]*\"[^>]*>", "")
                 .replaceFirst("<h1>", "")
                 .replaceFirst("</h1>", "")
-                .substring(0, 200)
-        ;
+                .substring(0, 200);
     }
 }
