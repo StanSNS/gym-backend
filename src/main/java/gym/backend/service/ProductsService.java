@@ -8,8 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 @RequiredArgsConstructor
 @Service
@@ -24,7 +24,7 @@ public class ProductsService {
         for (ProductEntity productEntity : productEntityRepository.findAllSellableProducts()) {
             SellableProductDTO sellableProductDTO = modelMapper.map(productEntity, SellableProductDTO.class);
 
-            double priceDiff = productEntity.getDiscountedPrice() * 1.5 - productEntity.getEnemyPrice();
+            double priceDiff = productEntity.getDiscountedPrice() * 1.4 - productEntity.getEnemyPrice();
 
             sellableProductDTO
                     .setReducedTotalAmountPercentage(priceDiff / productEntity.getEnemyPrice() * 100);
@@ -43,7 +43,7 @@ public class ProductsService {
             }
 
             if (!categoryFound) {
-                Map<String, Integer> categoryMap = new TreeMap<>();
+                Map<String, Integer> categoryMap = new HashMap<>();
                 categoryMap.put(category, 1);
                 homePageResponseDataDTO.getCategories().add(categoryMap);
             }
@@ -61,7 +61,7 @@ public class ProductsService {
             }
 
             if (!brandFound) {
-                Map<String, Integer> brandMap = new TreeMap<>();
+                Map<String, Integer> brandMap = new HashMap<>();
                 brandMap.put(brand, 1);
                 homePageResponseDataDTO.getBrands().add(brandMap);
             }

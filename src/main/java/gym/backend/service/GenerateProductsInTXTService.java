@@ -29,7 +29,7 @@ public class GenerateProductsInTXTService {
                     productEntity.getBrandEntity().getName(),
                     productEntity.getName(),
                     (Double.parseDouble(productEntity.getWeightKg()) != 0.0) ? productEntity.getWeightKg() + "kg = " : " = ",
-                    Math.ceil(productEntity.getDiscountedPrice() * 1.5)));
+                    Math.ceil(productEntity.getDiscountedPrice() * 1.4)));
 
             for (TasteEntity tasteEntity : productEntity.getTaste()) {
                 sb.append(String.format(TASTE_PRODUCT_TEMPLATE, tasteEntity.getName()));

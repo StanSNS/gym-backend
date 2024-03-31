@@ -18,7 +18,7 @@ public class ProductDataFromWebSite {
     private final ProductEntityRepository productEntityRepository;
     private final RequestService requestService;
 
-    public void addEnemyPrices() {
+    public void addEnemyPricesAndRating() {
         System.out.println("Start adding enemy prices from website to the DB... (This may take a few minutes.)");
 
         for (ProductEntity productEntity : productEntityRepository.findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue()) {
@@ -62,7 +62,6 @@ public class ProductDataFromWebSite {
             }
 
             productEntityRepository.save(productEntity);
-
         }
 
     }

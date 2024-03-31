@@ -23,7 +23,7 @@ public class SellableProductDTO {
     private Double reducedTotalAmountPercentage;
 
     public void setDiscountedPrice(Double discountedPrice) {
-        this.discountedPrice = discountedPrice * 1.5;
+        this.discountedPrice = discountedPrice * 1.4;
     }
 
     public void setDescription(String description) {

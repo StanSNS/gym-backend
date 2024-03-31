@@ -20,7 +20,7 @@ public class ScrapeDataFromWeb {
     public void startCollectingPrices(){
         System.out.println("Start collecting data...");
 
-        productDataFromWebSite.addEnemyPrices();
+        productDataFromWebSite.addEnemyPricesAndRating();
     }
 
     @GetMapping("/getXML")

@@ -42,7 +42,7 @@ public class MainProductDataInit {
 
             productDataFromSheetInit.startInit();
 
-            productDataFromWebSite.addEnemyPrices();
+            productDataFromWebSite.addEnemyPricesAndRating();
 
             System.out.println("Initialization has completed without errors.");
 
