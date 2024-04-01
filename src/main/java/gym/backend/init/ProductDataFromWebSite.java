@@ -19,12 +19,12 @@ public class ProductDataFromWebSite {
     private final RequestService requestService;
 
     public void addEnemyPricesAndRating() {
-        System.out.println("Start adding enemy prices from website to the DB... (This may take a few minutes.)");
+        System.out.println("Start scraping enemy prices and ratings from website... (This may take a few minutes.)");
 
         for (ProductEntity productEntity : productEntityRepository.findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue()) {
             extractEnemyPriceFromHTMLAndRatingDataFromHTML(productEntity);
         }
-        System.out.println("Scraping enemy prices has finished!");
+        System.out.println("Scraping has finished!");
     }
 
     private void extractEnemyPriceFromHTMLAndRatingDataFromHTML(ProductEntity productEntity) {

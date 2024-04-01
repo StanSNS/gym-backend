@@ -38,7 +38,7 @@ public class ProductDetailsDataInit {
     private final SizeEntityRepository sizeEntityRepository;
 
     public void detailsProductInit() {
-        System.out.println("Start modifying products with some details from each brand.");
+        System.out.println("Start modifying products with details from each brand.");
 
         for (BrandEntity brandEntity : brandEntityRepository.findAll()) {
             ResponseEntity<String> responseEntity = requestService.getProductDataByBrandID(brandEntity.getBrandID());
@@ -86,7 +86,7 @@ public class ProductDetailsDataInit {
                 }
             }
         }
-        System.out.println("Modifying of products has finished successfully.");
+        System.out.println("Modifying products from brand has finished successfully.");
     }
 
     private void addTastesInProductEntity(ProductJSONFromBrand singleProduct, ProductEntity productEntity) {

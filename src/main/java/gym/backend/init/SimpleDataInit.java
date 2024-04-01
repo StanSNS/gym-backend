@@ -30,7 +30,7 @@ public class SimpleDataInit {
             ProductsJSON productsJSON = gson.fromJson(responseEntity.getBody(), ProductsJSON.class);
 
             if (brandEntityRepository.count() == 0 && tasteEntityRepository.count() == 0 && sizeEntityRepository.count() == 0) {
-                System.out.println("Start filling the DB with Tastes, Sizes and Brands entities...");
+                System.out.println("Start filling the DB with Tastes, Sizes and Brands...");
                 for (ProductJSON singleData : productsJSON.getData()) {
                     if (!brandEntityRepository.existsByBrandID(singleData.getBrand_id())) {
                         BrandEntity brandEntity = new BrandEntity();

@@ -34,6 +34,8 @@ public class MainProductDataInit {
                 && tasteEntityRepository.count() == 0;
 
         if (isDBHasData) {
+            System.out.println("DB is empty - start initialization.");
+
             simpleDataInit.startInit();
 
             productDataInit.simpleProductInit();
@@ -44,8 +46,7 @@ public class MainProductDataInit {
 
             productDataFromWebSite.addEnemyPricesAndRating();
 
-            System.out.println("Initialization has completed without errors.");
-
+            System.out.println("Initialization has completed successfully.");
         } else {
             System.out.println("Skipping initialization - DB is already full.");
             System.out.println("Total Brand entities: " + brandEntityRepository.count());
