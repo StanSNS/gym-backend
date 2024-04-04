@@ -1,5 +1,6 @@
 package gym.backend.models.DTO;
 
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,8 @@ public class SellableProductDTO {
     private Integer ratingCount;
     private Double enemyPrice;
     private Double reducedTotalAmountPercentage;
+    private String sku;
+    private String modelId;
 
     public void setDiscountedPrice(Double discountedPrice) {
         this.discountedPrice = discountedPrice * 1.4;

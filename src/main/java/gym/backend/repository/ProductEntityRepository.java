@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,8 @@ public interface ProductEntityRepository extends JpaRepository<ProductEntity, Lo
     Optional<ProductEntity> findProductEntityBySku(String sku);
 
     List<ProductEntity> findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue();
+
+    Optional<ProductEntity> findProductEntityBySkuAndModelId(String sku, String modelId);
 
     @Query(value = "SELECT *\n" +
             "FROM products\n" +
