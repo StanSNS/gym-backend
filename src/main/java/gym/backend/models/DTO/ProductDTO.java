@@ -21,4 +21,7 @@ public class ProductDTO {
     private Double ratingValue;
     private Integer ratingCount;
 
+    public Double getDiscountedPrice() {
+        return discountedPrice * 1.3;
+    }
 }

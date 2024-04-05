@@ -33,9 +33,6 @@ public class ProductsController {
 
     @GetMapping("/product")
     public ResponseEntity<ProductDTO> getCurrentProduct(@RequestParam String sku, @RequestParam String modelId) {
-        System.out.println(sku);
-        System.out.println(modelId);
-
         return new ResponseEntity<>(productsService.getSingleProduct(sku, modelId), HttpStatus.ACCEPTED);
     }
 

@@ -26,14 +26,21 @@ public class SellableProductDTO {
     private String modelId;
 
     public void setDiscountedPrice(Double discountedPrice) {
-        this.discountedPrice = discountedPrice * 1.4;
+        this.discountedPrice = discountedPrice * 1.3;
     }
 
     public void setDescription(String description) {
-        this.description = description
-                .replaceFirst("<span\\s+style=\"[^\"]*\"[^>]*>", "")
+        description.replaceFirst("<span\\s+style=\"[^\"]*\"[^>]*>", "")
                 .replaceFirst("<h1>", "")
-                .replaceFirst("</h1>", "")
-                .substring(0, 200);
+                .replaceFirst("</h1>", "");
+
+        int length = description.length();
+
+        if (length < 200) {
+            this.description = description.substring(0, length);
+        } else {
+            this.description = description.substring(0, 200);
+        }
+
     }
 }
