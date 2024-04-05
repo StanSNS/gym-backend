@@ -25,6 +25,9 @@ public class TasteEntity extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
+    @Column
+    private String colors;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,9 +1,6 @@
 package gym.backend.init;
 
-import gym.backend.repository.BrandEntityRepository;
-import gym.backend.repository.ProductEntityRepository;
-import gym.backend.repository.SizeEntityRepository;
-import gym.backend.repository.TasteEntityRepository;
+import gym.backend.repository.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -24,6 +21,7 @@ public class MainProductDataInit {
     private final ProductEntityRepository productEntityRepository;
     private final SizeEntityRepository sizeEntityRepository;
     private final TasteEntityRepository tasteEntityRepository;
+    private final TasteColorsInit tasteColorsInit;
 
     @PostConstruct
     public void dataInit() throws IOException {
@@ -35,6 +33,8 @@ public class MainProductDataInit {
 
         if (isDBHasData) {
             System.out.println("DB is empty - start initialization.");
+
+            tasteColorsInit.startInit();
 
             simpleDataInit.startInit();
 

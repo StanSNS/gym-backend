@@ -4,11 +4,13 @@ import com.google.gson.Gson;
 import gym.backend.init.initService.RequestService;
 import gym.backend.models.entity.BrandEntity;
 import gym.backend.models.entity.SizeEntity;
+import gym.backend.models.entity.TasteColor;
 import gym.backend.models.entity.TasteEntity;
 import gym.backend.models.json.Product.ProductJSON;
 import gym.backend.models.json.Product.ProductsJSON;
 import gym.backend.repository.BrandEntityRepository;
 import gym.backend.repository.SizeEntityRepository;
+import gym.backend.repository.TasteColorEntityRepository;
 import gym.backend.repository.TasteEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ public class SimpleDataInit {
     private final BrandEntityRepository brandEntityRepository;
     private final TasteEntityRepository tasteEntityRepository;
     private final SizeEntityRepository sizeEntityRepository;
+    private final TasteColorEntityRepository tasteColorEntityRepository;
     private final RequestService requestService;
     private final Gson gson;
 
@@ -41,8 +44,16 @@ public class SimpleDataInit {
 
                     if (!tasteEntityRepository.existsBySilaTasteID(singleData.getTaste_id()) && singleData.getTaste_id() != null && singleData.getTaste_name() != null) {
                         TasteEntity tasteEntity = new TasteEntity();
+                        tasteEntity.setColors("");
                         tasteEntity.setName(singleData.getTaste_name());
                         tasteEntity.setSilaTasteID(singleData.getTaste_id());
+
+                        for (String singleTaste : tasteEntity.getName().split(" ")) {
+                            TasteColor tasteColor = tasteColorEntityRepository.findByNameIgnoreCase(singleTaste);
+                            if(tasteColor != null){
+                                tasteEntity.setColors(tasteEntity.getColors() + tasteColor.getColor() + ", ");
+                            }
+                        }
                         tasteEntityRepository.save(tasteEntity);
                     }
 
