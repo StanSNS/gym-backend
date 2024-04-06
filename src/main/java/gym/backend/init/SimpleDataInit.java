@@ -45,6 +45,7 @@ public class SimpleDataInit {
                     if (!tasteEntityRepository.existsBySilaTasteID(singleData.getTaste_id()) && singleData.getTaste_id() != null && singleData.getTaste_name() != null) {
                         TasteEntity tasteEntity = new TasteEntity();
                         tasteEntity.setColors("");
+                        tasteEntity.setColorNames("");
                         tasteEntity.setName(singleData.getTaste_name());
                         tasteEntity.setSilaTasteID(singleData.getTaste_id());
 
@@ -52,6 +53,7 @@ public class SimpleDataInit {
                             TasteColor tasteColor = tasteColorEntityRepository.findByNameIgnoreCase(singleTaste);
                             if(tasteColor != null){
                                 tasteEntity.setColors(tasteEntity.getColors() + tasteColor.getColor() + ", ");
+                                tasteEntity.setColorNames(tasteEntity.getColorNames() + tasteColor.getName() + ", ");
                             }
                         }
                         tasteEntityRepository.save(tasteEntity);
