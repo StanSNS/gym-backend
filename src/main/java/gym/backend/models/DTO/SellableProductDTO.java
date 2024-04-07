@@ -21,6 +21,7 @@ public class SellableProductDTO {
     private Double ratingValue;
     private Integer ratingCount;
     private Double enemyPrice;
+    private Double regularPrice;
     private Double reducedTotalAmountPercentage;
     private String sku;
     private String modelId;

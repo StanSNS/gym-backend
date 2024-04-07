@@ -77,6 +77,7 @@ public class ProductDataFromWebSite {
                     }
                 }
             }
+            productEntity.setRatingCount(0);
 
             int ratingCount = productEntity.getOneStarRatingCount() +
                     productEntity.getTwoStarRatingCount() +
@@ -86,13 +87,18 @@ public class ProductDataFromWebSite {
 
             productEntity.setRatingCount(ratingCount);
 
+            productEntity.setRatingValue(0.0);
+
+
             double ratingValue = (productEntity.getOneStarRatingCount()) +
                     (2 * productEntity.getTwoStarRatingCount()) +
                     (3 * productEntity.getThreeStarRatingCount()) +
                     (4 * productEntity.getFourStarRatingCount()) +
                     (5 * productEntity.getFiveStarRatingCount());
 
-            productEntity.setRatingValue(ratingValue / ratingCount);
+            if(ratingCount != 0 || ratingValue != 0){
+                productEntity.setRatingValue(ratingValue / ratingCount);
+            }
 
             productEntityRepository.save(productEntity);
         }
