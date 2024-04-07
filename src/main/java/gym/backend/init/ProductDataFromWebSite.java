@@ -50,7 +50,6 @@ public class ProductDataFromWebSite {
                 }
             }
 
-
             Elements ratingValues = doc.getElementsByAttributeValue("itemprop", "ratingValue");
             for (Element span : ratingValues) {
                 productEntity.setRatingValue(Double.parseDouble(span.text()));
@@ -61,9 +60,35 @@ public class ProductDataFromWebSite {
                 productEntity.setRatingCount(Integer.parseInt(span.text()));
             }
 
+            productEntity.setOneStarRatingCount(0);
+            productEntity.setTwoStarRatingCount(0);
+            productEntity.setThreeStarRatingCount(0);
+            productEntity.setFourStarRatingCount(0);
+            productEntity.setFiveStarRatingCount(0);
+
+            Element mainDiv = doc.selectFirst("div[style=float:left; margin-top:7px; margin-left:25px;]");
+            if (mainDiv != null) {
+                Elements divs = mainDiv.select("div");
+                for (int i = 1; i < divs.size(); i++) {
+                    Element div = divs.get(i);
+                    String text = div.text();
+                    if (text.contains("(") && text.contains(")")) {
+                        int startIndex = text.indexOf("(") + 1;
+                        int endIndex = text.indexOf(")");
+                        int valueInsideBrackets = Integer.parseInt(text.substring(startIndex, endIndex));
+
+                        switch (i) {
+                            case 5 -> productEntity.setOneStarRatingCount(valueInsideBrackets);
+                            case 4 -> productEntity.setTwoStarRatingCount(valueInsideBrackets);
+                            case 3 -> productEntity.setThreeStarRatingCount(valueInsideBrackets);
+                            case 2 -> productEntity.setFourStarRatingCount(valueInsideBrackets);
+                            case 1 -> productEntity.setFiveStarRatingCount(valueInsideBrackets);
+                        }
+                    }
+                }
+            }
             productEntityRepository.save(productEntity);
         }
-
     }
 
 }

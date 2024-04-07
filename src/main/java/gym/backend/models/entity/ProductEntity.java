@@ -70,4 +70,19 @@ public class ProductEntity extends BaseEntity {
 
     @Column
     private Integer ratingCount;
+
+    @Column
+    private Integer oneStarRatingCount;
+
+    @Column
+    private Integer twoStarRatingCount;
+
+    @Column
+    private Integer threeStarRatingCount;
+
+    @Column
+    private Integer fourStarRatingCount;
+
+    @Column
+    private Integer fiveStarRatingCount;
 }
