@@ -50,16 +50,6 @@ public class ProductDataFromWebSite {
                 }
             }
 
-            Elements ratingValues = doc.getElementsByAttributeValue("itemprop", "ratingValue");
-            for (Element span : ratingValues) {
-                productEntity.setRatingValue(Double.parseDouble(span.text()));
-            }
-
-            Elements ratingCounts = doc.getElementsByAttributeValue("itemprop", "ratingCount");
-            for (Element span : ratingCounts) {
-                productEntity.setRatingCount(Integer.parseInt(span.text()));
-            }
-
             productEntity.setOneStarRatingCount(0);
             productEntity.setTwoStarRatingCount(0);
             productEntity.setThreeStarRatingCount(0);
@@ -87,6 +77,23 @@ public class ProductDataFromWebSite {
                     }
                 }
             }
+
+            int ratingCount = productEntity.getOneStarRatingCount() +
+                    productEntity.getTwoStarRatingCount() +
+                    productEntity.getThreeStarRatingCount() +
+                    productEntity.getFourStarRatingCount() +
+                    productEntity.getFiveStarRatingCount();
+
+            productEntity.setRatingCount(ratingCount);
+
+            double ratingValue = (productEntity.getOneStarRatingCount()) +
+                    (2 * productEntity.getTwoStarRatingCount()) +
+                    (3 * productEntity.getThreeStarRatingCount()) +
+                    (4 * productEntity.getFourStarRatingCount()) +
+                    (5 * productEntity.getFiveStarRatingCount());
+
+            productEntity.setRatingValue(ratingValue / ratingCount);
+
             productEntityRepository.save(productEntity);
         }
     }

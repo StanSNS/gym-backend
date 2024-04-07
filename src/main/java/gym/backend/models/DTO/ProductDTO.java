@@ -1,5 +1,6 @@
 package gym.backend.models.DTO;
 
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,11 @@ public class ProductDTO {
     private Double discountedPrice;
     private Double ratingValue;
     private Integer ratingCount;
+    private Integer oneStarRatingCount;
+    private Integer twoStarRatingCount;
+    private Integer threeStarRatingCount;
+    private Integer fourStarRatingCount;
+    private Integer fiveStarRatingCount;
 
     public Double getDiscountedPrice() {
         return discountedPrice * 1.3;
