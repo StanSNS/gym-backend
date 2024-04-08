@@ -29,17 +29,7 @@ public class ProductDataFromSheetInit {
                     String skuNumber = String.valueOf((int) Double.parseDouble(row.getCell(0).toString()));
                     double regularPrice = Double.parseDouble(row.getCell(3).toString().split(" ")[0]);
                     double discountedPrice = Double.parseDouble(row.getCell(5).toString().split(" ")[0]);
-                    String barcode = row.getCell(6).toString();
                     boolean isAvailable = row.getCell(7).toString().equals("Да");
-
-                    Optional<ProductEntity> productEntityBySkuAndBarcodeNull = productEntityRepository.findProductEntityBySkuAndBarcodeNull(skuNumber);
-                    if (productEntityBySkuAndBarcodeNull.isPresent()) {
-                        if (!barcode.isEmpty()) {
-                            ProductEntity productEntity = productEntityBySkuAndBarcodeNull.get();
-                            productEntity.setBarcode(barcode);
-                            productEntityRepository.save(productEntity);
-                        }
-                    }
 
                     Optional<ProductEntity> productEntityBySku = productEntityRepository.findProductEntityBySku(skuNumber);
                     if (productEntityBySku.isPresent()) {

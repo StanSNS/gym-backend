@@ -14,8 +14,8 @@ public class SingleProduct {
     private String image;
     private String description;
     private Set<TasteDTO> taste;
-    private Set<SizeDTO> size;
     private String weightKg;
+    private String modelId;
     private Double regularPrice;
     private Double discountedPrice;
     private Double ratingValue;

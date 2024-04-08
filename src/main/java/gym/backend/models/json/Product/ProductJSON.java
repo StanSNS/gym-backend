@@ -10,10 +10,7 @@ public class ProductJSON {
     private String brand_id;
     private String taste_id;
     private String taste_name;
-    private String size_id;
-    private String size_name;
     private String available;
-    private String barcode_ean;
     private String brand_name;
     private String product_name;
     private String s;

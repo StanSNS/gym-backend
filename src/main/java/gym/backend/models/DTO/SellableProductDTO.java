@@ -15,7 +15,6 @@ public class SellableProductDTO {
     private Double discountedPrice;
     private String image;
     private String name;
-    private List<SizeDTO> size;
     private List<TasteDTO> taste;
     private String weightKg;
     private Double ratingValue;

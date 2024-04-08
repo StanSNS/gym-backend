@@ -3,13 +3,11 @@ package gym.backend.init;
 import com.google.gson.Gson;
 import gym.backend.init.initService.RequestService;
 import gym.backend.models.entity.BrandEntity;
-import gym.backend.models.entity.SizeEntity;
 import gym.backend.models.entity.TasteColor;
 import gym.backend.models.entity.TasteEntity;
 import gym.backend.models.json.Product.ProductJSON;
 import gym.backend.models.json.Product.ProductsJSON;
 import gym.backend.repository.BrandEntityRepository;
-import gym.backend.repository.SizeEntityRepository;
 import gym.backend.repository.TasteColorEntityRepository;
 import gym.backend.repository.TasteEntityRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +20,6 @@ public class SimpleDataInit {
 
     private final BrandEntityRepository brandEntityRepository;
     private final TasteEntityRepository tasteEntityRepository;
-    private final SizeEntityRepository sizeEntityRepository;
     private final TasteColorEntityRepository tasteColorEntityRepository;
     private final RequestService requestService;
     private final Gson gson;
@@ -32,8 +29,8 @@ public class SimpleDataInit {
         if (responseEntity.getStatusCode().toString().startsWith("200")) {
             ProductsJSON productsJSON = gson.fromJson(responseEntity.getBody(), ProductsJSON.class);
 
-            if (brandEntityRepository.count() == 0 && tasteEntityRepository.count() == 0 && sizeEntityRepository.count() == 0) {
-                System.out.println("Start filling the DB with Tastes, Sizes and Brands...");
+            if (brandEntityRepository.count() == 0 && tasteEntityRepository.count() == 0) {
+                System.out.println("Start filling the DB with Tastes and Brands...");
                 for (ProductJSON singleData : productsJSON.getData()) {
                     if (!brandEntityRepository.existsByBrandID(singleData.getBrand_id())) {
                         BrandEntity brandEntity = new BrandEntity();
@@ -58,15 +55,8 @@ public class SimpleDataInit {
                         }
                         tasteEntityRepository.save(tasteEntity);
                     }
-
-                    if (!sizeEntityRepository.existsBySilaSizeID(singleData.getSize_id()) && singleData.getSize_id() != null && singleData.getSize_name() != null) {
-                        SizeEntity sizeEntity = new SizeEntity();
-                        sizeEntity.setSilaSizeID(singleData.getSize_id());
-                        sizeEntity.setName(singleData.getSize_name());
-                        sizeEntityRepository.save(sizeEntity);
-                    }
                 }
-                System.out.println("Successfully added Brands, Tastes and Sizes.");
+                System.out.println("Successfully added Brands and Tastes...");
             }
 
         }

@@ -44,9 +44,6 @@ public class ProductEntity extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<TasteEntity> taste;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<SizeEntity> size;
-
     @Column
     private String weightKg;
 
@@ -55,9 +52,6 @@ public class ProductEntity extends BaseEntity {
 
     @Column
     private Double discountedPrice;
-
-    @Column
-    private String barcode;
 
     @Column
     private Boolean isAvailable;

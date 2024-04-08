@@ -7,15 +7,12 @@ import com.google.gson.JsonParser;
 import gym.backend.init.initService.RequestService;
 import gym.backend.models.entity.BrandEntity;
 import gym.backend.models.entity.ProductEntity;
-import gym.backend.models.entity.SizeEntity;
 import gym.backend.models.entity.TasteEntity;
 import gym.backend.models.json.ProductData.ProductJSONFromBrand;
 import gym.backend.models.json.ProductData.ProductsJSONFromBrand;
-import gym.backend.models.json.Size.SizeJSON;
 import gym.backend.models.json.Taste.TasteJSON;
 import gym.backend.repository.BrandEntityRepository;
 import gym.backend.repository.ProductEntityRepository;
-import gym.backend.repository.SizeEntityRepository;
 import gym.backend.repository.TasteEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -35,7 +32,6 @@ public class ProductDetailsDataInit {
     private final ProductEntityRepository productEntityRepository;
     private final ModelMapper modelMapper;
     private final TasteEntityRepository tasteEntityRepository;
-    private final SizeEntityRepository sizeEntityRepository;
 
     public void detailsProductInit() {
         System.out.println("Start modifying products with details from each brand.");
@@ -58,13 +54,10 @@ public class ProductDetailsDataInit {
                             productEntity.setSku(singleProduct.getId());
                             productEntity.setModelId(singleProduct.getModel_id());
                             productEntity.setBrandEntity(brandEntityRepository.findByName(singleProduct.getBrand()));
-                            productEntity.setSize(new HashSet<>());
                             productEntity.setTaste(new HashSet<>());
                             productEntity.setWeightKg(singleProduct.getWeight_kg());
-                            productEntity.setBarcode(singleProduct.getEan());
 
                             addTastesInProductEntity(singleProduct, productEntity);
-                            addSizesInProductEntity(singleProduct, productEntity);
                         } else {
                             productEntity = productEntityRepository.findProductEntityByModelId(singleProduct.getModel_id());
                             productEntity.setSku(singleProduct.getId());
@@ -74,12 +67,7 @@ public class ProductDetailsDataInit {
                             productEntity.setDescription(singleProduct.getDescription());
                             productEntity.setWeightKg(singleProduct.getWeight_kg());
 
-                            if (productEntity.getBarcode() == null && !singleProduct.getEan().isEmpty()) {
-                                productEntity.setBarcode(singleProduct.getEan());
-                            }
-
                             addTastesInProductEntity(singleProduct, productEntity);
-                            addSizesInProductEntity(singleProduct, productEntity);
                         }
                         productEntityRepository.save(productEntity);
                     }
@@ -101,23 +89,6 @@ public class ProductDetailsDataInit {
                     tasteEntity.setName(tasteJSON.getName());
                     tasteEntityRepository.save(tasteEntity);
                     productEntity.getTaste().add(tasteEntity);
-                }
-            }
-        }
-    }
-
-    private void addSizesInProductEntity(ProductJSONFromBrand singleProduct, ProductEntity productEntity) {
-        if (singleProduct.getSize().size() > 0) {
-            for (SizeJSON sizeJSON : singleProduct.getSize()) {
-                Optional<SizeEntity> sizeEntityBySilaSizeID = sizeEntityRepository.findSizeEntityBySilaSizeID(sizeJSON.getId());
-                if (sizeEntityBySilaSizeID.isPresent()) {
-                    productEntity.getSize().add(sizeEntityBySilaSizeID.get());
-                } else {
-                    SizeEntity sizeEntity = new SizeEntity();
-                    sizeEntity.setSilaSizeID(sizeJSON.getId());
-                    sizeEntity.setName(sizeJSON.getName());
-                    sizeEntityRepository.save(sizeEntity);
-                    productEntity.getSize().add(sizeEntity);
                 }
             }
         }

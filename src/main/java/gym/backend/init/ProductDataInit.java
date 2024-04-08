@@ -7,7 +7,6 @@ import gym.backend.models.json.Product.ProductJSON;
 import gym.backend.models.json.Product.ProductsJSON;
 import gym.backend.repository.BrandEntityRepository;
 import gym.backend.repository.ProductEntityRepository;
-import gym.backend.repository.SizeEntityRepository;
 import gym.backend.repository.TasteEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,6 @@ public class ProductDataInit {
     private final Gson gson;
     private final BrandEntityRepository brandEntityRepository;
     private final TasteEntityRepository tasteEntityRepository;
-    private final SizeEntityRepository sizeEntityRepository;
     private final ProductEntityRepository productEntityRepository;
 
     public void simpleProductInit() {
@@ -44,18 +42,12 @@ public class ProductDataInit {
                         productEntity.getTaste().add(tasteEntityRepository.findTasteEntityBySilaTasteID(singleProduct.getTaste_id()).get());
                     }
 
-                    if (singleProduct.getSize_id() != null) {
-                        productEntity.getSize().add(sizeEntityRepository.findSizeEntityBySilaSizeID(singleProduct.getSize_id()).get());
-                    }
-                    productEntity.setBarcode(singleProduct.getBarcode_ean());
                 } else {
                     productEntity.setModelId(singleProduct.getModel_id());
                     productEntity.setName(singleProduct.getProduct_name());
                     productEntity.setBrandEntity(brandEntityRepository.findByBrandID(singleProduct.getBrand_id()));
                     productEntity.setRegularPrice((Double.parseDouble(singleProduct.getRegular_price())));
-                    productEntity.setBarcode(singleProduct.getBarcode_ean());
                     productEntity.setIsAvailable(singleProduct.getAvailable().equals("1"));
-                    productEntity.setSize(new HashSet<>());
                     productEntity.setTaste(new HashSet<>());
                 }
 

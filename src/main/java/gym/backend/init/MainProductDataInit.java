@@ -19,7 +19,6 @@ public class MainProductDataInit {
     private final ProductDataFromWebSite productDataFromWebSite;
     private final BrandEntityRepository brandEntityRepository;
     private final ProductEntityRepository productEntityRepository;
-    private final SizeEntityRepository sizeEntityRepository;
     private final TasteEntityRepository tasteEntityRepository;
     private final TasteColorsInit tasteColorsInit;
 
@@ -28,7 +27,6 @@ public class MainProductDataInit {
 
         boolean isDBHasData = brandEntityRepository.count() == 0
                 && productEntityRepository.count() == 0
-                & sizeEntityRepository.count() == 0
                 && tasteEntityRepository.count() == 0;
 
         if (isDBHasData) {
@@ -51,7 +49,6 @@ public class MainProductDataInit {
             System.out.println("Skipping initialization - DB is already full.");
             System.out.println("Total Brand entities: " + brandEntityRepository.count());
             System.out.println("Total Product entities: " + productEntityRepository.count());
-            System.out.println("Total Size entities: " + sizeEntityRepository.count());
             System.out.println("Total Taste entities: " + tasteEntityRepository.count());
         }
 

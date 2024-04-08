@@ -9,4 +9,5 @@ public class TasteDTO {
     private String name;
     private String colors;
     private String colorNames;
+    private String silaTasteID;
 }

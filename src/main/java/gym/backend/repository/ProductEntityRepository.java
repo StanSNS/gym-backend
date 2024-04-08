@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,27 +14,26 @@ public interface ProductEntityRepository extends JpaRepository<ProductEntity, Lo
 
     boolean existsByModelId(String modelId);
 
-    Optional<ProductEntity> findProductEntityBySkuAndBarcodeNull(String sku);
-
     Optional<ProductEntity> findProductEntityBySku(String sku);
 
     List<ProductEntity> findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue();
 
     Optional<ProductEntity> findProductEntityBySkuAndModelId(String sku, String modelId);
 
-    @Query(value = "SELECT *\n" +
-            "FROM products\n" +
-            "WHERE discounted_price IS NOT NULL\n" +
-            "  AND discounted_price != 0\n" +
-            "  AND enemy_price IS NOT NULL\n" +
-            "  AND is_available = TRUE\n" +
-            "  AND image IS NOT NULL\n" +
-            "  AND image != ''\n" +
-            "  AND category IS NOT NULL\n" +
-            "  AND category != ''\n" +
-            "  AND weight_kg != ''\n" +
-            "  AND weight_kg is not null\n" +
-            "  AND products.discounted_price * 1.3 < enemy_price\n" +
-            "ORDER BY (products.discounted_price * 1.3 - products.enemy_price) ASC", nativeQuery = true)
+    @Query(value = """
+            SELECT *
+            FROM products
+            WHERE discounted_price IS NOT NULL
+              AND discounted_price != 0
+              AND enemy_price IS NOT NULL
+              AND is_available = TRUE
+              AND image IS NOT NULL
+              AND image != ''
+              AND category IS NOT NULL
+              AND category != ''
+              AND weight_kg != ''
+              AND weight_kg is not null
+              AND products.discounted_price * 1.3 < enemy_price
+            ORDER BY (products.discounted_price * 1.3 - products.enemy_price) ASC""", nativeQuery = true)
     List<ProductEntity> findAllSellableProducts();
 }
