@@ -1,6 +1,5 @@
 package gym.backend.models.DTO;
 
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +7,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class ProductDTO {
+public class SingleProduct {
     private String name;
     private BrandDTO brandEntity;
     private String category;

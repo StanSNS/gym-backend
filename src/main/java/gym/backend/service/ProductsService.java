@@ -2,8 +2,8 @@ package gym.backend.service;
 
 import gym.backend.exception.ResourceNotFoundException;
 import gym.backend.models.DTO.HomePageResponseDataDTO;
-import gym.backend.models.DTO.ProductDTO;
 import gym.backend.models.DTO.SellableProductDTO;
+import gym.backend.models.DTO.SingleProduct;
 import gym.backend.models.entity.ProductEntity;
 import gym.backend.repository.ProductEntityRepository;
 import lombok.RequiredArgsConstructor;
@@ -72,13 +72,13 @@ public class ProductsService {
         return homePageResponseDataDTO;
     }
 
-    public ProductDTO getSingleProduct(String sku, String modelId) {
+    public SingleProduct getSingleProduct(String sku, String modelId) {
         Optional<ProductEntity> productEntityBySkuAndModelId = productEntityRepository.findProductEntityBySkuAndModelId(sku, modelId);
 
         if (productEntityBySkuAndModelId.isEmpty()) {
             throw new ResourceNotFoundException();
         }
         ProductEntity productEntity = productEntityBySkuAndModelId.get();
-        return modelMapper.map(productEntity, ProductDTO.class);
+        return modelMapper.map(productEntity, SingleProduct.class);
     }
 }
