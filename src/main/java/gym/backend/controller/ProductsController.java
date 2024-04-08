@@ -6,10 +6,7 @@ import gym.backend.service.ProductsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +23,18 @@ public class ProductsController {
     @GetMapping("/product")
     public ResponseEntity<SingleProduct> getCurrentProduct(@RequestParam String sku, @RequestParam String modelId) {
         return new ResponseEntity<>(productsService.getSingleProduct(sku, modelId), HttpStatus.ACCEPTED);
+    }
+
+    @PatchMapping("/product")
+    public ResponseEntity<String> checkIfProductIsAvailable(@RequestParam String brandId, @RequestParam String modelId, @RequestParam String tasteId) {
+
+        boolean isProductAvailable = productsService.checkIfProductIsAvailable(brandId, modelId, tasteId);
+
+        if (isProductAvailable) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 

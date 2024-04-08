@@ -1,14 +1,22 @@
 package gym.backend.service;
 
+import com.google.gson.Gson;
 import gym.backend.exception.ResourceNotFoundException;
 import gym.backend.models.DTO.HomePageResponseDataDTO;
 import gym.backend.models.DTO.SellableProductDTO;
 import gym.backend.models.DTO.SingleProduct;
 import gym.backend.models.entity.ProductEntity;
+import gym.backend.models.json.ProductAvailability.ProductAvailabilityResponse;
 import gym.backend.repository.ProductEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,8 +26,12 @@ import java.util.Optional;
 @Service
 public class ProductsService {
 
+    @Value("${sila.bg}")
+    private String SILA_BG_API_TOKEN;
+
     private final ProductEntityRepository productEntityRepository;
     private final ModelMapper modelMapper;
+    private final Gson gson;
 
     public HomePageResponseDataDTO getFrontPageData() {
         HomePageResponseDataDTO homePageResponseDataDTO = new HomePageResponseDataDTO();
@@ -81,4 +93,27 @@ public class ProductsService {
         ProductEntity productEntity = productEntityBySkuAndModelId.get();
         return modelMapper.map(productEntity, SingleProduct.class);
     }
+
+    public boolean checkIfProductIsAvailable(String brandId, String modelId, String tasteId) {
+        String productsURL = "https://distro.silabg.com/api/v1/product?api_token=" + SILA_BG_API_TOKEN;
+        String jsonData = "{\"brand_id\": \"" + brandId + "\", \"model_id\":\"" + modelId + "\",\"taste_id\":\"" + tasteId + "\"}";
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(jsonData, headers);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(productsURL, HttpMethod.POST, requestEntity, String.class);
+
+        ProductAvailabilityResponse productAvailabilityResponse = gson.fromJson(responseEntity.getBody(), ProductAvailabilityResponse.class);
+
+        Integer productCount = productAvailabilityResponse.getCount();
+
+        return switch (productCount) {
+            case 0 -> false;
+            case 1 -> productAvailabilityResponse.getData().get(0).getAvailable().equals("1");
+            default -> false;
+        };
+
+    }
+
 }
