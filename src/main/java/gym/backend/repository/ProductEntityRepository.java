@@ -24,16 +24,17 @@ public interface ProductEntityRepository extends JpaRepository<ProductEntity, Lo
             SELECT *
             FROM products
             WHERE discounted_price IS NOT NULL
-              AND discounted_price != 0
-              AND enemy_price IS NOT NULL
-              AND is_available = TRUE
-              AND image IS NOT NULL
-              AND image != ''
-              AND category IS NOT NULL
-              AND category != ''
-              AND weight_kg != ''
-              AND weight_kg is not null
-              AND products.discounted_price * 1.3 < enemy_price
-            ORDER BY (products.discounted_price * 1.3 - products.enemy_price) ASC""", nativeQuery = true)
+            AND discounted_price != 0
+            AND enemy_price IS NOT NULL
+            AND is_available = TRUE
+            AND image IS NOT NULL
+            AND image != ''
+            AND category IS NOT NULL
+            AND category != ''
+            AND weight_kg IS NOT NULL
+            AND weight_kg != ''
+            AND products.discounted_price * 1.3 < enemy_price
+            AND products.discounted_price * 1.3 < products.regular_price
+            ORDER BY (products.discounted_price * 1.3 - products.enemy_price)""", nativeQuery = true)
     List<ProductEntity> findAllSellableProducts();
 }
