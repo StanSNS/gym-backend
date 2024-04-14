@@ -20,4 +20,7 @@ public class OrderProductEntity extends BaseEntity {
 
     @Column
     private String modelId;
+
+    @Column
+    private String selectedTasteSilaId;
 }

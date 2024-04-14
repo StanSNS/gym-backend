@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrderEntityRepository extends JpaRepository<OrderEntity, Long> {
+
+    boolean existsByRandomNumber(Long randomNumber);
+
 }

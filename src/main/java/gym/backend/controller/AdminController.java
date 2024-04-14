@@ -1,6 +1,6 @@
 package gym.backend.controller;
 
-import gym.backend.models.DTO.TasteDTO;
+import gym.backend.models.DTO.Admin.Order.AdminOrderDTO;
 import gym.backend.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class AdminController {
     private final AdminService adminService;
 
     @GetMapping
-    public ResponseEntity<List<TasteDTO>> getAllTastes() {
-        return new ResponseEntity<>(adminService.getAllTastes(), HttpStatus.OK);
+    public ResponseEntity<List<AdminOrderDTO>> getAllAdminData() {
+        return new ResponseEntity<>(adminService.getAllOrdersForAdminPage(), HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
 package gym.backend.models.entity;
 
+import gym.backend.models.enums.OrderStatus;
 import gym.backend.models.entity.BaseEntity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Table(name = "orders")
@@ -16,6 +18,12 @@ import java.util.List;
 @Getter
 @Setter
 public class OrderEntity extends BaseEntity {
+
+    @Column
+    private Long randomNumber;
+
+    @Column
+    private LocalDateTime date;
 
     @Column
     private String firstName;
@@ -49,6 +57,9 @@ public class OrderEntity extends BaseEntity {
 
     @Column
     private Double totalWeight;
+
+    @Enumerated
+    private OrderStatus orderStatus;
 
     @Column
     private Double totalAmount;
