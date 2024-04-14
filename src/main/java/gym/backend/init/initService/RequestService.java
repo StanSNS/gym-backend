@@ -21,6 +21,13 @@ public class RequestService {
     @Value("${sila.bg}")
     private String SILA_BG_API_TOKEN;
 
+    @Value("${sila.bg.auth.email}")
+    private String SILA_BG_AUTH_EMAIL;
+
+    @Value("${sila.bg.auth.password}")
+    private String SILA_BG_AUTH_PASSWORD;
+
+
     public ResponseEntity<String> getProductDataByBrandID(String brandID) {
         String productsURL = "https://distro.silabg.com/api/v1/brandfeed?api_token=" + SILA_BG_API_TOKEN;
         String jsonData = "{\"brand_id\": \"" + brandID + "\"}";
@@ -48,8 +55,8 @@ public class RequestService {
         HttpHeaders headers = new HttpHeaders();
 
         MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
-        requestBody.add("smail", "stanimirsergev159@gmail.com");
-        requestBody.add("spass", "bymejuh");
+        requestBody.add("smail", SILA_BG_AUTH_EMAIL);
+        requestBody.add("spass", SILA_BG_AUTH_PASSWORD);
         requestBody.add("remember", "on");
         requestBody.add("_qf__loginForm", "");
         requestBody.add("submit", "");
