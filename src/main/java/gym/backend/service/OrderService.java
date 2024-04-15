@@ -23,7 +23,7 @@ public class OrderService {
     private final OrderProductEntityRepository orderProductEntityRepository;
     private final ModelMapper modelMapper;
 
-    public void addOrder(OrderDTO orderDTO) {
+    public Long addOrder(OrderDTO orderDTO) {
         OrderEntity orderEntity = modelMapper.map(orderDTO, OrderEntity.class);
         orderEntity.setCartItems(new ArrayList<>());
 
@@ -32,7 +32,7 @@ public class OrderService {
             orderProductEntity.setQuantity(Integer.valueOf(cartItemOrderDto.getQuantity()));
             orderProductEntity.setModelId(cartItemOrderDto.getModelId());
 
-            if(cartItemOrderDto.getSelectedTaste() != null){
+            if (cartItemOrderDto.getSelectedTaste() != null) {
                 orderProductEntity.setSelectedTasteSilaId(cartItemOrderDto.getSelectedTaste().getSilaTasteID());
             }
             orderProductEntityRepository.save(orderProductEntity);
@@ -41,9 +41,13 @@ public class OrderService {
 
         orderEntity.setOrderStatus(OrderStatus.PENDING);
         orderEntity.setDate(LocalDateTime.now());
-        orderEntity.setRandomNumber(generateUniqueOrderNumber());
+
+        Long randomOrderNumber = generateUniqueOrderNumber();
+
+        orderEntity.setRandomNumber(randomOrderNumber);
         orderEntityRepository.save(orderEntity);
 
+        return randomOrderNumber;
     }
 
     private Long generateUniqueOrderNumber() {
