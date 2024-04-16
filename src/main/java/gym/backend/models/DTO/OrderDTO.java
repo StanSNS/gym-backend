@@ -14,8 +14,8 @@ public class OrderDTO {
     private String phone;
     private String country;
     private String town;
-    private String region;
     private String postCode;
+    private String officeAddress;
     private String address;
     private String additionalAddress;
     private String delivery;

@@ -44,7 +44,7 @@ public class OrderEntity extends BaseEntity {
     private String town;
 
     @Column
-    private String region;
+    private String officeAddress;
 
     @Column
     private String postCode;
