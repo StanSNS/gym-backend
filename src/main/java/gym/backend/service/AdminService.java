@@ -6,6 +6,7 @@ import gym.backend.models.entity.OrderEntity;
 import gym.backend.models.entity.OrderProductEntity;
 import gym.backend.models.entity.ProductEntity;
 import gym.backend.models.entity.TasteEntity;
+import gym.backend.models.enums.OrderStatus;
 import gym.backend.repository.OrderEntityRepository;
 import gym.backend.repository.ProductEntityRepository;
 import gym.backend.repository.TasteEntityRepository;
@@ -63,13 +64,13 @@ public class AdminService {
                 adminShoppingCartDTO.setAdminProductDTO(adminProductDTO);
                 adminShoppingCartDTO.setQuantity(cartItem.getQuantity());
 
-                if(cartItem.getSelectedTasteSilaId() != null){
+                if (cartItem.getSelectedTasteSilaId() != null) {
                     Optional<TasteEntity> tasteEntity = tasteEntityRepository.findTasteEntityBySilaTasteID(cartItem.getSelectedTasteSilaId());
                     if (tasteEntity.isEmpty()) {
                         throw new ResourceNotFoundException();
                     }
                     adminShoppingCartDTO.setSelectedTaste(tasteEntity.get().getName());
-                }else{
+                } else {
                     adminShoppingCartDTO.setSelectedTaste("");
                 }
 
@@ -93,4 +94,21 @@ public class AdminService {
         return adminOrderDTOToReturn;
     }
 
+    public void modifyOrderStatus(String status, Long randomNumber) {
+        OrderEntity orderEntity = orderEntityRepository.findByRandomNumber(randomNumber);
+        if (orderEntity == null) {
+            throw new ResourceNotFoundException();
+        }
+        switch (status) {
+            case "PENDING" -> orderEntity.setOrderStatus(OrderStatus.PENDING);
+            case "APPROVED" -> orderEntity.setOrderStatus(OrderStatus.APPROVED);
+            case "IN_DELIVERY" -> orderEntity.setOrderStatus(OrderStatus.IN_DELIVERY);
+            case "COMPLETED" -> orderEntity.setOrderStatus(OrderStatus.COMPLETED);
+            case "CANCELED" -> orderEntity.setOrderStatus(OrderStatus.CANCELED);
+            default -> throw new ResourceNotFoundException();
+        }
+
+        orderEntityRepository.save(orderEntity);
+
+    }
 }
