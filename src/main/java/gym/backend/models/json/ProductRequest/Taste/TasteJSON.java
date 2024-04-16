@@ -1,4 +1,4 @@
-package gym.backend.models.json.Taste;
+package gym.backend.models.json.ProductRequest.Taste;
 
 import lombok.Getter;
 import lombok.Setter;

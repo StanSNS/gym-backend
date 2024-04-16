@@ -81,6 +81,40 @@ public class RequestService {
         return null;
     }
 
+    public String getAllOfficesSpeedyBG() {
+        String url = "https://api.speedy.bg/v1/location/office/";
+        String requestBody = "{\n" +
+                "    \"userName\": 1995900,\n" +
+                "    \"password\": 6625235775,\n" +
+                "    \"language\": \"BG\",\n" +
+                "    \"countryId\": 100\n" +
+                "}";
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        return restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class).getBody();
+    }
+
+    public String getAllOfficesSpeedyEN() {
+        String url = "https://api.speedy.bg/v1/location/office/";
+        String requestBody = "{\n" +
+                "    \"userName\": 1995900,\n" +
+                "    \"password\": 6625235775,\n" +
+                "    \"language\": \"EN\",\n" +
+                "    \"countryId\": 100\n" +
+                "}";
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        return restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class).getBody();
+    }
+
     public ResponseEntity<String> getAllProductsData() {
         String productsURL = "https://distro.silabg.com/api/v1/product?api_token=" + SILA_BG_API_TOKEN;
 

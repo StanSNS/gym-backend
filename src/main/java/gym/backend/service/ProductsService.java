@@ -6,7 +6,7 @@ import gym.backend.models.DTO.HomePageResponseDataDTO;
 import gym.backend.models.DTO.SellableProductDTO;
 import gym.backend.models.DTO.SingleProduct;
 import gym.backend.models.entity.ProductEntity;
-import gym.backend.models.json.ProductAvailability.ProductAvailabilityResponse;
+import gym.backend.models.json.ProductRequest.ProductAvailability.ProductAvailabilityResponse;
 import gym.backend.repository.ProductEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

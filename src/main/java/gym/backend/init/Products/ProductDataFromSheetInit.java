@@ -1,4 +1,4 @@
-package gym.backend.init;
+package gym.backend.init.Products;
 
 import gym.backend.init.initService.RequestService;
 import gym.backend.models.entity.ProductEntity;

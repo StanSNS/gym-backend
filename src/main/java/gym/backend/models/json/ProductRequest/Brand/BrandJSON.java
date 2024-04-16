@@ -1,4 +1,4 @@
-package gym.backend.models.json.Brand;
+package gym.backend.models.json.ProductRequest.Brand;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

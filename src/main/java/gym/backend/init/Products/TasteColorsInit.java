@@ -1,4 +1,4 @@
-package gym.backend.init;
+package gym.backend.init.Products;
 
 import gym.backend.models.entity.TasteColor;
 import gym.backend.repository.TasteColorEntityRepository;

@@ -1,4 +1,4 @@
-package gym.backend.models.json.ProductAvailability;
+package gym.backend.models.json.ProductRequest.ProductAvailability;
 
 import lombok.Getter;
 import lombok.Setter;

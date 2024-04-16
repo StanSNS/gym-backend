@@ -12,12 +12,12 @@ public class OrderDTO {
     private String lastName;
     private String email;
     private String phone;
-
     private String country;
     private String town;
+    private String region;
+    private String postCode;
     private String address;
     private String additionalAddress;
-
     private String delivery;
     private String courier;
     private Double totalWeight;

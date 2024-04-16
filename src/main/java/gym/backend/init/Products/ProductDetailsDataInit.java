@@ -1,4 +1,4 @@
-package gym.backend.init;
+package gym.backend.init.Products;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -8,9 +8,9 @@ import gym.backend.init.initService.RequestService;
 import gym.backend.models.entity.BrandEntity;
 import gym.backend.models.entity.ProductEntity;
 import gym.backend.models.entity.TasteEntity;
-import gym.backend.models.json.ProductData.ProductJSONFromBrand;
-import gym.backend.models.json.ProductData.ProductsJSONFromBrand;
-import gym.backend.models.json.Taste.TasteJSON;
+import gym.backend.models.json.ProductRequest.ProductData.ProductJSONFromBrand;
+import gym.backend.models.json.ProductRequest.ProductData.ProductsJSONFromBrand;
+import gym.backend.models.json.ProductRequest.Taste.TasteJSON;
 import gym.backend.repository.BrandEntityRepository;
 import gym.backend.repository.ProductEntityRepository;
 import gym.backend.repository.TasteEntityRepository;

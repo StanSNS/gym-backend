@@ -1,10 +1,12 @@
 package gym.backend.service;
 
 import gym.backend.models.DTO.CartProductsDTO;
+import gym.backend.models.DTO.CitySpeedyDTOBG;
 import gym.backend.models.DTO.OrderDTO;
 import gym.backend.models.enums.OrderStatus;
 import gym.backend.models.entity.OrderEntity;
 import gym.backend.models.entity.OrderProductEntity;
+import gym.backend.repository.CitySpeedyEntityRepository;
 import gym.backend.repository.OrderEntityRepository;
 import gym.backend.repository.OrderProductEntityRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -22,6 +26,7 @@ public class OrderService {
     private final OrderEntityRepository orderEntityRepository;
     private final OrderProductEntityRepository orderProductEntityRepository;
     private final ModelMapper modelMapper;
+    private final CitySpeedyEntityRepository citySpeedyEntityRepository;
 
     public Long addOrder(OrderDTO orderDTO) {
         OrderEntity orderEntity = modelMapper.map(orderDTO, OrderEntity.class);
@@ -60,6 +65,15 @@ public class OrderService {
             unique = !orderEntityRepository.existsByRandomNumber(randomNumber);
         } while (!unique);
         return randomNumber;
+    }
+
+    public List<CitySpeedyDTOBG> getAllSpeedyAddresses(){
+        return citySpeedyEntityRepository
+                .findAll()
+                .stream()
+                .map(citySpeedyEntity ->
+                        modelMapper.map(citySpeedyEntity, CitySpeedyDTOBG.class))
+                .collect(Collectors.toList());
     }
 
 }

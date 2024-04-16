@@ -1,12 +1,12 @@
-package gym.backend.init;
+package gym.backend.init.Products;
 
 import com.google.gson.Gson;
 import gym.backend.init.initService.RequestService;
 import gym.backend.models.entity.BrandEntity;
 import gym.backend.models.entity.TasteColor;
 import gym.backend.models.entity.TasteEntity;
-import gym.backend.models.json.Product.ProductJSON;
-import gym.backend.models.json.Product.ProductsJSON;
+import gym.backend.models.json.ProductRequest.Product.ProductJSON;
+import gym.backend.models.json.ProductRequest.Product.ProductsJSON;
 import gym.backend.repository.BrandEntityRepository;
 import gym.backend.repository.TasteColorEntityRepository;
 import gym.backend.repository.TasteEntityRepository;
