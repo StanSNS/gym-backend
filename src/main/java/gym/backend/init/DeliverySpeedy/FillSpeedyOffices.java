@@ -9,7 +9,6 @@ import gym.backend.models.json.DeliveryRequest.CitiesSpeedyJSON;
 import gym.backend.models.json.DeliveryRequest.CitySpeedyJSON;
 import gym.backend.repository.AddressSpeedyEntityRepository;
 import gym.backend.repository.CitySpeedyEntityRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -25,8 +24,7 @@ public class FillSpeedyOffices {
     private final CitySpeedyEntityRepository citySpeedyEntityRepository;
     private final AddressSpeedyEntityRepository addressSpeedyEntityRepository;
 
-    @PostConstruct
-    public void fillAddressesAndTowns() {
+    public void startInit() {
         CitiesSpeedyJSON citiesSpeedyJSON = gson.fromJson(requestService.getAllOfficesSpeedy(), CitiesSpeedyJSON.class);
 
         for (CitySpeedyJSON office : citiesSpeedyJSON.getOffices()) {
@@ -41,7 +39,7 @@ public class FillSpeedyOffices {
             }
 
             String modifiedCityName = modifiedCityNameSB.toString();
-            Optional<CitySpeedyEntity> optionalCitySpeedyEntity = citySpeedyEntityRepository.findByCityName(modifiedCityName.toString());
+            Optional<CitySpeedyEntity> optionalCitySpeedyEntity = citySpeedyEntityRepository.findByCityName(modifiedCityName);
 
             CitySpeedyEntity citySpeedyEntity;
             if (optionalCitySpeedyEntity.isEmpty()) {
@@ -54,13 +52,16 @@ public class FillSpeedyOffices {
                 citySpeedyEntity = optionalCitySpeedyEntity.get();
             }
 
-            AddressSpeedyEntity addressSpeedyEntity = new AddressSpeedyEntity();
-            addressSpeedyEntity.setFullAddress(address.getLocalAddressString());
-            addressSpeedyEntityRepository.save(addressSpeedyEntity);
+            AddressSpeedyEntity addressSpeedyEntity;
 
-            citySpeedyEntity.getAddresses().add(addressSpeedyEntity);
+            if (!addressSpeedyEntityRepository.existsByFullAddress(address.getLocalAddressString())) {
+                addressSpeedyEntity = new AddressSpeedyEntity();
+                addressSpeedyEntity.setFullAddress(address.getLocalAddressString());
+                addressSpeedyEntityRepository.save(addressSpeedyEntity);
+                citySpeedyEntity.getAddresses().add(addressSpeedyEntity);
+                citySpeedyEntityRepository.save(citySpeedyEntity);
+            }
 
-            citySpeedyEntityRepository.save(citySpeedyEntity);
         }
 
 

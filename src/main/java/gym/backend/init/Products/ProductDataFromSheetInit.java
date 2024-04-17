@@ -22,7 +22,6 @@ public class ProductDataFromSheetInit {
         XSSFSheet sheet = requestService.getDistroSheet();
 
         if (sheet != null) {
-            System.out.println("Start modifying products inside the DB from sheet...");
             for (int i = sheet.getFirstRowNum() + 1; i <= sheet.getLastRowNum(); i++) {
                 XSSFRow row = sheet.getRow(i);
                 if (row != null) {
@@ -39,10 +38,8 @@ public class ProductDataFromSheetInit {
                         productEntity.setIsAvailable(isAvailable);
                         productEntityRepository.save(productEntity);
                     }
-
                 }
             }
         }
-        System.out.println("Modifying from sheet has completed!");
     }
 }

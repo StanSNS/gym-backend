@@ -33,9 +33,7 @@ public class ProductDetailsDataInit {
     private final ModelMapper modelMapper;
     private final TasteEntityRepository tasteEntityRepository;
 
-    public void detailsProductInit() {
-        System.out.println("Start modifying products with details from each brand.");
-
+    public void startInit() {
         for (BrandEntity brandEntity : brandEntityRepository.findAll()) {
             ResponseEntity<String> responseEntity = requestService.getProductDataByBrandID(brandEntity.getBrandID());
 
@@ -74,7 +72,6 @@ public class ProductDetailsDataInit {
                 }
             }
         }
-        System.out.println("Modifying products from brand has finished successfully.");
     }
 
     private void addTastesInProductEntity(ProductJSONFromBrand singleProduct, ProductEntity productEntity) {

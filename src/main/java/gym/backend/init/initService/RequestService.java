@@ -75,8 +75,6 @@ public class RequestService {
                 XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
                 return workbook.getSheetAt(0);
             }
-        } else {
-            System.out.println("Failed to download file. Status code: " + statusCode);
         }
         return null;
     }

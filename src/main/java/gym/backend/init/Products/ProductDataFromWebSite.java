@@ -18,13 +18,11 @@ public class ProductDataFromWebSite {
     private final ProductEntityRepository productEntityRepository;
     private final RequestService requestService;
 
-    public void addEnemyPricesAndRating() {
-        System.out.println("Start scraping enemy prices and ratings from website... (This may take a few minutes.)");
+    public void startInit() {
 
         for (ProductEntity productEntity : productEntityRepository.findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue()) {
             extractEnemyPriceFromHTMLAndRatingDataFromHTML(productEntity);
         }
-        System.out.println("Scraping has finished!");
     }
 
     private void extractEnemyPriceFromHTMLAndRatingDataFromHTML(ProductEntity productEntity) {
@@ -43,8 +41,6 @@ public class ProductDataFromWebSite {
                         if (value.trim().contains(".")) {
                             productEntity.setEnemyPrice(Double.parseDouble(value.trim()));
                         }
-                    } else {
-                        System.out.println("Value extraction failed for model ID: " + productEntity.getModelId());
                     }
                     break;
                 }
@@ -88,7 +84,6 @@ public class ProductDataFromWebSite {
             productEntity.setRatingCount(ratingCount);
 
             productEntity.setRatingValue(0.0);
-
 
             double ratingValue = (productEntity.getOneStarRatingCount()) +
                     (2 * productEntity.getTwoStarRatingCount()) +

@@ -24,11 +24,10 @@ public class ProductDataInit {
     private final TasteEntityRepository tasteEntityRepository;
     private final ProductEntityRepository productEntityRepository;
 
-    public void simpleProductInit() {
+    public void startInit() {
         ResponseEntity<String> responseEntity = requestService.getAllProductsData();
 
         if (responseEntity.getStatusCode().toString().startsWith("200")) {
-            System.out.println("Start filling the DB with Products with basic data...");
 
             ProductsJSON productsJSON = gson.fromJson(responseEntity.getBody(), ProductsJSON.class);
 
@@ -56,7 +55,6 @@ public class ProductDataInit {
 
                 productEntityRepository.save(productEntity);
             }
-            System.out.println("Successfully added basic product data.");
         }
 
     }

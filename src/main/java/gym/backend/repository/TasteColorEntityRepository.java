@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface TasteColorEntityRepository extends JpaRepository<TasteColor, Long> {
 
     TasteColor findByNameIgnoreCase(String name);
+
+    boolean existsByNameIgnoreCase(String name);
 }
