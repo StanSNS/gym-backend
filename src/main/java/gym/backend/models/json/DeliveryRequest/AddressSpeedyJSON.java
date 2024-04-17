@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AddressSpeedy {
+public class AddressSpeedyJSON {
     private String siteName;
     private String siteType;
     private String postCode;

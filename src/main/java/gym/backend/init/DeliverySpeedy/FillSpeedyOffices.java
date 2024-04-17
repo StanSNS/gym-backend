@@ -1,15 +1,20 @@
 package gym.backend.init.DeliverySpeedy;
 
 import com.google.gson.Gson;
-import gym.backend.exception.ResourceNotFoundException;
 import gym.backend.init.initService.RequestService;
+import gym.backend.models.entity.AddressSpeedyEntity;
 import gym.backend.models.entity.CitySpeedyEntity;
-import gym.backend.models.json.DeliveryRequest.AddressSpeedy;
-import gym.backend.models.json.DeliveryRequest.CitiesSpeedy;
-import gym.backend.models.json.DeliveryRequest.CitySpeedy;
+import gym.backend.models.json.DeliveryRequest.AddressSpeedyJSON;
+import gym.backend.models.json.DeliveryRequest.CitiesSpeedyJSON;
+import gym.backend.models.json.DeliveryRequest.CitySpeedyJSON;
+import gym.backend.repository.AddressSpeedyEntityRepository;
 import gym.backend.repository.CitySpeedyEntityRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -18,36 +23,46 @@ public class FillSpeedyOffices {
     private final RequestService requestService;
     private final Gson gson;
     private final CitySpeedyEntityRepository citySpeedyEntityRepository;
+    private final AddressSpeedyEntityRepository addressSpeedyEntityRepository;
 
+    @PostConstruct
     public void fillAddressesAndTowns() {
-        CitiesSpeedy citiesSpeedyBG = gson.fromJson(requestService.getAllOfficesSpeedyBG(), CitiesSpeedy.class);
+        CitiesSpeedyJSON citiesSpeedyJSON = gson.fromJson(requestService.getAllOfficesSpeedy(), CitiesSpeedyJSON.class);
 
-        for (CitySpeedy office : citiesSpeedyBG.getOffices()) {
-            AddressSpeedy address = office.getAddress();
+        for (CitySpeedyJSON office : citiesSpeedyJSON.getOffices()) {
+            AddressSpeedyJSON address = office.getAddress();
 
-            CitySpeedyEntity citySpeedyEntity = new CitySpeedyEntity();
-            citySpeedyEntity.setSiteNameBg(address.getSiteName());
-            citySpeedyEntity.setSiteTypeBg(address.getSiteType());
-            citySpeedyEntity.setPostCode(address.getPostCode());
-            citySpeedyEntity.setAddressBG(address.getLocalAddressString());
-            citySpeedyEntity.setSpeedyId(office.getId());
-            citySpeedyEntityRepository.save(citySpeedyEntity);
-        }
+            StringBuilder modifiedCityNameSB = new StringBuilder();
+            modifiedCityNameSB.append(address.getSiteType().toLowerCase()).append(" ");
 
-        CitiesSpeedy citiesSpeedyEN = gson.fromJson(requestService.getAllOfficesSpeedyEN(), CitiesSpeedy.class);
-
-        for (CitySpeedy office : citiesSpeedyEN.getOffices()) {
-            AddressSpeedy address = office.getAddress();
-
-            CitySpeedyEntity citySpeedyEntity = citySpeedyEntityRepository.findBySpeedyId(office.getId());
-            if (citySpeedyEntity == null) {
-                throw new ResourceNotFoundException();
+            for (String singleWord : address.getSiteName().split("\\s+")) {
+                String result = singleWord.substring(0, 1).toUpperCase() + singleWord.substring(1).toLowerCase();
+                modifiedCityNameSB.append(result).append(" ");
             }
-            citySpeedyEntity.setSiteNameEn(address.getSiteName());
-            citySpeedyEntity.setSiteTypeEn(address.getSiteType());
-            citySpeedyEntity.setAddressEN(address.getLocalAddressString());
+
+            String modifiedCityName = modifiedCityNameSB.toString();
+            Optional<CitySpeedyEntity> optionalCitySpeedyEntity = citySpeedyEntityRepository.findByCityName(modifiedCityName.toString());
+
+            CitySpeedyEntity citySpeedyEntity;
+            if (optionalCitySpeedyEntity.isEmpty()) {
+                citySpeedyEntity = new CitySpeedyEntity();
+                citySpeedyEntity.setSpeedyId(office.getId());
+                citySpeedyEntity.setPostCode(address.getPostCode());
+                citySpeedyEntity.setCityName(modifiedCityName);
+                citySpeedyEntity.setAddresses(new ArrayList<>());
+            } else {
+                citySpeedyEntity = optionalCitySpeedyEntity.get();
+            }
+
+            AddressSpeedyEntity addressSpeedyEntity = new AddressSpeedyEntity();
+            addressSpeedyEntity.setFullAddress(address.getLocalAddressString());
+            addressSpeedyEntityRepository.save(addressSpeedyEntity);
+
+            citySpeedyEntity.getAddresses().add(addressSpeedyEntity);
+
             citySpeedyEntityRepository.save(citySpeedyEntity);
         }
+
 
     }
 }

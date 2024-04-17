@@ -1,7 +1,7 @@
 package gym.backend.service;
 
 import gym.backend.models.DTO.CartProductsDTO;
-import gym.backend.models.DTO.CitySpeedyDTOBG;
+import gym.backend.models.DTO.SpeedyOffices.CitySpeedyDTO;
 import gym.backend.models.DTO.OrderDTO;
 import gym.backend.models.enums.OrderStatus;
 import gym.backend.models.entity.OrderEntity;
@@ -67,12 +67,12 @@ public class OrderService {
         return randomNumber;
     }
 
-    public List<CitySpeedyDTOBG> getAllSpeedyAddresses(){
+    public List<CitySpeedyDTO> getAllSpeedyAddresses(){
         return citySpeedyEntityRepository
                 .findAll()
                 .stream()
                 .map(citySpeedyEntity ->
-                        modelMapper.map(citySpeedyEntity, CitySpeedyDTOBG.class))
+                        modelMapper.map(citySpeedyEntity, CitySpeedyDTO.class))
                 .collect(Collectors.toList());
     }
 

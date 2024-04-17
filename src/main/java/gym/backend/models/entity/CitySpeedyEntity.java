@@ -1,15 +1,15 @@
 package gym.backend.models.entity;
 
 import gym.backend.models.entity.BaseEntity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "cities_speedy")
+import java.util.List;
+
+@Table(name = "cities")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,24 +20,13 @@ public class CitySpeedyEntity extends BaseEntity {
     @Column(name = "speedy_id")
     private Long speedyId;
 
-    @Column(name = "site_name_bg")
-    private String siteNameBg;
-
-    @Column(name = "site_name_en")
-    private String siteNameEn;
-
-    @Column(name = "site_type_bg")
-    private String siteTypeBg;
-
-    @Column(name = "site_type_en")
-    private String siteTypeEn;
+    @Column(name = "site_name")
+    private String cityName;
 
     @Column(name = "post_code")
     private String postCode;
 
-    @Column(name = "address_bg")
-    private String addressBG;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<AddressSpeedyEntity> addresses;
 
-    @Column(name = "address_en")
-    private String addressEN;
 }

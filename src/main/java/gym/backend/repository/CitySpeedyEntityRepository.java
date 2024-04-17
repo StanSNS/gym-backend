@@ -4,8 +4,11 @@ import gym.backend.models.entity.CitySpeedyEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface CitySpeedyEntityRepository extends JpaRepository<CitySpeedyEntity, Long> {
 
-    CitySpeedyEntity findBySpeedyId(Long speedyId);
+    Optional<CitySpeedyEntity> findByCityName(String cityName);
+
 }

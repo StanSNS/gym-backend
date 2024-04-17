@@ -1,6 +1,6 @@
 package gym.backend.controller;
 
-import gym.backend.models.DTO.CitySpeedyDTOBG;
+import gym.backend.models.DTO.SpeedyOffices.CitySpeedyDTO;
 import gym.backend.models.DTO.OrderDTO;
 import gym.backend.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class OrderController {
     }
 
     @GetMapping("order/addresses")
-    public ResponseEntity<List<CitySpeedyDTOBG>> getAllAddresses() {
+    public ResponseEntity<List<CitySpeedyDTO>> getAllAddresses() {
         return new ResponseEntity<>(orderService.getAllSpeedyAddresses(), HttpStatus.OK);
     }
 }
