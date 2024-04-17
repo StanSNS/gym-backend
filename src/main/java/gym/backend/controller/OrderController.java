@@ -18,12 +18,14 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("order")
-    public ResponseEntity<Long> receiveOrder(@RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<Long> receiveOrder(@RequestBody OrderDTO orderDTO) throws InterruptedException {
+        Thread.sleep(10000);
         return new ResponseEntity<>(orderService.addOrder(orderDTO), HttpStatus.OK);
     }
 
     @GetMapping("order/addresses")
-    public ResponseEntity<List<CitySpeedyDTO>> getAllAddresses() {
+    public ResponseEntity<List<CitySpeedyDTO>> getAllAddresses() throws InterruptedException {
+        Thread.sleep(10000);
         return new ResponseEntity<>(orderService.getAllSpeedyAddresses(), HttpStatus.OK);
     }
 }

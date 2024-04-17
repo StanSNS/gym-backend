@@ -26,8 +26,7 @@ public class ProductsController {
     }
 
     @PatchMapping("/product")
-    public ResponseEntity<String> checkIfProductIsAvailable(@RequestParam String brandId, @RequestParam String modelId, @RequestParam String tasteId) {
-
+    public ResponseEntity<String> checkIfProductIsAvailable(@RequestParam String brandId, @RequestParam String modelId, @RequestParam String tasteId) throws InterruptedException {
         boolean isProductAvailable = productsService.checkIfProductIsAvailable(brandId, modelId, tasteId);
 
         if (isProductAvailable) {
