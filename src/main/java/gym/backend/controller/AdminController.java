@@ -28,12 +28,12 @@ public class AdminController {
     private final FillSpeedyOffices fillSpeedyOffices;
 
     @GetMapping
-    public ResponseEntity<List<AdminOrderDTO>> getAllAdminData() throws InterruptedException {
+    public ResponseEntity<List<AdminOrderDTO>> getAllAdminData() {
         return new ResponseEntity<>(adminService.getAllOrdersForAdminPage(), HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<String> modifyOrderStatus(@RequestParam String status, @RequestParam Long randomNumber) throws InterruptedException {
+    public ResponseEntity<String> modifyOrderStatus(@RequestParam String status, @RequestParam Long randomNumber) {
         adminService.modifyOrderStatus(status, randomNumber);
         return new ResponseEntity<>(HttpStatus.OK);
     }

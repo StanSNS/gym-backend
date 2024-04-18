@@ -1,7 +1,7 @@
 package gym.backend.controller;
 
 import gym.backend.models.DTO.HomePageResponseDataDTO;
-import gym.backend.models.DTO.SingleProduct;
+import gym.backend.models.DTO.SingleProductDataDTO;
 import gym.backend.service.ProductsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,12 +21,12 @@ public class ProductsController {
     }
 
     @GetMapping("/product")
-    public ResponseEntity<SingleProduct> getCurrentProduct(@RequestParam String sku, @RequestParam String modelId) {
+    public ResponseEntity<SingleProductDataDTO> getCurrentProduct(@RequestParam String sku, @RequestParam String modelId) {
         return new ResponseEntity<>(productsService.getSingleProduct(sku, modelId), HttpStatus.ACCEPTED);
     }
 
     @PatchMapping("/product")
-    public ResponseEntity<String> checkIfProductIsAvailable(@RequestParam String brandId, @RequestParam String modelId, @RequestParam String tasteId) throws InterruptedException {
+    public ResponseEntity<String> checkIfProductIsAvailable(@RequestParam String brandId, @RequestParam String modelId, @RequestParam String tasteId) {
         boolean isProductAvailable = productsService.checkIfProductIsAvailable(brandId, modelId, tasteId);
 
         if (isProductAvailable) {

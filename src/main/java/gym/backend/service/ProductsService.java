@@ -4,7 +4,8 @@ import com.google.gson.Gson;
 import gym.backend.exception.ResourceNotFoundException;
 import gym.backend.models.DTO.HomePageResponseDataDTO;
 import gym.backend.models.DTO.SellableProductDTO;
-import gym.backend.models.DTO.SingleProduct;
+import gym.backend.models.DTO.SingleProductDTO;
+import gym.backend.models.DTO.SingleProductDataDTO;
 import gym.backend.models.entity.ProductEntity;
 import gym.backend.models.json.ProductRequest.ProductAvailability.ProductAvailabilityResponse;
 import gym.backend.repository.ProductEntityRepository;
@@ -18,9 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -84,14 +83,22 @@ public class ProductsService {
         return homePageResponseDataDTO;
     }
 
-    public SingleProduct getSingleProduct(String sku, String modelId) {
+    public SingleProductDataDTO getSingleProduct(String sku, String modelId) {
         Optional<ProductEntity> productEntityBySkuAndModelId = productEntityRepository.findProductEntityBySkuAndModelId(sku, modelId);
 
         if (productEntityBySkuAndModelId.isEmpty()) {
             throw new ResourceNotFoundException();
         }
         ProductEntity productEntity = productEntityBySkuAndModelId.get();
-        return modelMapper.map(productEntity, SingleProduct.class);
+        SingleProductDataDTO singleProductDataDTO = modelMapper.map(productEntity, SingleProductDataDTO.class);
+        singleProductDataDTO.setSingleProducts(new HashSet<>());
+
+        for (ProductEntity entity : productEntityRepository.findAllSellableProductsByBrand(productEntity.getBrandEntity().getName())) {
+            SingleProductDTO map = modelMapper.map(entity, SingleProductDTO.class);
+            singleProductDataDTO.getSingleProducts().add(map);
+        }
+
+        return singleProductDataDTO;
     }
 
     public boolean checkIfProductIsAvailable(String brandId, String modelId, String tasteId) {

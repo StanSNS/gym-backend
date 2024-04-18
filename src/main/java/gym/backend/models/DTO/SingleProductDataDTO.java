@@ -3,11 +3,12 @@ package gym.backend.models.DTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
-public class SingleProduct {
+public class SingleProductDataDTO {
     private String name;
     private BrandDTO brandEntity;
     private String category;
@@ -25,6 +26,7 @@ public class SingleProduct {
     private Integer threeStarRatingCount;
     private Integer fourStarRatingCount;
     private Integer fiveStarRatingCount;
+    private Set<SingleProductDTO> singleProducts;
 
     public Double getDiscountedPrice() {
         return discountedPrice * 1.3;

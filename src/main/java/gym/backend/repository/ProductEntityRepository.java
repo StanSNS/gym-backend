@@ -3,6 +3,7 @@ package gym.backend.repository;
 import gym.backend.models.entity.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -39,4 +40,30 @@ public interface ProductEntityRepository extends JpaRepository<ProductEntity, Lo
               AND products.discounted_price * 1.3 < products.regular_price
             ORDER BY (products.discounted_price * 1.3 - products.enemy_price)""", nativeQuery = true)
     List<ProductEntity> findAllSellableProducts();
+
+    @Query(value = """
+        SELECT p.*
+        FROM products p
+        JOIN brands b ON b.id = p.brand_entity_id
+        WHERE b.name = :brandName
+          AND p.discounted_price IS NOT NULL
+          AND p.discounted_price != 0
+          AND p.enemy_price IS NOT NULL
+          AND p.model_id != ''
+          AND p.model_id IS NOT NULL
+          AND p.is_available = TRUE
+          AND p.image IS NOT NULL
+          AND p.image != ''
+          AND p.category IS NOT NULL
+          AND p.category != ''
+          AND p.weight_kg IS NOT NULL
+          AND p.weight_kg != ''
+          AND p.discounted_price * 1.3 < p.enemy_price
+          AND p.discounted_price * 1.3 < p.regular_price
+        ORDER BY (p.discounted_price * 1.3 - p.enemy_price)
+        LIMIT 10""", nativeQuery = true)
+    List<ProductEntity> findAllSellableProductsByBrand(@Param("brandName") String brandName);
+
+
+
 }
