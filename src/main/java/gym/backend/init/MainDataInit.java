@@ -6,6 +6,7 @@ import gym.backend.repository.BrandEntityRepository;
 import gym.backend.repository.CitySpeedyEntityRepository;
 import gym.backend.repository.ProductEntityRepository;
 import gym.backend.repository.TasteEntityRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +29,7 @@ public class MainDataInit {
     private final TasteColorsInit tasteColorsInit;
     private final FillSpeedyOffices fillSpeedyOffices;
 
-//    @PostConstruct
+    @PostConstruct
     public void dataInit() throws IOException {
         boolean isDBHasData = brandEntityRepository.count() == 0
                 && productEntityRepository.count() == 0
