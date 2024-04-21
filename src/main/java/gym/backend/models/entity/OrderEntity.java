@@ -70,6 +70,12 @@ public class OrderEntity extends BaseEntity {
     @Column
     private Double totalAmount;
 
+    @Column
+    private Integer productCount;
+
+    @Column
+    private Double deliveryPrice;
+
     @ManyToMany
     private List<OrderProductEntity> cartItems;
 

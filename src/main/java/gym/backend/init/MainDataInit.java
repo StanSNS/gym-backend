@@ -37,19 +37,23 @@ public class MainDataInit {
                 && citySpeedyEntityRepository.count() == 0;
 
         if (isDBHasData) {
-            tasteColorsInit.startInit(); //DONE
+            System.out.println("Start adding fresh data...");
 
-            simpleDataInit.startInit(); //DONE
+            tasteColorsInit.startInit();
 
-            productDataInit.startInit(); //DONE
+            simpleDataInit.startInit();
 
-            productDetailsDataInit.startInit(); //DONE
+            productDataInit.startInit();
 
-            productDataFromSheetInit.startInit(); //DONE
+            productDetailsDataInit.startInit();
 
-            fillSpeedyOffices.startInit(); //DONE
+            productDataFromSheetInit.startInit();
+
+            fillSpeedyOffices.startInit();
 
             productDataFromWebSite.startInit();
+
+            System.out.println("Operation completed.");
         }
 
     }

@@ -19,10 +19,11 @@ public class ProductDataFromWebSite {
     private final RequestService requestService;
 
     public void startInit() {
-
+        System.out.println("START product-data-details-web-execute...");
         for (ProductEntity productEntity : productEntityRepository.findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue()) {
             extractEnemyPriceFromHTMLAndRatingDataFromHTML(productEntity);
         }
+        System.out.println("END product-data-details-web-execute...");
     }
 
     private void extractEnemyPriceFromHTMLAndRatingDataFromHTML(ProductEntity productEntity) {

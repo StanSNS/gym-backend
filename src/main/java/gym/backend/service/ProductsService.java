@@ -83,13 +83,12 @@ public class ProductsService {
         return homePageResponseDataDTO;
     }
 
-    public SingleProductDataDTO getSingleProduct(String sku, String modelId) {
-        Optional<ProductEntity> productEntityBySkuAndModelId = productEntityRepository.findProductEntityBySkuAndModelId(sku, modelId);
+    public SingleProductDataDTO getSingleProduct(String modelId) {
+        ProductEntity productEntity = productEntityRepository.findProductEntityByModelId(modelId);
 
-        if (productEntityBySkuAndModelId.isEmpty()) {
+        if (productEntity == null) {
             throw new ResourceNotFoundException();
         }
-        ProductEntity productEntity = productEntityBySkuAndModelId.get();
         SingleProductDataDTO singleProductDataDTO = modelMapper.map(productEntity, SingleProductDataDTO.class);
         singleProductDataDTO.setSingleProducts(new HashSet<>());
 

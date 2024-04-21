@@ -27,6 +27,7 @@ public class FillSpeedyOffices {
     public void startInit() {
         CitiesSpeedyJSON citiesSpeedyJSON = gson.fromJson(requestService.getAllOfficesSpeedy(), CitiesSpeedyJSON.class);
 
+        System.out.println("START speedy-offices-execute...");
         for (CitySpeedyJSON office : citiesSpeedyJSON.getOffices()) {
             AddressSpeedyJSON address = office.getAddress();
 
@@ -61,9 +62,7 @@ public class FillSpeedyOffices {
                 citySpeedyEntity.getAddresses().add(addressSpeedyEntity);
                 citySpeedyEntityRepository.save(citySpeedyEntity);
             }
-
         }
-
-
+        System.out.println("END speedy-offices-execute...");
     }
 }

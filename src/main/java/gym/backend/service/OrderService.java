@@ -9,6 +9,7 @@ import gym.backend.models.entity.OrderProductEntity;
 import gym.backend.repository.CitySpeedyEntityRepository;
 import gym.backend.repository.OrderEntityRepository;
 import gym.backend.repository.OrderProductEntityRepository;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,9 @@ public class OrderService {
     private final OrderProductEntityRepository orderProductEntityRepository;
     private final ModelMapper modelMapper;
     private final CitySpeedyEntityRepository citySpeedyEntityRepository;
+    private final EmailService emailService;
 
-    public Long addOrder(OrderDTO orderDTO) {
+    public Long addOrder(OrderDTO orderDTO) throws MessagingException {
         OrderEntity orderEntity = modelMapper.map(orderDTO, OrderEntity.class);
         orderEntity.setCartItems(new ArrayList<>());
 
@@ -51,6 +53,8 @@ public class OrderService {
 
         orderEntity.setRandomNumber(randomOrderNumber);
         orderEntityRepository.save(orderEntity);
+
+        emailService.sendReceivedOrder(randomOrderNumber, orderDTO);
 
         return randomOrderNumber;
     }

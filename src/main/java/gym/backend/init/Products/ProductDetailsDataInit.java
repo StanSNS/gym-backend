@@ -34,6 +34,7 @@ public class ProductDetailsDataInit {
     private final TasteEntityRepository tasteEntityRepository;
 
     public void startInit() {
+        System.out.println("START product-data-details-execute...");
         for (BrandEntity brandEntity : brandEntityRepository.findAll()) {
             ResponseEntity<String> responseEntity = requestService.getProductDataByBrandID(brandEntity.getBrandID());
 
@@ -72,6 +73,7 @@ public class ProductDetailsDataInit {
                 }
             }
         }
+        System.out.println("END product-data-details-execute...");
     }
 
     private void addTastesInProductEntity(ProductJSONFromBrand singleProduct, ProductEntity productEntity) {

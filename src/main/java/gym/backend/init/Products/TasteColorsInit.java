@@ -16,20 +16,22 @@ public class TasteColorsInit {
     private final TasteColorEntityRepository tasteColorEntityRepository;
 
     public void startInit() throws IOException {
-            String filePath = "src/main/resources/TasteColors.txt";
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
+        System.out.println("START taste-color-execute...");
+        String filePath = "src/main/resources/TasteColors.txt";
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
 
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String name = line.split(" ")[0];
-                String color = line.split(" ")[1];
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            String name = line.split(" ")[0];
+            String color = line.split(" ")[1];
 
-                if(!tasteColorEntityRepository.existsByNameIgnoreCase(name)){
-                    TasteColor tasteColor = new TasteColor();
-                    tasteColor.setName(name);
-                    tasteColor.setColor(color);
-                    tasteColorEntityRepository.save(tasteColor);
-                }
+            if (!tasteColorEntityRepository.existsByNameIgnoreCase(name)) {
+                TasteColor tasteColor = new TasteColor();
+                tasteColor.setName(name);
+                tasteColor.setColor(color);
+                tasteColorEntityRepository.save(tasteColor);
             }
+        }
+        System.out.println("END taste-color-execute...");
     }
 }

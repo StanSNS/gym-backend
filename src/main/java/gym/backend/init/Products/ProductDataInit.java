@@ -25,6 +25,7 @@ public class ProductDataInit {
     private final ProductEntityRepository productEntityRepository;
 
     public void startInit() {
+        System.out.println("START product-data-execute...");
         ResponseEntity<String> responseEntity = requestService.getAllProductsData();
 
         if (responseEntity.getStatusCode().toString().startsWith("200")) {
@@ -56,6 +57,6 @@ public class ProductDataInit {
                 productEntityRepository.save(productEntity);
             }
         }
-
+        System.out.println("END product-data-execute...");
     }
 }

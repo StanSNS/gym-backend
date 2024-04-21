@@ -21,8 +21,8 @@ public class ProductsController {
     }
 
     @GetMapping("/product")
-    public ResponseEntity<SingleProductDataDTO> getCurrentProduct(@RequestParam String sku, @RequestParam String modelId) {
-        return new ResponseEntity<>(productsService.getSingleProduct(sku, modelId), HttpStatus.ACCEPTED);
+    public ResponseEntity<SingleProductDataDTO> getCurrentProduct(@RequestParam String modelId) {
+        return new ResponseEntity<>(productsService.getSingleProduct(modelId), HttpStatus.ACCEPTED);
     }
 
     @PatchMapping("/product")

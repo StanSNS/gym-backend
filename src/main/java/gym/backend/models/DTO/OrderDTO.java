@@ -22,5 +22,8 @@ public class OrderDTO {
     private String courier;
     private Double totalWeight;
     private Double totalAmount;
+    private Double totalSaving;
+    private Double deliveryPrice;
+    private Integer productCount;
     private List<CartProductsDTO> cartItems;
 }

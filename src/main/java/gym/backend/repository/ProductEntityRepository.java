@@ -19,7 +19,6 @@ public interface ProductEntityRepository extends JpaRepository<ProductEntity, Lo
 
     List<ProductEntity> findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue();
 
-    Optional<ProductEntity> findProductEntityBySkuAndModelId(String sku, String modelId);
 
     @Query(value = """
             SELECT *

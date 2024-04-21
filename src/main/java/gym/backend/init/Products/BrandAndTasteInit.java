@@ -25,6 +25,7 @@ public class BrandAndTasteInit {
     private final Gson gson;
 
     public void startInit() {
+        System.out.println("START brand-taste-data-execute...");
         ResponseEntity<String> responseEntity = requestService.getAllProductsData();
         if (responseEntity.getStatusCode().toString().startsWith("200")) {
             ProductsJSON productsJSON = gson.fromJson(responseEntity.getBody(), ProductsJSON.class);
@@ -55,8 +56,7 @@ public class BrandAndTasteInit {
                 }
             }
         }
-
-
+        System.out.println("END brand-taste-data-execute...");
     }
 
 }
