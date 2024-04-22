@@ -54,7 +54,7 @@ public class OrderService {
         orderEntity.setRandomNumber(randomOrderNumber);
         orderEntityRepository.save(orderEntity);
 
-        emailService.sendReceivedOrder(randomOrderNumber, orderDTO);
+        emailService.generateHTMLContentAndSendEmail(orderEntity);
 
         return randomOrderNumber;
     }

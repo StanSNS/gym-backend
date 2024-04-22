@@ -71,6 +71,9 @@ public class OrderEntity extends BaseEntity {
     private Double totalAmount;
 
     @Column
+    private Double totalSaving;
+
+    @Column
     private Integer productCount;
 
     @Column

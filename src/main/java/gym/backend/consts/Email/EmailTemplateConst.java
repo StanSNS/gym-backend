@@ -1,8 +1,8 @@
-package gym.backend.consts;
+package gym.backend.consts.Email;
 
-public class EmailConst {
+public class EmailTemplateConst {
 
-    public static final String RECEIVE_ORDER_HTML_START = """
+    public static final String ORDER_HTML_START = """
             <!DOCTYPE html>
             <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
             <head>
@@ -130,7 +130,7 @@ public class EmailConst {
                     <td>
             """;
 
-    public static final String RECEIVE_ORDER_HTML_END = """
+    public static final String ORDER_HTML_END = """
                     </td>
                 </tr>
                 </tbody>
@@ -139,7 +139,7 @@ public class EmailConst {
             </html>
             """;
 
-    public static final String RECEIVE_ORDER_HTML_IMAGE = """
+    public static final String ORDER_HTML_IMAGE = """
             <table class="row row-1" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
                    role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                 <tbody>
@@ -163,7 +163,7 @@ public class EmailConst {
                                             <td class="pad" style="width:100%;">
                                                 <div class="alignment" align="center" style="line-height:10px">
                                                     <div style="max-width: 700px;"><img
-                                                            src="https://i.imgur.com/yh093cS.png"
+                                                            src=currentImage
                                                             style="display: block; height: auto; border: 0; width: 100%;"
                                                             width="700" height="auto"></div>
                                                 </div>
@@ -180,7 +180,7 @@ public class EmailConst {
             </table>
             """;
 
-    public static final String RECEIVE_ORDER_HTML_INTRO = """
+    public static final String ORDER_HTML_INTRO = """
             <table class="row row-2" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
                                role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                             <tbody>
@@ -272,7 +272,7 @@ public class EmailConst {
                                                     <tr>
                                                         <td class="pad">
                                                             <h1 style="margin: 0; color: #7747FF; direction: ltr; font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 33.6px;">
-                                                                <span style="color: #ffffff;"><em>Благодарим ви за поръчката.&nbsp;<br><br>Здравейте,<br><br>Благодарим ви, че избрахте нашата платформа. Вашата поръчка предстои да се обработи от наш служител.<br></em></span><br><span
+                                                                <span style="color: #ffffff;"><em>Благодарим ви за поръчката.&nbsp;<br><br>Здравейте,<br><br>introductionOrder<br></em></span><br><span
                                                                     style="color: #ffffff;"><em>Подробностите за вашата поръчка са посочени по-долу: </em></span>
                                                             </h1>
                                                         </td>
@@ -288,7 +288,7 @@ public class EmailConst {
             </table>
             """;
 
-    public static final String RECEIVE_ORDER_HTML_DIVIDER = """
+    public static final String ORDER_HTML_DIVIDER = """
             <table class="row row-5" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                   <tbody>
                   <tr>
@@ -330,7 +330,7 @@ public class EmailConst {
             </table>
             """;
 
-    public static final String RECEIVE_ORDER_HTML_SPACER = """
+    public static final String ORDER_HTML_SPACER = """
             <table class="row row-7" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
                        role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                     <tbody>
@@ -358,7 +358,7 @@ public class EmailConst {
             """;
 
 
-    public static final String RECEIVE_ORDER_HTML_RANDOM_ORDER_NUMBER = """
+    public static final String ORDER_HTML_RANDOM_ORDER_NUMBER = """
             <table class="row row-6" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
                    role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                 <tbody>
@@ -396,7 +396,7 @@ public class EmailConst {
             """;
 
 
-    public static final String RECEIVE_ORDER_HTML_ALL_INFO = """
+    public static final String ORDER_HTML_ALL_INFO = """
             <table class="row row-8" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                 <tbody>
                 <tr>
@@ -567,10 +567,10 @@ public class EmailConst {
                     </td>
                 </tr>
                 </tbody>
-            </table>  
+            </table>
             """;
 
-    public static final String RECEIVE_ORDER_HTML_PRODUCT = """
+    public static final String ORDER_HTML_PRODUCT = """
             <table class="row row-7" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
                        role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                     <tbody>
@@ -678,7 +678,7 @@ public class EmailConst {
             """;
 
 
-    public static final String RECEIVE_ORDER_HTML_DISCLAIMER_INFO = """
+    public static final String ORDER_HTML_DISCLAIMER_INFO = """
             <table class="row row-12" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
                                role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                             <tbody>
@@ -698,7 +698,7 @@ public class EmailConst {
                                                     <tr>
                                                         <td class="pad">
                                                             <h1 style="margin: 0; color: #7747FF; direction: ltr; font-family: Arial, Helvetica, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 31.2px;">
-                                                                <span style="color: #ffffff;"><em><strong>Наш служител ще се свърже с вас скоро, за да потвърди поръчката и да ви предостави допълнителна информация, ако е необходимо.<br><br></strong></em><em><strong>Благодарим ви за доверието и избора на нашата компания. Ако имате някакви въпроси, не се колебайте да се свържете с нас.</strong></em></span>
+                                                                <span style="color: #ffffff;"><em><strong>disclaimerOne<br><br></strong></em><em><strong>disclaimerTwo</strong></em></span>
                                                             </h1>
                                                         </td>
                                                     </tr>
@@ -854,7 +854,7 @@ public class EmailConst {
             """;
 
 
-    public static final String RECEIVE_ORDER_HTML_FOOTER = """
+    public static final String ORDER_HTML_FOOTER = """
              <table class="row row-16" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
                                role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                             <tbody>

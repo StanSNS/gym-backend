@@ -10,6 +10,7 @@ import gym.backend.models.enums.OrderStatus;
 import gym.backend.repository.OrderEntityRepository;
 import gym.backend.repository.ProductEntityRepository;
 import gym.backend.repository.TasteEntityRepository;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class AdminService {
     private final OrderEntityRepository orderEntityRepository;
     private final ProductEntityRepository productEntityRepository;
     private final TasteEntityRepository tasteEntityRepository;
+    private final EmailService emailService;
 
 
     public List<AdminOrderDTO> getAllOrdersForAdminPage() {
@@ -94,21 +96,24 @@ public class AdminService {
         return adminOrderDTOToReturn;
     }
 
-    public void modifyOrderStatus(String status, Long randomNumber) {
+    public void modifyOrderStatus(String status, Long randomNumber) throws MessagingException {
         OrderEntity orderEntity = orderEntityRepository.findByRandomNumber(randomNumber);
         if (orderEntity == null) {
             throw new ResourceNotFoundException();
         }
+
         switch (status) {
             case "PENDING" -> orderEntity.setOrderStatus(OrderStatus.PENDING);
             case "APPROVED" -> orderEntity.setOrderStatus(OrderStatus.APPROVED);
             case "IN_DELIVERY" -> orderEntity.setOrderStatus(OrderStatus.IN_DELIVERY);
             case "COMPLETED" -> orderEntity.setOrderStatus(OrderStatus.COMPLETED);
             case "CANCELED" -> orderEntity.setOrderStatus(OrderStatus.CANCELED);
+            case "RETURNED" -> orderEntity.setOrderStatus(OrderStatus.RETURNED);
             default -> throw new ResourceNotFoundException();
         }
 
         orderEntityRepository.save(orderEntity);
 
+        emailService.generateHTMLContentAndSendEmail(orderEntity);
     }
 }

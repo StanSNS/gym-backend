@@ -4,6 +4,7 @@ import gym.backend.init.DeliverySpeedy.FillSpeedyOffices;
 import gym.backend.init.Products.*;
 import gym.backend.models.DTO.Admin.Order.AdminOrderDTO;
 import gym.backend.service.AdminService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class AdminController {
     }
 
     @PutMapping
-    public ResponseEntity<String> modifyOrderStatus(@RequestParam String status, @RequestParam Long randomNumber) {
+    public ResponseEntity<String> modifyOrderStatus(@RequestParam String status, @RequestParam Long randomNumber) throws MessagingException {
         adminService.modifyOrderStatus(status, randomNumber);
         return new ResponseEntity<>(HttpStatus.OK);
     }
