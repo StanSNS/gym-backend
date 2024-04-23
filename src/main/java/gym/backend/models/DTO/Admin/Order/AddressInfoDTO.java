@@ -10,4 +10,5 @@ public class AddressInfoDTO {
     private String town;
     private String address;
     private String additionalAddress;
+    private String officeAddress;
 }
