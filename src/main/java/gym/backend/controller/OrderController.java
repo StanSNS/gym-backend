@@ -27,4 +27,11 @@ public class OrderController {
     public ResponseEntity<List<CitySpeedyDTO>> getAllAddresses() {
         return new ResponseEntity<>(orderService.getAllSpeedyAddresses(), HttpStatus.OK);
     }
+
+    @GetMapping("order/recover")
+    public ResponseEntity<String> recoverAllOrderInfo(@RequestParam String email) throws MessagingException {
+        orderService.recoverOrdersAndSendEmail(email);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

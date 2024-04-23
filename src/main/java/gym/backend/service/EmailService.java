@@ -1,5 +1,7 @@
 package gym.backend.service;
 
+import gym.backend.exception.ResourceNotFoundException;
+import gym.backend.models.DTO.RetrieveOrderDTO;
 import gym.backend.models.entity.OrderEntity;
 import gym.backend.models.entity.OrderProductEntity;
 import gym.backend.models.entity.ProductEntity;
@@ -15,11 +17,17 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
-import static gym.backend.consts.Email.EmailTemplateConst.*;
-import static gym.backend.consts.Email.EmailTemplateKeys.*;
-import static gym.backend.consts.Email.EmailTemplateValues.*;
+import static gym.backend.consts.Email.RetrieveOrdersByEmail.RetrieveOrdersHTMLConst.*;
+import static gym.backend.consts.Email.RetrieveOrdersByEmail.RetrieveOrdersKeyConst.*;
+import static gym.backend.consts.Email.RetrieveOrdersByEmail.RetrieveOrdersValueConst.*;
+import static gym.backend.consts.Email.Order.EmailTemplateConst.*;
+import static gym.backend.consts.Email.Order.EmailTemplateKeys.*;
+import static gym.backend.consts.Email.Order.EmailTemplateValues.*;
 import static gym.backend.consts.Email.EmailTitleConst.*;
 
 @Service
@@ -64,7 +72,7 @@ public class EmailService {
         sb.append(ORDER_HTML_FOOTER);
         sb.append(ORDER_HTML_END);
 
-        sendOrderEmail(orderEntity.getEmail(), sb.toString(), orderTitle);
+        sendEmail(orderEntity.getEmail(), sb.toString(), orderTitle);
     }
 
     private void createHTMLBody(OrderEntity orderEntity, StringBuilder sb, String canceledImageUrl, String canceledIntroText, String canceledDisclaimerOneText, String canceledDisclaimerTwoText) {
@@ -146,14 +154,70 @@ public class EmailService {
         return productSB.toString();
     }
 
-    private void sendOrderEmail(String email, String htmlBody, String orderTitle) throws MessagingException {
+    private void sendEmail(String email, String htmlBody, String emailTitle) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
         helper.setFrom(EMAIL_ORIGIN);
         helper.setTo(email);
-        helper.setSubject(orderTitle);
+        helper.setSubject(emailTitle);
         helper.setText(htmlBody, true);
 
         javaMailSender.send(message);
     }
+
+    public void generateAllOrdersByEmail(List<RetrieveOrderDTO> ordersByEmail) throws MessagingException {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(ORDER_HTML_START);
+        sb.append(ORDER_HTML_SPACER);
+        sb.append(RECOVER_ALL_ORDER_HTML_INTRO.replaceFirst(ORDER_INTRO_KEY, RETRIEVE_ORDER_INTRO_TEXT));
+        sb.append(ORDER_HTML_SPACER);
+        sb.append(generateTableContent(ordersByEmail));
+        sb.append(ORDER_HTML_SPACER);
+        sb.append(ORDER_HTML_DISCLAIMER_INFO.replaceFirst(ORDER_DISCLAIMER_ONE_KEY, RETRIEVE_ORDER_DISCLAIMER_ONE_TEXT).replaceFirst(ORDER_DISCLAIMER_TWO_KEY, RETRIEVE_ORDER_DISCLAIMER_TWO_TEXT));
+        sb.append(ORDER_HTML_FOOTER);
+        sb.append(ORDER_HTML_END);
+
+        sendEmail("stanimirsergevsns@gmail.com", sb.toString(), RETRIEVE_ALL_ORDERS_LIST);
+    }
+
+    private String generateTableContent(List<RetrieveOrderDTO> ordersByEmail) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(RECOVER_ALL_ORDER_HTML_TABLE_START);
+
+        for (RetrieveOrderDTO orderDTO : ordersByEmail) {
+            String randomOrderNumber = orderDTO.getRandomNumber().toString();
+            String orderDate = dateOrderFormat(orderDTO.getDate());
+            String totalOrderAmount = String.format("%.2f", orderDTO.getTotalAmount());
+
+            String translatedStatus = "";
+            switch (orderDTO.getOrderStatus()) {
+                case PENDING -> translatedStatus = "Изчакващ";
+                case APPROVED -> translatedStatus = "Одобрен";
+                case IN_DELIVERY -> translatedStatus = "Доставя се";
+                case COMPLETED -> translatedStatus = "Завършен";
+                case CANCELED -> translatedStatus = "Отказан";
+                case RETURNED -> translatedStatus = "Върнат";
+                default -> throw new ResourceNotFoundException();
+            }
+
+            sb.append(RECOVER_ALL_ORDER_HTML_TABLE_CONTENT
+                    .replaceFirst(ORDER_TABLE_NUMBER_KEY, randomOrderNumber)
+                    .replaceFirst(ORDER_TABLE_DATE_KEY, orderDate)
+                    .replaceFirst(ORDER_TABLE_AMOUNT_KEY, totalOrderAmount)
+                    .replaceFirst(ORDER_TABLE_STATUS_KEY, translatedStatus)
+            );
+        }
+
+        sb.append(RECOVER_ALL_ORDER_HTML_TABLE_END);
+
+        return sb.toString();
+    }
+
+    private String dateOrderFormat(LocalDateTime orderTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH:mm");
+        return orderTime.format(formatter);
+    }
+
 }

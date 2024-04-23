@@ -1,6 +1,7 @@
 package gym.backend.service;
 
 import gym.backend.models.DTO.CartProductsDTO;
+import gym.backend.models.DTO.RetrieveOrderDTO;
 import gym.backend.models.DTO.SpeedyOffices.CitySpeedyDTO;
 import gym.backend.models.DTO.OrderDTO;
 import gym.backend.models.enums.OrderStatus;
@@ -71,7 +72,7 @@ public class OrderService {
         return randomNumber;
     }
 
-    public List<CitySpeedyDTO> getAllSpeedyAddresses(){
+    public List<CitySpeedyDTO> getAllSpeedyAddresses() {
         return citySpeedyEntityRepository
                 .findAll()
                 .stream()
@@ -80,5 +81,9 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
+    public void recoverOrdersAndSendEmail(String email) throws MessagingException {
+        List<RetrieveOrderDTO> ordersByEmail = orderEntityRepository.findAllByEmail(email).stream().map(orderEntity -> modelMapper.map(orderEntity, RetrieveOrderDTO.class)).collect(Collectors.toList());
+        emailService.generateAllOrdersByEmail(ordersByEmail);
+    }
 }
 

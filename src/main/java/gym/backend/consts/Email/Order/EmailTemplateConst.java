@@ -1,4 +1,4 @@
-package gym.backend.consts.Email;
+package gym.backend.consts.Email.Order;
 
 public class EmailTemplateConst {
 

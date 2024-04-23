@@ -1,4 +1,4 @@
-package gym.backend.consts.Email;
+package gym.backend.consts.Email.Order;
 
 public class EmailTemplateValues {
     public static final String PENDING_IMAGE_URL = "https://i.imgur.com/1ULULLx.png";

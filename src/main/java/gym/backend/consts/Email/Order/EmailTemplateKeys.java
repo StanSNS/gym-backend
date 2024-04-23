@@ -1,4 +1,4 @@
-package gym.backend.consts.Email;
+package gym.backend.consts.Email.Order;
 
 public class EmailTemplateKeys {
     public static final String ORDER_IMAGE_KEY = "currentImage";
