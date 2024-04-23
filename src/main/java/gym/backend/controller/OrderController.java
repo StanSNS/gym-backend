@@ -14,24 +14,28 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "${my.url}")
+@RequestMapping("/order")
 public class OrderController {
 
     private final OrderService orderService;
 
-    @PostMapping("order")
+    @PostMapping
     public ResponseEntity<Long> receiveOrder(@RequestBody OrderDTO orderDTO) throws MessagingException {
         return new ResponseEntity<>(orderService.addOrder(orderDTO), HttpStatus.OK);
     }
 
-    @GetMapping("order/addresses")
+    @GetMapping("/addresses")
     public ResponseEntity<List<CitySpeedyDTO>> getAllAddresses() {
         return new ResponseEntity<>(orderService.getAllSpeedyAddresses(), HttpStatus.OK);
     }
 
-    @GetMapping("order/recover")
+    @GetMapping("/recover")
     public ResponseEntity<String> recoverAllOrderInfo(@RequestParam String email) throws MessagingException {
-        orderService.recoverOrdersAndSendEmail(email);
+        return orderService.recoverOrdersAndSendEmail(email);
+    }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/number")
+    public ResponseEntity<String> findOrderByNumber(@RequestParam Long number) throws MessagingException {
+        return orderService.findOrderAndSendEmail(number);
     }
 }

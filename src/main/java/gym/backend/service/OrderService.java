@@ -1,5 +1,6 @@
 package gym.backend.service;
 
+import gym.backend.exception.ResourceNotFoundException;
 import gym.backend.models.DTO.CartProductsDTO;
 import gym.backend.models.DTO.RetrieveOrderDTO;
 import gym.backend.models.DTO.SpeedyOffices.CitySpeedyDTO;
@@ -13,6 +14,8 @@ import gym.backend.repository.OrderProductEntityRepository;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -81,9 +84,24 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
-    public void recoverOrdersAndSendEmail(String email) throws MessagingException {
+    public ResponseEntity<String> recoverOrdersAndSendEmail(String email) throws MessagingException {
         List<RetrieveOrderDTO> ordersByEmail = orderEntityRepository.findAllByEmail(email).stream().map(orderEntity -> modelMapper.map(orderEntity, RetrieveOrderDTO.class)).collect(Collectors.toList());
+        if (ordersByEmail.size() <= 0) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
         emailService.generateAllOrdersByEmail(ordersByEmail);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> findOrderAndSendEmail(Long number) throws MessagingException {
+        OrderEntity orderEntity = orderEntityRepository.findByRandomNumber(number);
+        if(orderEntity == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        emailService.generateHTMLContentAndSendEmail(orderEntity);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 
