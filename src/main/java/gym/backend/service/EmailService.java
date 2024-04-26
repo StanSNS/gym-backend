@@ -157,7 +157,7 @@ public class EmailService {
     private void sendEmail(String email, String htmlBody, String emailTitle) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-        helper.setFrom(EMAIL_ORIGIN);
+        helper.setFrom(EMAIL_ORIGIN); //fixme this has to be sent from the company email...
         helper.setTo(email);
         helper.setSubject(emailTitle);
         helper.setText(htmlBody, true);
@@ -218,6 +218,17 @@ public class EmailService {
     private String dateOrderFormat(LocalDateTime orderTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH:mm");
         return orderTime.format(formatter);
+    }
+
+    public void sendRequestEmail(String email, String title, String content) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        helper.setFrom(email);
+        helper.setTo(email); //fixme this has to be sent to the company email...
+        helper.setSubject(title);
+        helper.setText(content);
+
+        javaMailSender.send(message);
     }
 
 }
