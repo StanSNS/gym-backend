@@ -62,7 +62,7 @@ public class AdminService {
                 adminProductDTO.setImage(productEntity.getImage());
                 adminProductDTO.setWeightKg(productEntity.getWeightKg());
                 adminProductDTO.setRegularPrice(productEntity.getRegularPrice());
-                adminProductDTO.setDiscountedPrice(productEntity.getDiscountedPrice() * 1.3);
+                adminProductDTO.setDiscountedPrice(productEntity.getDiscountedPrice() * 1.4);
 
                 adminShoppingCartDTO.setAdminProductDTO(adminProductDTO);
                 adminShoppingCartDTO.setQuantity(cartItem.getQuantity());

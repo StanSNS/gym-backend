@@ -137,7 +137,7 @@ public class EmailService {
             String productWeight = productEntity.getWeightKg();
             Integer productQuantity = orderProductEntity.getQuantity();
             Double regularPrice = productEntity.getRegularPrice();
-            Double reducedPrice = productEntity.getDiscountedPrice() * 1.3;
+            Double reducedPrice = productEntity.getDiscountedPrice() * 1.4;
             Double savedAmount = regularPrice - reducedPrice;
 
             productSB.append(ORDER_HTML_PRODUCT

@@ -17,6 +17,6 @@ public class SingleProductDTO {
     private String weightKg;
 
     public void setDiscountedPrice(Double discountedPrice) {
-        this.discountedPrice = discountedPrice * 1.3;
+        this.discountedPrice = discountedPrice * 1.4;
     }
 }

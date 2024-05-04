@@ -29,6 +29,6 @@ public class SingleProductDataDTO {
     private Set<SingleProductDTO> singleProducts;
 
     public Double getDiscountedPrice() {
-        return discountedPrice * 1.3;
+        return discountedPrice * 1.4;
     }
 }

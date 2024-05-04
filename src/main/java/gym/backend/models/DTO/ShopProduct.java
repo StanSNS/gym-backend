@@ -18,6 +18,6 @@ public class ShopProduct {
     private Integer ratingCount;
 
     public Double getDiscountedPrice() {
-        return discountedPrice * 1.3;
+        return discountedPrice * 1.4;
     }
 }

@@ -35,9 +35,9 @@ public interface ProductEntityRepository extends JpaRepository<ProductEntity, Lo
               AND category != ''
               AND weight_kg IS NOT NULL
               AND weight_kg != ''
-              AND products.discounted_price * 1.3 < enemy_price
-              AND products.discounted_price * 1.3 < products.regular_price
-            ORDER BY (products.discounted_price * 1.3 - products.enemy_price)""", nativeQuery = true)
+              AND products.discounted_price * 1.4 < enemy_price
+              AND products.discounted_price * 1.4 < products.regular_price
+            ORDER BY (products.discounted_price * 1.4 - products.enemy_price)""", nativeQuery = true)
     List<ProductEntity> findAllSellableProducts();
 
     @Query(value = """
@@ -57,9 +57,9 @@ public interface ProductEntityRepository extends JpaRepository<ProductEntity, Lo
           AND p.category != ''
           AND p.weight_kg IS NOT NULL
           AND p.weight_kg != ''
-          AND p.discounted_price * 1.3 < p.enemy_price
-          AND p.discounted_price * 1.3 < p.regular_price
-        ORDER BY (p.discounted_price * 1.3 - p.enemy_price)
+          AND p.discounted_price * 1.4 < p.enemy_price
+          AND p.discounted_price * 1.4 < p.regular_price
+        ORDER BY (p.discounted_price * 1.4 - p.enemy_price)
         LIMIT 10""", nativeQuery = true)
     List<ProductEntity> findAllSellableProductsByBrand(@Param("brandName") String brandName);
 

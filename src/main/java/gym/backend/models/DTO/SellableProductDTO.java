@@ -26,7 +26,7 @@ public class SellableProductDTO {
     private String modelId;
 
     public void setDiscountedPrice(Double discountedPrice) {
-        this.discountedPrice = discountedPrice * 1.3;
+        this.discountedPrice = discountedPrice * 1.4;
     }
 
     public void setDescription(String description) {
