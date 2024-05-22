@@ -1,15 +1,14 @@
 package gym.backend.models.entity;
 
 import gym.backend.models.entity.BaseEntity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Table(name = "admins")
 @Entity
@@ -27,6 +26,9 @@ public class AdminEntity extends BaseEntity {
 
     @Column
     private String jwtToken;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<RoleEntity> roles;
 
     @Override
     public boolean equals(Object o) {

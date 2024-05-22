@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface AdminEntityRepository extends JpaRepository<AdminEntity, Long> {
     Optional<AdminEntity> findFirstByOrderByIdAsc();
+
+    Optional<AdminEntity> findByUsername(String username);
 }

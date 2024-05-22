@@ -1,5 +1,9 @@
 package gym.backend.config;
 
+import gym.backend.security.JwtAuthenticationEntryPoint;
+import gym.backend.security.JwtAuthenticationFilter;
+import gym.backend.security.JwtTokenProvider;
+import gym.backend.utils.ValidateData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,12 +16,20 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import static gym.backend.consts.Auth.RoleConst.ADMIN_C;
 
 @Configuration
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SpringSecurityConfig implements WebMvcConfigurer {
+
+    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
+    private final JwtAuthenticationFilter authenticationFilter;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final ValidateData validateData;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -42,14 +54,13 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
 //                    RESET_PASSWORD_UPDATE_PATH,
 //                    TWO_FACTOR_AUTH_CONTROLLER_MAPPING_LOGIN
             ).permitAll();
-//            authorize.requestMatchers(AUTH_SWAGGER_WHITELIST).permitAll();
-//            authorize.requestMatchers("/admin").authenticated();
-//            authorize.requestMatchers("/admin").hasRole(ADMIN_C);
-//            authorize.anyRequest().authenticated();
+            authorize.requestMatchers("/admin").authenticated();
+            authorize.requestMatchers("/admin").hasRole(ADMIN_C);
+            authorize.anyRequest().authenticated();
         });
         http.httpBasic(Customizer.withDefaults());
-//        http.exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint));
-//        http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint));
+        http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -62,4 +73,10 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
+
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new AdminInterceptor(jwtTokenProvider, validateData))
+//                .addPathPatterns("/admin").addPathPatterns("/community/{action}");
+//    }
 }
