@@ -19,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static gym.backend.consts.Auth.RoleConst.ADMIN_C;
 import static gym.backend.consts.Urls.AdminControllerUrlPaths.*;
+import static gym.backend.consts.Urls.UserControllerUrlPaths.*;
 
 @Configuration
 @EnableMethodSecurity
@@ -36,7 +37,14 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
         http.authorizeHttpRequests((authorize) -> {
 
             authorize.requestMatchers(
-                    AUTH_LOGIN
+                    AUTH_LOGIN,
+                    RECEIVE_ORDER,
+                    GET_ALL_ADDRESSES,
+                    RECOVER_ALL_ORDER_INFO,
+                    FIND_ORDER_BY_NUMBER,
+                    SEND_EMAIL,
+                    HOME,
+                    PRODUCT
             ).permitAll();
 
             authorize.requestMatchers(
