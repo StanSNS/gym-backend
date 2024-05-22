@@ -20,7 +20,7 @@ import static gym.backend.consts.Urls.AdminControllerUrlPaths.*;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "${my.url}")
+@CrossOrigin(origins = "${admin.frontend.base.url}")
 @RequestMapping
 public class AdminController {
 

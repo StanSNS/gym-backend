@@ -15,7 +15,7 @@ import static gym.backend.consts.Urls.UserControllerUrlPaths.*;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "${my.url}")
+@CrossOrigin(origins = "${user.frontend.base.url}")
 @RequestMapping
 public class OrderController {
 

@@ -14,7 +14,7 @@ import static gym.backend.consts.Urls.UserControllerUrlPaths.PRODUCT;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "${my.url}")
+@CrossOrigin(origins = "${user.frontend.base.url}")
 public class ProductsController {
 
     private final ProductsService productsService;

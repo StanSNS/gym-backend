@@ -11,7 +11,7 @@ import static gym.backend.consts.Urls.UserControllerUrlPaths.SEND_EMAIL;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "${my.url}")
+@CrossOrigin(origins = "${user.frontend.base.url}")
 @RequestMapping
 public class OtherController {
 
