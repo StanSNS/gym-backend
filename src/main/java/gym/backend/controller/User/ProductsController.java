@@ -1,4 +1,4 @@
-package gym.backend.controller;
+package gym.backend.controller.User;
 
 import gym.backend.models.DTO.HomePageResponseDataDTO;
 import gym.backend.models.DTO.SingleProductDataDTO;

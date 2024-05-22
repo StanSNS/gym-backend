@@ -1,17 +1,18 @@
 package gym.backend.service;
 
 import gym.backend.exception.ResourceNotFoundException;
+import gym.backend.models.DTO.Admin.Auth.LoginDTO;
 import gym.backend.models.DTO.Admin.Order.*;
-import gym.backend.models.entity.OrderEntity;
-import gym.backend.models.entity.OrderProductEntity;
-import gym.backend.models.entity.ProductEntity;
-import gym.backend.models.entity.TasteEntity;
+import gym.backend.models.entity.*;
 import gym.backend.models.enums.OrderStatus;
+import gym.backend.repository.AdminEntityRepository;
 import gym.backend.repository.OrderEntityRepository;
 import gym.backend.repository.ProductEntityRepository;
 import gym.backend.repository.TasteEntityRepository;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,7 +27,8 @@ public class AdminService {
     private final ProductEntityRepository productEntityRepository;
     private final TasteEntityRepository tasteEntityRepository;
     private final EmailService emailService;
-
+    private final AdminEntityRepository adminEntityRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public List<AdminOrderDTO> getAllOrdersForAdminPage() {
         List<AdminOrderDTO> adminOrderDTOToReturn = new ArrayList<>();
@@ -116,5 +118,15 @@ public class AdminService {
         orderEntityRepository.save(orderEntity);
 
         emailService.generateHTMLContentAndSendEmail(orderEntity);
+    }
+
+    public boolean authenticateUser(LoginDTO loginDTO) {
+        Optional<AdminEntity> firstByOrderByIdAsc = adminEntityRepository.findFirstByOrderByIdAsc();
+        if (firstByOrderByIdAsc.isPresent()) {
+            AdminEntity adminEntity = firstByOrderByIdAsc.get();
+            return adminEntity.getUsername().equals(loginDTO.getUsername())
+                    && passwordEncoder.matches(loginDTO.getPassword(),adminEntity.getPassword());
+        }
+        throw new ResourceNotFoundException();
     }
 }
