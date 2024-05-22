@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static gym.backend.consts.Auth.RoleConst.ADMIN_C;
+import static gym.backend.consts.Urls.AdminControllerUrlPaths.*;
 
 @Configuration
 @EnableMethodSecurity
@@ -33,26 +34,35 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests((authorize) -> {
-            authorize.requestMatchers(
-                    "/admin/auth/login",
-                    "/admin"
 
-//                    ALL_PATHS,
-//                    CUSTOM_LOGOUT_PATHS,
-//                    ADMIN_PATH,
-//                    AUTH_PATH,
-//                    ABOUT_PATH,
-//                    PRICING_PATH,
-//                    ACCOUNTS_PATH,
-//                    PARTNERS_PATH,
-//                    COMMUNITY_PATH,
-//                    CHANGE_PASSWORD_PATH,
-//                    RESET_PASSWORD_PATH,
-//                    RESET_PASSWORD_UPDATE_PATH,
-//                    TWO_FACTOR_AUTH_CONTROLLER_MAPPING_LOGIN
+            authorize.requestMatchers(
+                    AUTH_LOGIN
             ).permitAll();
-            authorize.requestMatchers("/admin").authenticated();
-            authorize.requestMatchers("/admin").hasRole(ADMIN_C);
+
+            authorize.requestMatchers(
+                    BASE_ADMIN,
+                    TASTE_COLOR_EXECUTE,
+                    TASTE_DATA_EXECUTE,
+                    PRODUCT_DATA_EXECUTE,
+                    PRODUCT_DATA_DETAILS_EXECUTE,
+                    PRODUCT_DATA_DETAILS_SHEET_EXECUTE,
+                    PRODUCT_DATA_DETAILS_WEB_EXECUTE,
+                    SPEEDY_OFFICES_EXECUTE,
+                    ALL_EXECUTE
+            ).authenticated();
+
+            authorize.requestMatchers(
+                    BASE_ADMIN,
+                    TASTE_COLOR_EXECUTE,
+                    TASTE_DATA_EXECUTE,
+                    PRODUCT_DATA_EXECUTE,
+                    PRODUCT_DATA_DETAILS_EXECUTE,
+                    PRODUCT_DATA_DETAILS_SHEET_EXECUTE,
+                    PRODUCT_DATA_DETAILS_WEB_EXECUTE,
+                    SPEEDY_OFFICES_EXECUTE,
+                    ALL_EXECUTE
+            ).hasRole(ADMIN_C);
+
             authorize.anyRequest().authenticated();
         });
         http.httpBasic(Customizer.withDefaults());
@@ -73,9 +83,9 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        AdminInterceptor adminInterceptor = new AdminInterceptor(jwtTokenProvider,validateData);
-
+        AdminInterceptor adminInterceptor = new AdminInterceptor(jwtTokenProvider, validateData);
         registry.addInterceptor(adminInterceptor)
-                .addPathPatterns("/admin");
+                .addPathPatterns(BASE_ADMIN + "/*")
+                .excludePathPatterns(AUTH_LOGIN);
     }
 }

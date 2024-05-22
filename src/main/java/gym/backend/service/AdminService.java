@@ -135,16 +135,6 @@ public class AdminService {
         emailService.generateHTMLContentAndSendEmail(orderEntity);
     }
 
-//    public boolean authenticateUser(LoginDTO loginDTO) {
-//        Optional<AdminEntity> firstByOrderByIdAsc = adminEntityRepository.findFirstByOrderByIdAsc();
-//        if (firstByOrderByIdAsc.isPresent()) {
-//            AdminEntity adminEntity = firstByOrderByIdAsc.get();
-//            return adminEntity.getUsername().equals(loginDTO.getUsername())
-//                    && passwordEncoder.matches(loginDTO.getPassword(), adminEntity.getPassword());
-//        }
-//        throw new ResourceNotFoundException();
-//    }
-
     @Transactional
     public JwtAuthResponseDTO login(LoginDTO loginDto) {
         if (!validationUtil.isValid(loginDto)) {
@@ -179,7 +169,7 @@ public class AdminService {
             throw new InternalErrorException();
         }
         jwtAuthResponse.setAccessToken(token);
-        jwtAuthResponse.setUsername(adminEntity.getUsername());
+        jwtAuthResponse.setExpirationDate(jwtTokenProvider.getJwtExpirationDate());
 
         if (!validationUtil.isValid(jwtAuthResponse)) {
             throw new DataValidationException();

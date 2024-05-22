@@ -15,11 +15,9 @@ public class JwtAuthResponseDTO {
     @NotNull
     private String accessToken;
 
-    private String tokenType = "Bearer";
-
     @NotNull
     private Set<String> role;
 
     @NotNull
-    private String username;
+    private Long expirationDate;
 }

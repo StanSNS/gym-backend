@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+import static gym.backend.consts.Urls.AdminControllerUrlPaths.*;
+
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "${my.url}")
-@RequestMapping("/admin")
+@RequestMapping
 public class AdminController {
 
     private final AdminService adminService;
@@ -31,74 +33,75 @@ public class AdminController {
     private final ProductDataFromWebSite productDataFromWebSite;
     private final FillSpeedyOffices fillSpeedyOffices;
 
-    @PostMapping("/auth/login")
-    public ResponseEntity<JwtAuthResponseDTO> authenticateUser(@RequestBody LoginDTO loginDTO){
-//        boolean isUserAuthenticated = adminService.authenticateUser(loginDTO);
-
-        JwtAuthResponseDTO login = adminService.login(loginDTO);
-
-//        if(isUserAuthenticated){
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        }
-
-        return new ResponseEntity<>(login,HttpStatus.OK);
+    @PostMapping(AUTH_LOGIN)
+    public ResponseEntity<JwtAuthResponseDTO> authenticateUser(@RequestBody LoginDTO loginDTO) {
+        return new ResponseEntity<>(adminService.login(loginDTO), HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping(BASE_ADMIN)
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<AdminOrderDTO>> getAllAdminData() {
         return new ResponseEntity<>(adminService.getAllOrdersForAdminPage(), HttpStatus.OK);
     }
 
-    @PutMapping
-    public ResponseEntity<String> modifyOrderStatus(@RequestParam String status, @RequestParam Long randomNumber) throws MessagingException {
+    @PutMapping(BASE_ADMIN)
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> modifyOrderStatus(@RequestParam String status, @RequestParam Long randomNumber) throws MessagingException {
         adminService.modifyOrderStatus(status, randomNumber);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("taste-color-execute")
+    @PutMapping(TASTE_COLOR_EXECUTE)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> tasteColorExecute() throws IOException {
         tasteColorsInit.startInit();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("brand-taste-data-execute")
+    @PutMapping(TASTE_DATA_EXECUTE)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> brandTasteExecute() {
         simpleDataInit.startInit();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("product-data-execute")
+    @PutMapping(PRODUCT_DATA_EXECUTE)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> productDataExecute() {
         productDataInit.startInit();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("product-data-details-execute")
+    @PutMapping(PRODUCT_DATA_DETAILS_EXECUTE)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> productDataDetailsExecute() {
         productDetailsDataInit.startInit();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("product-data-details-sheet-execute")
+    @PutMapping(PRODUCT_DATA_DETAILS_SHEET_EXECUTE)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> productDataDetailsSheetExecute() throws IOException {
         productDataFromSheetInit.startInit();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("product-data-details-web-execute")
+    @PutMapping(PRODUCT_DATA_DETAILS_WEB_EXECUTE)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> productDataDetailsWebExecute() {
         productDataFromWebSite.startInit();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("speedy-offices-execute")
+    @PutMapping(SPEEDY_OFFICES_EXECUTE)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> speedyOfficesDataExecute() {
         fillSpeedyOffices.startInit();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("all-execute")
+    @PutMapping(ALL_EXECUTE)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> allExecute() throws IOException {
         tasteColorsInit.startInit();
         simpleDataInit.startInit();
@@ -107,9 +110,6 @@ public class AdminController {
         productDataFromSheetInit.startInit();
         productDataFromWebSite.startInit();
         fillSpeedyOffices.startInit();
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }
