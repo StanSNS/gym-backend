@@ -1,8 +1,5 @@
-package gym.backend.config;
+package gym.backend.security;
 
-import gym.backend.security.JwtAuthenticationEntryPoint;
-import gym.backend.security.JwtAuthenticationFilter;
-import gym.backend.security.JwtTokenProvider;
 import gym.backend.utils.ValidateData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static gym.backend.consts.Auth.RoleConst.ADMIN_C;
@@ -26,19 +24,18 @@ import static gym.backend.consts.Auth.RoleConst.ADMIN_C;
 @RequiredArgsConstructor
 public class SpringSecurityConfig implements WebMvcConfigurer {
 
-    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
     private final JwtAuthenticationFilter authenticationFilter;
     private final JwtTokenProvider jwtTokenProvider;
     private final ValidateData validateData;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // Disable CSRF protection
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests((authorize) -> {
-            // Define request matchers and permissions
             authorize.requestMatchers(
-                    "/admin/auth/login"
+                    "/admin/auth/login",
+                    "/admin"
 
 //                    ALL_PATHS,
 //                    CUSTOM_LOGOUT_PATHS,
@@ -74,9 +71,11 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
         return configuration.getAuthenticationManager();
     }
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new AdminInterceptor(jwtTokenProvider, validateData))
-//                .addPathPatterns("/admin").addPathPatterns("/community/{action}");
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        AdminInterceptor adminInterceptor = new AdminInterceptor(jwtTokenProvider,validateData);
+
+        registry.addInterceptor(adminInterceptor)
+                .addPathPatterns("/admin");
+    }
 }

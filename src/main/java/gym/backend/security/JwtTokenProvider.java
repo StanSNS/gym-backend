@@ -24,12 +24,6 @@ public class JwtTokenProvider {
     @Value("${app.jwt-expiration-milliseconds}")
     private long jwtExpirationDate;
 
-    /**
-     * Generates a JWT token for the provided authentication object.
-     *
-     * @param authentication The user's authentication.
-     * @return A JWT token as a string.
-     */
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
         Date currentDate = new Date();
@@ -42,22 +36,13 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    /**
-     * Creates a Key object from the JWT secret.
-     *
-     * @return A Key object created from the JWT secret.
-     */
+
     private Key key() {
         return Keys.hmacShaKeyFor(
                 Decoders.BASE64.decode(jwtSecret));
     }
 
-    /**
-     * Extracts the username from a JWT token.
-     *
-     * @param token The JWT token as a string.
-     * @return The username extracted from the token.
-     */
+
     public String getUsername(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key())
@@ -66,12 +51,7 @@ public class JwtTokenProvider {
                 .getBody().getSubject();
     }
 
-    /**
-     * Validates a JWT token by checking its signature and expiration.
-     *
-     * @param token The JWT token as a string.
-     * @return true if the token is valid, false if it's expired or has an invalid signature.
-     */
+
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key()).build().parse(token);

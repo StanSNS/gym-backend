@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import static gym.backend.consts.Auth.JWTConst.TOKEN_HEADER;
+
 @RequiredArgsConstructor
 @Component
 public class AdminInterceptor implements HandlerInterceptor {
@@ -19,17 +21,15 @@ public class AdminInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) {
-        String queryString = request.getQueryString();
+        String header = request.getHeader(TOKEN_HEADER);
 
-        if (!queryString.isEmpty()) {
-            String[] parts = queryString.split("&");
+        if (!header.isEmpty()) {
+            String jwtToken = header.split("\\s+")[1];
 
-            String username = parts[1].split("=")[1];
-            String jwtToken = parts[2].split("=")[1];
-
-            AdminEntity adminEntity = validateData.validateUserWithJWT(username, jwtToken);
-
-            if (adminEntity != null && validateData.isUserAdmin(adminEntity.getRoles()) && jwtTokenProvider.validateToken(jwtToken)) {
+            if (jwtTokenProvider.validateToken(jwtToken)) {
+                String username = jwtTokenProvider.getUsername(jwtToken);
+                validateData.validateUserWithJWT(username, jwtToken);
+                validateData.validateUserAuthority(username);
                 return true;
             }
         }

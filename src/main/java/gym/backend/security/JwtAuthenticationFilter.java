@@ -23,9 +23,6 @@ import static gym.backend.consts.Auth.JWTConst.*;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    /**
-     * initializing dependencies with lombok @RequiredArgsConstructor
-     */
     private final JwtTokenProvider jwtTokenProvider;
     private final UserDetailsService userDetailsService;
 
