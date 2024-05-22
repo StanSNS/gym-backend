@@ -14,16 +14,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class AdminInterceptor implements HandlerInterceptor {
 
-    /**
-     * initializing dependencies with lombok @RequiredArgsConstructor
-     */
     private final JwtTokenProvider jwtTokenProvider;
     private final ValidateData validateData;
 
-    /**
-     * Interceptor for handling admin-related requests.
-     * This interceptor performs validation for admin access by parsing and validating JWT tokens.
-     */
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) {
         String queryString = request.getQueryString();

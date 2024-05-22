@@ -2,6 +2,7 @@ package gym.backend.controller.Admin;
 
 import gym.backend.init.DeliverySpeedy.FillSpeedyOffices;
 import gym.backend.init.Products.*;
+import gym.backend.models.DTO.Admin.Auth.JwtAuthResponseDTO;
 import gym.backend.models.DTO.Admin.Auth.LoginDTO;
 import gym.backend.models.DTO.Admin.Order.AdminOrderDTO;
 import gym.backend.service.AdminService;
@@ -30,14 +31,16 @@ public class AdminController {
     private final FillSpeedyOffices fillSpeedyOffices;
 
     @PostMapping("/auth/login")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDTO){
-        boolean isUserAuthenticated = adminService.authenticateUser(loginDTO);
+    public ResponseEntity<JwtAuthResponseDTO> authenticateUser(@RequestBody LoginDTO loginDTO){
+//        boolean isUserAuthenticated = adminService.authenticateUser(loginDTO);
 
-        if(isUserAuthenticated){
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
+        JwtAuthResponseDTO login = adminService.login(loginDTO);
 
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//        if(isUserAuthenticated){
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        }
+
+        return new ResponseEntity<>(login,HttpStatus.OK);
     }
 
     @GetMapping

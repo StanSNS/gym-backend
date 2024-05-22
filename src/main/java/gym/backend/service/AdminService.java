@@ -1,6 +1,9 @@
 package gym.backend.service;
 
+import gym.backend.exception.DataValidationException;
+import gym.backend.exception.InternalErrorException;
 import gym.backend.exception.ResourceNotFoundException;
+import gym.backend.models.DTO.Admin.Auth.JwtAuthResponseDTO;
 import gym.backend.models.DTO.Admin.Auth.LoginDTO;
 import gym.backend.models.DTO.Admin.Order.*;
 import gym.backend.models.entity.*;
@@ -9,15 +12,24 @@ import gym.backend.repository.AdminEntityRepository;
 import gym.backend.repository.OrderEntityRepository;
 import gym.backend.repository.ProductEntityRepository;
 import gym.backend.repository.TasteEntityRepository;
+import gym.backend.security.JwtTokenProvider;
+import gym.backend.utils.ValidationUtil;
 import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @Service
@@ -29,6 +41,9 @@ public class AdminService {
     private final EmailService emailService;
     private final AdminEntityRepository adminEntityRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ValidationUtil validationUtil;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public List<AdminOrderDTO> getAllOrdersForAdminPage() {
         List<AdminOrderDTO> adminOrderDTOToReturn = new ArrayList<>();
@@ -120,13 +135,56 @@ public class AdminService {
         emailService.generateHTMLContentAndSendEmail(orderEntity);
     }
 
-    public boolean authenticateUser(LoginDTO loginDTO) {
-        Optional<AdminEntity> firstByOrderByIdAsc = adminEntityRepository.findFirstByOrderByIdAsc();
-        if (firstByOrderByIdAsc.isPresent()) {
-            AdminEntity adminEntity = firstByOrderByIdAsc.get();
-            return adminEntity.getUsername().equals(loginDTO.getUsername())
-                    && passwordEncoder.matches(loginDTO.getPassword(),adminEntity.getPassword());
+//    public boolean authenticateUser(LoginDTO loginDTO) {
+//        Optional<AdminEntity> firstByOrderByIdAsc = adminEntityRepository.findFirstByOrderByIdAsc();
+//        if (firstByOrderByIdAsc.isPresent()) {
+//            AdminEntity adminEntity = firstByOrderByIdAsc.get();
+//            return adminEntity.getUsername().equals(loginDTO.getUsername())
+//                    && passwordEncoder.matches(loginDTO.getPassword(), adminEntity.getPassword());
+//        }
+//        throw new ResourceNotFoundException();
+//    }
+
+    @Transactional
+    public JwtAuthResponseDTO login(LoginDTO loginDto) {
+        if (!validationUtil.isValid(loginDto)) {
+            throw new DataValidationException();
         }
-        throw new ResourceNotFoundException();
+        AdminEntity adminEntity = null;
+
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        Optional<AdminEntity> userEntityOptional = adminEntityRepository.findByUsername(loginDto.getUsername());
+
+        String token = "";
+        JwtAuthResponseDTO jwtAuthResponse = new JwtAuthResponseDTO();
+
+        if (userEntityOptional.isPresent()) {
+            adminEntity = userEntityOptional.get();
+            Set<RoleEntity> roles = adminEntity.getRoles();
+
+            if (adminEntity.getJwtToken() == null || adminEntity.getJwtToken().isEmpty() || !jwtTokenProvider.validateToken(adminEntity.getJwtToken())) {
+                token = jwtTokenProvider.generateToken(authentication);
+                adminEntity.setJwtToken(token);
+                adminEntityRepository.save(adminEntity);
+            } else {
+                token = adminEntity.getJwtToken();
+            }
+            if (!roles.isEmpty()) {
+                jwtAuthResponse.setRole(roles.stream().map(RoleEntity::getName).collect(Collectors.toSet()));
+            }
+        }
+        if (token.isEmpty()) {
+            throw new InternalErrorException();
+        }
+        jwtAuthResponse.setAccessToken(token);
+        jwtAuthResponse.setUsername(adminEntity.getUsername());
+
+        if (!validationUtil.isValid(jwtAuthResponse)) {
+            throw new DataValidationException();
+        }
+
+        return jwtAuthResponse;
     }
 }

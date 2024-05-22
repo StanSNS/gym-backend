@@ -20,7 +20,6 @@ public class ValidateData {
 
     private final AdminEntityRepository adminEntityRepository;
 
-
     public AdminEntity validateUserWithJWT(String username, String jwtToken) {
         Optional<AdminEntity> adminUserEntityOptional = adminEntityRepository.findByUsername(username);
         if (adminUserEntityOptional.isEmpty()) {
