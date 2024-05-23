@@ -1,5 +1,6 @@
-package gym.backend.models.DTO;
+package gym.backend.models.DTO.Order;
 
+import gym.backend.models.DTO.CartProductsDTO;
 import lombok.Getter;
 import lombok.Setter;
 

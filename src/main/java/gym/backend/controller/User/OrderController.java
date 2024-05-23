@@ -1,6 +1,7 @@
 package gym.backend.controller.User;
 
-import gym.backend.models.DTO.OrderDTO;
+import gym.backend.models.DTO.Order.DeliveryPriceReqDTO;
+import gym.backend.models.DTO.Order.OrderDTO;
 import gym.backend.models.DTO.SpeedyOffices.CitySpeedyDTO;
 import gym.backend.service.OrderService;
 import jakarta.mail.MessagingException;
@@ -24,6 +25,19 @@ public class OrderController {
     @PostMapping(RECEIVE_ORDER)
     public ResponseEntity<Long> receiveOrder(@RequestBody OrderDTO orderDTO) throws MessagingException {
         return new ResponseEntity<>(orderService.addOrder(orderDTO), HttpStatus.OK);
+    }
+
+    @PostMapping(GET_DELIVERY_PRICE)
+    public ResponseEntity<Long> getDeliveryPrice(@RequestBody DeliveryPriceReqDTO deliveryPriceDTOReq) {
+
+        System.out.println(deliveryPriceDTOReq.getOfficeID());
+        System.out.println(deliveryPriceDTOReq.getAmountWithoutDelivery());
+        System.out.println(deliveryPriceDTOReq.getTotalWeight());
+
+
+        orderService.getDeliveryPrice(deliveryPriceDTOReq);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(GET_ALL_ADDRESSES)

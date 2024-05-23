@@ -1,10 +1,10 @@
 package gym.backend.service;
 
-import gym.backend.exception.ResourceNotFoundException;
 import gym.backend.models.DTO.CartProductsDTO;
-import gym.backend.models.DTO.RetrieveOrderDTO;
+import gym.backend.models.DTO.Order.DeliveryPriceReqDTO;
+import gym.backend.models.DTO.Order.RetrieveOrderDTO;
 import gym.backend.models.DTO.SpeedyOffices.CitySpeedyDTO;
-import gym.backend.models.DTO.OrderDTO;
+import gym.backend.models.DTO.Order.OrderDTO;
 import gym.backend.models.enums.OrderStatus;
 import gym.backend.models.entity.OrderEntity;
 import gym.backend.models.entity.OrderProductEntity;
@@ -102,6 +102,11 @@ public class OrderService {
 
         emailService.generateHTMLContentAndSendEmail(orderEntity);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public void getDeliveryPrice(DeliveryPriceReqDTO deliveryPriceDTOReq) {
+
+
     }
 }
 

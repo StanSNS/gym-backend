@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ShopProduct {
+public class ShopProductDTO {
     private String name;
     private BrandDTO brandEntity;
     private String category;

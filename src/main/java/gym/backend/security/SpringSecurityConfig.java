@@ -40,6 +40,7 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
                     AUTH_LOGIN,
                     RECEIVE_ORDER,
                     GET_ALL_ADDRESSES,
+                    GET_DELIVERY_PRICE,
                     RECOVER_ALL_ORDER_INFO,
                     FIND_ORDER_BY_NUMBER,
                     SEND_EMAIL,

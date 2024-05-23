@@ -1,4 +1,4 @@
-package gym.backend.models.DTO;
+package gym.backend.models.DTO.Order;
 
 import gym.backend.models.enums.OrderStatus;
 import lombok.Getter;

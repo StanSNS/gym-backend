@@ -1,7 +1,7 @@
 package gym.backend.service;
 
 import gym.backend.exception.ResourceNotFoundException;
-import gym.backend.models.DTO.RetrieveOrderDTO;
+import gym.backend.models.DTO.Order.RetrieveOrderDTO;
 import gym.backend.models.entity.OrderEntity;
 import gym.backend.models.entity.OrderProductEntity;
 import gym.backend.models.entity.ProductEntity;
