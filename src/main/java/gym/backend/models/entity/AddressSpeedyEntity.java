@@ -16,7 +16,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddressSpeedyEntity extends BaseEntity {
-
     @Column
     private String fullAddress;
+
+    @Column
+    private Long officeID;
 }

@@ -50,12 +50,6 @@ public class OrderEntity extends BaseEntity {
     private String postCode;
 
     @Column
-    private String address;
-
-    @Column
-    private String additionalAddress;
-
-    @Column
     private String delivery;
 
     @Column

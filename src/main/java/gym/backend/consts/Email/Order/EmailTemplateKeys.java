@@ -16,7 +16,6 @@ public class EmailTemplateKeys {
     public static final String COURIER_KEY = "Courier";
     public static final String DELIVERY_TYPE_KEY = "deliveryType";
     public static final String ADDRESS_LINE_ONE_KEY = "addressLineOne";
-    public static final String ADDRESS_LINE_TWO_KEY = "addressLineTwo";
     public static final String TOTAL_PRODUCT_COUNT_KEY = "totalProductCount";
     public static final String TOTAL_WEIGHT_KEY = "totalWeight";
     public static final String DELIVERY_PRICE_KEY = "deliveryPrice";

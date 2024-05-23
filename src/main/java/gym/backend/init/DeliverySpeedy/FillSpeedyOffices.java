@@ -45,7 +45,6 @@ public class FillSpeedyOffices {
             CitySpeedyEntity citySpeedyEntity;
             if (optionalCitySpeedyEntity.isEmpty()) {
                 citySpeedyEntity = new CitySpeedyEntity();
-                citySpeedyEntity.setSpeedyId(office.getId());
                 citySpeedyEntity.setPostCode(address.getPostCode());
                 citySpeedyEntity.setCityName(modifiedCityName);
                 citySpeedyEntity.setAddresses(new ArrayList<>());
@@ -58,6 +57,7 @@ public class FillSpeedyOffices {
             if (!addressSpeedyEntityRepository.existsByFullAddress(address.getLocalAddressString())) {
                 addressSpeedyEntity = new AddressSpeedyEntity();
                 addressSpeedyEntity.setFullAddress(address.getLocalAddressString());
+                addressSpeedyEntity.setOfficeID(office.getId());
                 addressSpeedyEntityRepository.save(addressSpeedyEntity);
                 citySpeedyEntity.getAddresses().add(addressSpeedyEntity);
                 citySpeedyEntityRepository.save(citySpeedyEntity);

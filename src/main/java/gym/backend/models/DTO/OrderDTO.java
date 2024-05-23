@@ -16,8 +16,6 @@ public class OrderDTO {
     private String town;
     private String postCode;
     private String officeAddress;
-    private String address;
-    private String additionalAddress;
     private String delivery;
     private String courier;
     private Double totalWeight;

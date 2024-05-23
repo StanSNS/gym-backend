@@ -6,5 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddressSpeedyDTO {
+    private Long officeID;
     private String fullAddress;
 }

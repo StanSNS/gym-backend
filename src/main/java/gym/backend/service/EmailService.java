@@ -22,13 +22,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-import static gym.backend.consts.Email.RetrieveOrdersByEmail.RetrieveOrdersHTMLConst.*;
-import static gym.backend.consts.Email.RetrieveOrdersByEmail.RetrieveOrdersKeyConst.*;
-import static gym.backend.consts.Email.RetrieveOrdersByEmail.RetrieveOrdersValueConst.*;
+import static gym.backend.consts.Email.EmailTitleConst.*;
 import static gym.backend.consts.Email.Order.EmailTemplateConst.*;
 import static gym.backend.consts.Email.Order.EmailTemplateKeys.*;
 import static gym.backend.consts.Email.Order.EmailTemplateValues.*;
-import static gym.backend.consts.Email.EmailTitleConst.*;
+import static gym.backend.consts.Email.RetrieveOrdersByEmail.RetrieveOrdersHTMLConst.*;
+import static gym.backend.consts.Email.RetrieveOrdersByEmail.RetrieveOrdersKeyConst.*;
+import static gym.backend.consts.Email.RetrieveOrdersByEmail.RetrieveOrdersValueConst.*;
 
 @Service
 @RequiredArgsConstructor
@@ -89,13 +89,8 @@ public class EmailService {
     private String fillOrderInfoTemplate(OrderEntity orderEntity) {
         String deliveryType = "";
         String addressLineOne = "";
-        String addressLineTwo = "Няма";
 
-        if (orderEntity.getDelivery().equals("ADDRESS")) {
-            deliveryType = "До адрес";
-            addressLineOne = orderEntity.getAddress();
-            addressLineTwo = orderEntity.getAdditionalAddress();
-        } else if (orderEntity.getDelivery().equals("OFFICE")) {
+        if (orderEntity.getDelivery().equals("OFFICE")) {
             deliveryType = "До офис";
             addressLineOne = orderEntity.getOfficeAddress();
         }
@@ -111,7 +106,6 @@ public class EmailService {
                 .replaceFirst(COURIER_KEY, orderEntity.getCourier())
                 .replaceFirst(DELIVERY_TYPE_KEY, deliveryType)
                 .replaceFirst(ADDRESS_LINE_ONE_KEY, addressLineOne)
-                .replaceFirst(ADDRESS_LINE_TWO_KEY, addressLineTwo)
                 .replaceFirst(TOTAL_PRODUCT_COUNT_KEY, orderEntity.getProductCount().toString())
                 .replaceFirst(TOTAL_WEIGHT_KEY, String.format("%.2f", orderEntity.getTotalWeight()))
                 .replaceFirst(DELIVERY_PRICE_KEY, String.format("%.2f", orderEntity.getDeliveryPrice()))

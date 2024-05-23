@@ -9,7 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 public class CitySpeedyDTO {
-    private Long speedyId;
     private String cityName;
     private String postCode;
     private List<AddressSpeedyDTO> addresses;

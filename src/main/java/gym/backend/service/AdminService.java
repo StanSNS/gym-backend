@@ -62,8 +62,6 @@ public class AdminService {
             addressInfoDTO.setCountry(orderEntity.getCountry());
             addressInfoDTO.setTown(orderEntity.getTown());
             addressInfoDTO.setOfficeAddress(orderEntity.getOfficeAddress());
-            addressInfoDTO.setAddress(orderEntity.getAddress());
-            addressInfoDTO.setAdditionalAddress(orderEntity.getAdditionalAddress());
             adminOrderDTO.setAddressInfo(addressInfoDTO);
 
             double amountAdminToPay = 0;

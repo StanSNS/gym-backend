@@ -484,19 +484,6 @@ public class EmailTemplateConst {
                                             </td>
                                         </tr>
                                     </table>
-                                    <table class="table_block block-7" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                        <tr>
-                                            <td class="pad" style="padding-left:40px;">
-                                                <table style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; table-layout: fixed; direction: ltr; background-color: transparent; font-family: Arial, Helvetica, sans-serif; font-weight: 400; color: #ffffff; text-align: left; letter-spacing: 0px;" width="100%">
-                                                    <tbody style="vertical-align: top; font-size: 16px; line-height: 120%;">
-                                                    <tr>
-                                                        <td width="100%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Допълнителен адрес:</span> addressLineTwo</strong></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </table>
                                     <table class="divider_block block-8" width="100%" border="0" cellpadding="20" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                         <tr>
                                             <td class="pad">

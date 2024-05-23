@@ -17,9 +17,6 @@ import java.util.List;
 @Setter
 public class CitySpeedyEntity extends BaseEntity {
 
-    @Column(name = "speedy_id")
-    private Long speedyId;
-
     @Column(name = "site_name")
     private String cityName;
 
