@@ -2,6 +2,7 @@ package gym.backend.controller.User;
 
 import gym.backend.models.DTO.Order.DeliveryPriceReqDTO;
 import gym.backend.models.DTO.Order.OrderDTO;
+import gym.backend.models.DTO.Order.SpeedyApi.DeliveryPriceMainResDTO;
 import gym.backend.models.DTO.SpeedyOffices.CitySpeedyDTO;
 import gym.backend.service.OrderService;
 import jakarta.mail.MessagingException;
@@ -28,10 +29,8 @@ public class OrderController {
     }
 
     @PostMapping(GET_DELIVERY_PRICE)
-    public ResponseEntity<?> getDeliveryPrice(@RequestBody(required = false) DeliveryPriceReqDTO deliveryPriceDTOReq) {
-
-
-        return new ResponseEntity<>( orderService.getDeliveryPrice(deliveryPriceDTOReq),HttpStatus.OK);
+    public ResponseEntity<?> getDeliveryPrice(@RequestBody DeliveryPriceReqDTO deliveryPriceDTOReq) {
+        return orderService.getDeliveryPrice(deliveryPriceDTOReq);
     }
 
     @GetMapping(GET_ALL_ADDRESSES)

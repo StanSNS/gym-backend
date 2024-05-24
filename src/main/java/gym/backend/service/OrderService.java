@@ -1,23 +1,29 @@
 package gym.backend.service;
 
 import com.google.gson.Gson;
+import gym.backend.exception.ResourceNotFoundException;
 import gym.backend.models.DTO.CartProductsDTO;
 import gym.backend.models.DTO.Order.DeliveryPriceReqDTO;
 import gym.backend.models.DTO.Order.RetrieveOrderDTO;
 import gym.backend.models.DTO.Order.SpeedyApi.DeliveryPriceMainReqDTO;
 import gym.backend.models.DTO.Order.SpeedyApi.DeliveryPriceMainResDTO;
+import gym.backend.models.DTO.Order.SpeedyApi.DeliveryPriceMainResErrorDTO;
 import gym.backend.models.DTO.SpeedyOffices.CitySpeedyDTO;
 import gym.backend.models.DTO.Order.OrderDTO;
+import gym.backend.models.entity.AddressSpeedyEntity;
 import gym.backend.models.enums.OrderStatus;
 import gym.backend.models.entity.OrderEntity;
 import gym.backend.models.entity.OrderProductEntity;
+import gym.backend.repository.AddressSpeedyEntityRepository;
 import gym.backend.repository.CitySpeedyEntityRepository;
 import gym.backend.repository.OrderEntityRepository;
 import gym.backend.repository.OrderProductEntityRepository;
+import jakarta.annotation.PostConstruct;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -25,12 +31,14 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class OrderService {
+    private final DataSourceTransactionManagerAutoConfiguration dataSourceTransactionManagerAutoConfiguration;
     @Value("${speedy.api.username}")
     private String SPEEDY_API_USERNAME;
     @Value("${speedy.api.password}")
@@ -40,6 +48,7 @@ public class OrderService {
     private final OrderProductEntityRepository orderProductEntityRepository;
     private final ModelMapper modelMapper;
     private final CitySpeedyEntityRepository citySpeedyEntityRepository;
+    private final AddressSpeedyEntityRepository addressSpeedyEntityRepository;
     private final EmailService emailService;
     private final Gson gson;
 
@@ -113,7 +122,7 @@ public class OrderService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public DeliveryPriceMainReqDTO getDeliveryPrice(DeliveryPriceReqDTO deliveryPriceDTOReq) {
+    public ResponseEntity<?> getDeliveryPrice(DeliveryPriceReqDTO deliveryPriceDTOReq) {
         String productsURL = "https://api.speedy.bg/v1/calculate/";
 
         DeliveryPriceMainReqDTO deliveryPriceMainReq = new DeliveryPriceMainReqDTO();
@@ -130,16 +139,13 @@ public class OrderService {
 
         ResponseEntity<String> exchange = restTemplate.exchange(productsURL, HttpMethod.POST, requestEntity, String.class);
 
-        DeliveryPriceMainResDTO map = modelMapper.map(gson.fromJson(exchange.getBody(), Object.class), DeliveryPriceMainResDTO.class);
+        Object responseBodyObject = gson.fromJson(exchange.getBody(), Object.class);
 
-        if (map.getCalculations().get(0).getPrice() == null) {
-            System.out.println("Office invalid");
-        } else {
-            System.out.println(map.getCalculations().get(0).getPrice().getTotal());
+        DeliveryPriceMainResDTO deliveryPriceMainResDTO = modelMapper.map(responseBodyObject, DeliveryPriceMainResDTO.class);
+
+        if (deliveryPriceMainResDTO.getCalculations().get(0).getPrice() == null) {
+            return new ResponseEntity<>(modelMapper.map(responseBodyObject, DeliveryPriceMainResErrorDTO.class), HttpStatus.NON_AUTHORITATIVE_INFORMATION);
         }
-
-        System.out.println();
-
-        return null;
+        return new ResponseEntity<>(deliveryPriceMainResDTO, HttpStatus.OK);
     }
 }
