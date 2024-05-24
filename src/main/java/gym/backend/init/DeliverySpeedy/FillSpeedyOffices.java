@@ -31,6 +31,10 @@ public class FillSpeedyOffices {
         for (CitySpeedyJSON office : citiesSpeedyJSON.getOffices()) {
             AddressSpeedyJSON address = office.getAddress();
 
+            if(office.getName().contains("АВТОМАТ")){
+                continue;
+            }
+
             StringBuilder modifiedCityNameSB = new StringBuilder();
             modifiedCityNameSB.append(address.getSiteType().toLowerCase()).append(" ");
 

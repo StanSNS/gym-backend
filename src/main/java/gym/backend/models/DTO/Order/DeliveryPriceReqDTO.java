@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DeliveryPriceReqDTO {
-    private Long officeID;
+    private Integer officeID;
     private Double amountWithoutDelivery;
     private Double totalWeight;
 }

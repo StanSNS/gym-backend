@@ -28,16 +28,10 @@ public class OrderController {
     }
 
     @PostMapping(GET_DELIVERY_PRICE)
-    public ResponseEntity<Long> getDeliveryPrice(@RequestBody DeliveryPriceReqDTO deliveryPriceDTOReq) {
-
-        System.out.println(deliveryPriceDTOReq.getOfficeID());
-        System.out.println(deliveryPriceDTOReq.getAmountWithoutDelivery());
-        System.out.println(deliveryPriceDTOReq.getTotalWeight());
+    public ResponseEntity<?> getDeliveryPrice(@RequestBody(required = false) DeliveryPriceReqDTO deliveryPriceDTOReq) {
 
 
-        orderService.getDeliveryPrice(deliveryPriceDTOReq);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>( orderService.getDeliveryPrice(deliveryPriceDTOReq),HttpStatus.OK);
     }
 
     @GetMapping(GET_ALL_ADDRESSES)

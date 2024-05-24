@@ -7,5 +7,6 @@ import lombok.Setter;
 @Setter
 public class CitySpeedyJSON {
     private Long id;
+    private String name;
     private AddressSpeedyJSON address;
 }
