@@ -87,13 +87,8 @@ public class EmailService {
     }
 
     private String fillOrderInfoTemplate(OrderEntity orderEntity) {
-        String deliveryType = "";
-        String addressLineOne = "";
-
-        if (orderEntity.getDelivery().equals("OFFICE")) {
-            deliveryType = "До офис";
-            addressLineOne = orderEntity.getOfficeAddress();
-        }
+        String deliveryType = "До офис";
+        String addressLineOne =orderEntity.getOfficeAddress();
 
         return ORDER_HTML_ALL_INFO
                 .replaceFirst(FIRST_NAME_KEY, orderEntity.getFirstName())
@@ -103,7 +98,7 @@ public class EmailService {
                 .replaceFirst(COUNTRY_KEY, orderEntity.getCountry())
                 .replaceFirst(TOWN_KEY, orderEntity.getTown())
                 .replaceFirst(POST_CODE_KEY, orderEntity.getPostCode())
-                .replaceFirst(COURIER_KEY, orderEntity.getCourier())
+                .replaceFirst(COURIER_KEY, "Speedy")
                 .replaceFirst(DELIVERY_TYPE_KEY, deliveryType)
                 .replaceFirst(ADDRESS_LINE_ONE_KEY, addressLineOne)
                 .replaceFirst(TOTAL_PRODUCT_COUNT_KEY, orderEntity.getProductCount().toString())
