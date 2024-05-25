@@ -11,4 +11,6 @@ public interface AddressSpeedyEntityRepository extends JpaRepository<AddressSpee
 
     boolean existsByFullAddress(String fullAddress);
 
+    Optional<AddressSpeedyEntity> findByFullAddress(String fullAddress);
+
 }

@@ -3,7 +3,6 @@ package gym.backend.models.DTO.Order.SpeedyApi;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +11,7 @@ import java.util.List;
 @Setter
 @ToString
 public class DeliveryPriceMainReqDTO {
-    @Value("${speedy.api.username}")
     private String userName;
-    @Value("${speedy.api.password}")
     private String password;
     private String language = "EN";
     private Recipient recipient = new Recipient();

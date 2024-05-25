@@ -47,13 +47,10 @@ public class OrderEntity extends BaseEntity {
     private String officeAddress;
 
     @Column
+    private Long officeID;
+
+    @Column
     private String postCode;
-
-    @Column
-    private String delivery;
-
-    @Column
-    private String courier;
 
     @Column
     private Double totalWeight;

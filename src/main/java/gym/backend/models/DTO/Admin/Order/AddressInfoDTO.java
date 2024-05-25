@@ -8,7 +8,6 @@ import lombok.Setter;
 public class AddressInfoDTO {
     private String country;
     private String town;
-    private String address;
-    private String additionalAddress;
     private String officeAddress;
+    private Long officeID;
 }

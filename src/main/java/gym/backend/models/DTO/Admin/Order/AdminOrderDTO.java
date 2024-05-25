@@ -12,8 +12,6 @@ public class AdminOrderDTO {
     private UserInfoDTO userInfo;
     private AddressInfoDTO addressInfo;
     private List<AdminShoppingCartDTO> productOrders;
-    private String delivery;
-    private String courier;
     private Double totalWeight;
     private Double amountToBePayedByCustomer;
     private Double amountToBePayedByAdmin;

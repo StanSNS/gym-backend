@@ -3,6 +3,7 @@ package gym.backend.consts.Urls;
 public class AdminControllerUrlPaths {
     public static final String BASE_ADMIN = "/admin";
     public static final String AUTH_LOGIN = "/admin/auth/login";
+    public static final String CREATE_ORDER_IN_SPEEDY = "/admin/create-order-speedy";
     public static final String TASTE_COLOR_EXECUTE = "/admin/taste-color-execute";
     public static final String TASTE_DATA_EXECUTE = "/admin/brand-taste-data-execute";
     public static final String PRODUCT_DATA_EXECUTE = "/admin/product-data-execute";

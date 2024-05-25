@@ -8,20 +8,17 @@ import gym.backend.models.DTO.Admin.Auth.LoginDTO;
 import gym.backend.models.DTO.Admin.Order.*;
 import gym.backend.models.entity.*;
 import gym.backend.models.enums.OrderStatus;
-import gym.backend.repository.AdminEntityRepository;
-import gym.backend.repository.OrderEntityRepository;
-import gym.backend.repository.ProductEntityRepository;
-import gym.backend.repository.TasteEntityRepository;
+import gym.backend.repository.*;
 import gym.backend.security.JwtTokenProvider;
 import gym.backend.utils.ValidationUtil;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,16 +31,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class AdminService {
+    @Value("${speedy.api.username}")
+    private String SPEEDY_API_USERNAME;
+    @Value("${speedy.api.password}")
+    private String SPEEDY_API_PASSWORD;
 
     private final OrderEntityRepository orderEntityRepository;
     private final ProductEntityRepository productEntityRepository;
     private final TasteEntityRepository tasteEntityRepository;
     private final EmailService emailService;
     private final AdminEntityRepository adminEntityRepository;
-    private final PasswordEncoder passwordEncoder;
     private final ValidationUtil validationUtil;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
+    private final AddressSpeedyEntityRepository addressSpeedyEntityRepository;
 
     public List<AdminOrderDTO> getAllOrdersForAdminPage() {
         List<AdminOrderDTO> adminOrderDTOToReturn = new ArrayList<>();
@@ -58,11 +59,17 @@ public class AdminService {
             userInfoDTO.setPhone(orderEntity.getPhone());
             adminOrderDTO.setUserInfo(userInfoDTO);
 
+            Optional<AddressSpeedyEntity> byFullAddress = addressSpeedyEntityRepository.findByFullAddress(orderEntity.getOfficeAddress());
+            if (byFullAddress.isEmpty()) {
+                throw new ResourceNotFoundException();
+            }
+
             AddressInfoDTO addressInfoDTO = new AddressInfoDTO();
             addressInfoDTO.setCountry(orderEntity.getCountry());
             addressInfoDTO.setTown(orderEntity.getTown());
             addressInfoDTO.setOfficeAddress(orderEntity.getOfficeAddress());
             adminOrderDTO.setAddressInfo(addressInfoDTO);
+            addressInfoDTO.setOfficeID(byFullAddress.get().getOfficeID());
 
             double amountAdminToPay = 0;
 
@@ -96,8 +103,6 @@ public class AdminService {
                 amountAdminToPay += productEntity.getDiscountedPrice() * cartItem.getQuantity();
             }
 
-            adminOrderDTO.setDelivery(orderEntity.getDelivery());
-            adminOrderDTO.setCourier(orderEntity.getCourier());
             adminOrderDTO.setTotalWeight(orderEntity.getTotalWeight());
             adminOrderDTO.setAmountToBePayedByCustomer(orderEntity.getTotalAmount());
             adminOrderDTO.setOrderStatus(orderEntity.getOrderStatus().name());
@@ -175,4 +180,38 @@ public class AdminService {
 
         return jwtAuthResponse;
     }
+
+    public CreateOrderSpeedyApiReqDTO createSpeedyOrderAPI(CreateOrderInSpeedyDTO createOrderInSpeedyDTO) {
+        CreateOrderSpeedyApiReqDTO createOrderSpeedyApiReqDTO = buildRequest(createOrderInSpeedyDTO);
+
+
+        //TODO
+        return null;
+    }
+
+    private CreateOrderSpeedyApiReqDTO buildRequest(CreateOrderInSpeedyDTO createOrderInSpeedyDTO){
+        Double amountToBePayedByCustomer = createOrderInSpeedyDTO.getAmountToBePayedByCustomer();
+        Double totalWeight = createOrderInSpeedyDTO.getTotalWeight();
+        String phone = createOrderInSpeedyDTO.getPhone();
+        String name = createOrderInSpeedyDTO.getFirstName().trim() + " " + createOrderInSpeedyDTO.getLastName().trim();
+        String email = createOrderInSpeedyDTO.getEmail();
+        Long officeID = createOrderInSpeedyDTO.getOfficeID();
+
+        CreateOrderSpeedyApiReqDTO createOrderSpeedyApiReqDTO = new CreateOrderSpeedyApiReqDTO();
+        createOrderSpeedyApiReqDTO.setUserName(SPEEDY_API_USERNAME);
+        createOrderSpeedyApiReqDTO.setPassword(SPEEDY_API_PASSWORD);
+        createOrderSpeedyApiReqDTO.getService().getAdditionalServices().getDeclaredValue().setAmount(amountToBePayedByCustomer);
+        createOrderSpeedyApiReqDTO.getContent().setTotalWeight(totalWeight);
+
+        createOrderSpeedyApiReqDTO.getSender().getPhone1().setNumber("0895225759");
+
+        createOrderSpeedyApiReqDTO.getRecipient().getPhone1().setNumber(phone);
+        createOrderSpeedyApiReqDTO.getRecipient().setClientName(name);
+        createOrderSpeedyApiReqDTO.getRecipient().setEmail(email);
+        createOrderSpeedyApiReqDTO.getRecipient().setPickupOfficeId(officeID);
+
+
+        return createOrderSpeedyApiReqDTO;
+    }
+
 }

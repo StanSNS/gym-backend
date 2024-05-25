@@ -55,6 +55,7 @@ public class OrderService {
     public Long addOrder(OrderDTO orderDTO) throws MessagingException {
         OrderEntity orderEntity = modelMapper.map(orderDTO, OrderEntity.class);
         orderEntity.setCartItems(new ArrayList<>());
+        orderEntity.setCountry("България");
 
         for (CartProductsDTO cartItemOrderDto : orderDTO.getCartItems()) {
             OrderProductEntity orderProductEntity = new OrderProductEntity();

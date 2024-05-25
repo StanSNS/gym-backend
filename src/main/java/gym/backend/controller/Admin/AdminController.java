@@ -5,6 +5,8 @@ import gym.backend.init.Products.*;
 import gym.backend.models.DTO.Admin.Auth.JwtAuthResponseDTO;
 import gym.backend.models.DTO.Admin.Auth.LoginDTO;
 import gym.backend.models.DTO.Admin.Order.AdminOrderDTO;
+import gym.backend.models.DTO.Admin.Order.CreateOrderInSpeedyDTO;
+import gym.backend.models.DTO.Admin.Order.CreateOrderSpeedyApiReqDTO;
 import gym.backend.service.AdminService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +38,11 @@ public class AdminController {
     @PostMapping(AUTH_LOGIN)
     public ResponseEntity<JwtAuthResponseDTO> authenticateUser(@RequestBody LoginDTO loginDTO) {
         return new ResponseEntity<>(adminService.login(loginDTO), HttpStatus.OK);
+    }
+
+    @PostMapping(CREATE_ORDER_IN_SPEEDY)
+    public ResponseEntity<CreateOrderSpeedyApiReqDTO> createOrderInSpeedy(@RequestBody CreateOrderInSpeedyDTO createOrderInSpeedyDTO) {
+        return new ResponseEntity<>(adminService.createSpeedyOrderAPI(createOrderInSpeedyDTO), HttpStatus.OK);
     }
 
     @GetMapping(BASE_ADMIN)

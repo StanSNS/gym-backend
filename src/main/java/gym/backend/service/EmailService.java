@@ -95,7 +95,7 @@ public class EmailService {
                 .replaceFirst(LAST_NAME_KEY, orderEntity.getLastName())
                 .replaceFirst(USER_EMAIL_KEY, orderEntity.getEmail())
                 .replaceFirst(PHONE_NUMBER_KEY, orderEntity.getPhone())
-                .replaceFirst(COUNTRY_KEY, orderEntity.getCountry())
+                .replaceFirst(COUNTRY_KEY, "България")
                 .replaceFirst(TOWN_KEY, orderEntity.getTown())
                 .replaceFirst(POST_CODE_KEY, orderEntity.getPostCode())
                 .replaceFirst(COURIER_KEY, "Speedy")
