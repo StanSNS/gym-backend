@@ -41,8 +41,9 @@ public class AdminController {
     }
 
     @PostMapping(CREATE_ORDER_IN_SPEEDY)
-    public ResponseEntity<CreateOrderSpeedyApiReqDTO> createOrderInSpeedy(@RequestBody CreateOrderInSpeedyDTO createOrderInSpeedyDTO) {
-        return new ResponseEntity<>(adminService.createSpeedyOrderAPI(createOrderInSpeedyDTO), HttpStatus.OK);
+    public ResponseEntity<CreateOrderSpeedyApiReqDTO> createOrderInSpeedy(@RequestBody CreateOrderInSpeedyDTO createOrderInSpeedyDTO) throws MessagingException {
+        adminService.createSpeedyOrderAPI(createOrderInSpeedyDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(BASE_ADMIN)

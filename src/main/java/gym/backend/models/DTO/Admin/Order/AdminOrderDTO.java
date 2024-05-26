@@ -18,5 +18,6 @@ public class AdminOrderDTO {
     private Double companyProfit;
     private String orderStatus;
     private LocalDateTime date;
+    private String speedyDeliveryId;
     private Long randomNumber;
 }

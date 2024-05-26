@@ -1,11 +1,13 @@
 package gym.backend.service;
 
+import com.google.gson.Gson;
 import gym.backend.exception.DataValidationException;
 import gym.backend.exception.InternalErrorException;
 import gym.backend.exception.ResourceNotFoundException;
 import gym.backend.models.DTO.Admin.Auth.JwtAuthResponseDTO;
 import gym.backend.models.DTO.Admin.Auth.LoginDTO;
 import gym.backend.models.DTO.Admin.Order.*;
+import gym.backend.models.DTO.Order.SpeedyApi.DeliveryPriceMainReqDTO;
 import gym.backend.models.entity.*;
 import gym.backend.models.enums.OrderStatus;
 import gym.backend.repository.*;
@@ -15,11 +17,16 @@ import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +52,7 @@ public class AdminService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final AddressSpeedyEntityRepository addressSpeedyEntityRepository;
+    private final Gson gson;
 
     public List<AdminOrderDTO> getAllOrdersForAdminPage() {
         List<AdminOrderDTO> adminOrderDTOToReturn = new ArrayList<>();
@@ -110,6 +118,7 @@ public class AdminService {
             adminOrderDTO.setCompanyProfit(adminOrderDTO.getAmountToBePayedByCustomer() - adminOrderDTO.getAmountToBePayedByAdmin());
             adminOrderDTO.setDate(orderEntity.getDate());
             adminOrderDTO.setRandomNumber(orderEntity.getRandomNumber());
+            adminOrderDTO.setSpeedyDeliveryId(orderEntity.getSpeedyDeliveryId());
 
             adminOrderDTOToReturn.add(adminOrderDTO);
         }
@@ -181,15 +190,40 @@ public class AdminService {
         return jwtAuthResponse;
     }
 
-    public CreateOrderSpeedyApiReqDTO createSpeedyOrderAPI(CreateOrderInSpeedyDTO createOrderInSpeedyDTO) {
-        CreateOrderSpeedyApiReqDTO createOrderSpeedyApiReqDTO = buildRequest(createOrderInSpeedyDTO);
+    public void createSpeedyOrderAPI(CreateOrderInSpeedyDTO createOrderInSpeedyDTO) throws MessagingException {
+        OrderEntity orderEntity = orderEntityRepository.findByRandomNumber(createOrderInSpeedyDTO.getRandomNumber());
+        if (orderEntity == null) {
+            throw new ResourceNotFoundException();
+        }
 
+        if (!orderEntity.getOrderStatus().equals(OrderStatus.PENDING)) {
+            throw new DataValidationException();
+        }
 
-        //TODO
-        return null;
+        CreateOrderSpeedyApiReqDTO createOrderSpeedyApiReqDTO = buildCreateOrderSpeedyBody(createOrderInSpeedyDTO);
+
+        String productsURL = "https://api.speedy.bg/v1/shipment";
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+
+        HttpEntity<CreateOrderSpeedyApiReqDTO> requestEntity = new HttpEntity<>(createOrderSpeedyApiReqDTO, headers);
+
+        ResponseEntity<String> exchange = restTemplate.exchange(productsURL, HttpMethod.POST, requestEntity, String.class);
+
+        CreateOrderSpeedyApiResDTO createOrderSpeedyApiResDTO = gson.fromJson(exchange.getBody(), CreateOrderSpeedyApiResDTO.class);
+
+        orderEntity.setSpeedyDeliveryId(createOrderSpeedyApiResDTO.getId());
+        orderEntity.setPickupDate(createOrderSpeedyApiResDTO.getPickupDate());
+        orderEntity.setDeliveryDeadline(createOrderSpeedyApiResDTO.getDeliveryDeadline());
+        orderEntity.setOrderStatus(OrderStatus.APPROVED);
+
+        orderEntityRepository.save(orderEntity);
+
+        emailService.generateHTMLContentAndSendEmail(orderEntity);
     }
 
-    private CreateOrderSpeedyApiReqDTO buildRequest(CreateOrderInSpeedyDTO createOrderInSpeedyDTO){
+    private CreateOrderSpeedyApiReqDTO buildCreateOrderSpeedyBody(CreateOrderInSpeedyDTO createOrderInSpeedyDTO) {
         Double amountToBePayedByCustomer = createOrderInSpeedyDTO.getAmountToBePayedByCustomer();
         Double totalWeight = createOrderInSpeedyDTO.getTotalWeight();
         String phone = createOrderInSpeedyDTO.getPhone();
@@ -203,7 +237,7 @@ public class AdminService {
         createOrderSpeedyApiReqDTO.getService().getAdditionalServices().getDeclaredValue().setAmount(amountToBePayedByCustomer);
         createOrderSpeedyApiReqDTO.getContent().setTotalWeight(totalWeight);
 
-        createOrderSpeedyApiReqDTO.getSender().getPhone1().setNumber("0895225759");
+        createOrderSpeedyApiReqDTO.getSender().getPhone1().setNumber("0888112233");
 
         createOrderSpeedyApiReqDTO.getRecipient().getPhone1().setNumber(phone);
         createOrderSpeedyApiReqDTO.getRecipient().setClientName(name);

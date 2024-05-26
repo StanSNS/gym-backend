@@ -70,6 +70,15 @@ public class OrderEntity extends BaseEntity {
     @Column
     private Double deliveryPrice;
 
+    @Column
+    private String speedyDeliveryId;
+
+    @Column
+    private String pickupDate;
+
+    @Column
+    private String deliveryDeadline;
+
     @ManyToMany
     private List<OrderProductEntity> cartItems;
 

@@ -1,6 +1,7 @@
 package gym.backend.models.DTO.Order;
 
 import gym.backend.models.DTO.CartProductsDTO;
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
