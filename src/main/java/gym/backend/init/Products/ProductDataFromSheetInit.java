@@ -6,6 +6,7 @@ import gym.backend.repository.ProductEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class ProductDataFromSheetInit {
     private final RequestService requestService;
     private final ProductEntityRepository productEntityRepository;
 
+    @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() throws IOException {
         XSSFSheet sheet = requestService.getDistroSheet();
 

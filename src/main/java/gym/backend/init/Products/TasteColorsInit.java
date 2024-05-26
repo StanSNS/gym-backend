@@ -3,6 +3,7 @@ package gym.backend.init.Products;
 import gym.backend.models.entity.TasteColor;
 import gym.backend.repository.TasteColorEntityRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -15,6 +16,7 @@ public class TasteColorsInit {
 
     private final TasteColorEntityRepository tasteColorEntityRepository;
 
+    @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() throws IOException {
         System.out.println("START taste-color-execute...");
         String filePath = "src/main/resources/TasteColors.txt";

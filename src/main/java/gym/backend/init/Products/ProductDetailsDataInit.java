@@ -16,6 +16,7 @@ import gym.backend.repository.ProductEntityRepository;
 import gym.backend.repository.TasteEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +34,7 @@ public class ProductDetailsDataInit {
     private final ModelMapper modelMapper;
     private final TasteEntityRepository tasteEntityRepository;
 
+    @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() {
         System.out.println("START product-data-details-execute...");
         for (BrandEntity brandEntity : brandEntityRepository.findAll()) {

@@ -8,6 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ public class ProductDataFromWebSite {
     private final ProductEntityRepository productEntityRepository;
     private final RequestService requestService;
 
+    @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() {
         System.out.println("START product-data-details-web-execute...");
         for (ProductEntity productEntity : productEntityRepository.findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue()) {

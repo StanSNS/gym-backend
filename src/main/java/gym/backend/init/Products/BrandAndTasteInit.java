@@ -11,6 +11,7 @@ import gym.backend.repository.BrandEntityRepository;
 import gym.backend.repository.TasteColorEntityRepository;
 import gym.backend.repository.TasteEntityRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,7 @@ public class BrandAndTasteInit {
     private final RequestService requestService;
     private final Gson gson;
 
+    @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() {
         System.out.println("START brand-taste-data-execute...");
         ResponseEntity<String> responseEntity = requestService.getAllProductsData();

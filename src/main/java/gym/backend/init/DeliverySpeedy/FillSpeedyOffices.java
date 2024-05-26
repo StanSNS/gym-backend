@@ -10,6 +10,7 @@ import gym.backend.models.json.DeliveryRequest.CitySpeedyJSON;
 import gym.backend.repository.AddressSpeedyEntityRepository;
 import gym.backend.repository.CitySpeedyEntityRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class FillSpeedyOffices {
     private final CitySpeedyEntityRepository citySpeedyEntityRepository;
     private final AddressSpeedyEntityRepository addressSpeedyEntityRepository;
 
+    @CacheEvict(value = "allSpeedyAddresses", allEntries = true)
     public void startInit() {
         CitiesSpeedyJSON citiesSpeedyJSON = gson.fromJson(requestService.getAllOfficesSpeedy(), CitiesSpeedyJSON.class);
 

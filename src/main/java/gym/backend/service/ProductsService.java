@@ -12,6 +12,7 @@ import gym.backend.repository.ProductEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -32,6 +33,7 @@ public class ProductsService {
     private final ModelMapper modelMapper;
     private final Gson gson;
 
+    @Cacheable(value = "allSellableProducts")
     public HomePageResponseDataDTO getFrontPageData() {
         HomePageResponseDataDTO homePageResponseDataDTO = new HomePageResponseDataDTO();
 

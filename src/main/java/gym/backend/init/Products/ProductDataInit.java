@@ -9,6 +9,7 @@ import gym.backend.repository.BrandEntityRepository;
 import gym.backend.repository.ProductEntityRepository;
 import gym.backend.repository.TasteEntityRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,7 @@ public class ProductDataInit {
     private final TasteEntityRepository tasteEntityRepository;
     private final ProductEntityRepository productEntityRepository;
 
+    @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() {
         System.out.println("START product-data-execute...");
         ResponseEntity<String> responseEntity = requestService.getAllProductsData();

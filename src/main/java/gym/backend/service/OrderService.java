@@ -1,29 +1,27 @@
 package gym.backend.service;
 
 import com.google.gson.Gson;
-import gym.backend.exception.ResourceNotFoundException;
 import gym.backend.models.DTO.CartProductsDTO;
 import gym.backend.models.DTO.Order.DeliveryPriceReqDTO;
+import gym.backend.models.DTO.Order.OrderDTO;
 import gym.backend.models.DTO.Order.RetrieveOrderDTO;
 import gym.backend.models.DTO.Order.SpeedyApi.DeliveryPriceMainReqDTO;
 import gym.backend.models.DTO.Order.SpeedyApi.DeliveryPriceMainResDTO;
 import gym.backend.models.DTO.Order.SpeedyApi.DeliveryPriceMainResErrorDTO;
 import gym.backend.models.DTO.SpeedyOffices.CitySpeedyDTO;
-import gym.backend.models.DTO.Order.OrderDTO;
-import gym.backend.models.entity.AddressSpeedyEntity;
-import gym.backend.models.enums.OrderStatus;
 import gym.backend.models.entity.OrderEntity;
 import gym.backend.models.entity.OrderProductEntity;
+import gym.backend.models.enums.OrderStatus;
 import gym.backend.repository.AddressSpeedyEntityRepository;
 import gym.backend.repository.CitySpeedyEntityRepository;
 import gym.backend.repository.OrderEntityRepository;
 import gym.backend.repository.OrderProductEntityRepository;
-import jakarta.annotation.PostConstruct;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -31,7 +29,6 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -94,6 +91,7 @@ public class OrderService {
         return randomNumber;
     }
 
+    @Cacheable(value = "allSpeedyAddresses")
     public List<CitySpeedyDTO> getAllSpeedyAddresses() {
         return citySpeedyEntityRepository
                 .findAll()
