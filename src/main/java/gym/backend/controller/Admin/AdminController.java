@@ -41,6 +41,7 @@ public class AdminController {
     }
 
     @PostMapping(CREATE_ORDER_IN_SPEEDY)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CreateOrderSpeedyApiReqDTO> createOrderInSpeedy(@RequestBody CreateOrderInSpeedyDTO createOrderInSpeedyDTO) throws MessagingException {
         adminService.createSpeedyOrderAPI(createOrderInSpeedyDTO);
         return new ResponseEntity<>(HttpStatus.OK);
