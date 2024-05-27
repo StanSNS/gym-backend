@@ -124,11 +124,19 @@ public class OrderService {
     public ResponseEntity<?> getDeliveryPrice(DeliveryPriceReqDTO deliveryPriceDTOReq) {
         String productsURL = "https://api.speedy.bg/v1/calculate/";
 
+        double totalWeight;
+
+        if (deliveryPriceDTOReq.getTotalWeight() == null || deliveryPriceDTOReq.getTotalWeight() == 0.0) {
+            totalWeight = 0.100;
+        } else {
+            totalWeight = deliveryPriceDTOReq.getTotalWeight();
+        }
+
         DeliveryPriceMainReqDTO deliveryPriceMainReq = new DeliveryPriceMainReqDTO();
         deliveryPriceMainReq.setUserName(SPEEDY_API_USERNAME);
         deliveryPriceMainReq.setPassword(SPEEDY_API_PASSWORD);
         deliveryPriceMainReq.getRecipient().setPickupOfficeId(deliveryPriceDTOReq.getOfficeID());
-        deliveryPriceMainReq.getContent().setTotalWeight(deliveryPriceDTOReq.getTotalWeight());
+        deliveryPriceMainReq.getContent().setTotalWeight(totalWeight);
         deliveryPriceMainReq.getService().getAdditionalServices().getDeclaredValue().setAmount(deliveryPriceDTOReq.getAmountWithoutDelivery());
 
         RestTemplate restTemplate = new RestTemplate();
