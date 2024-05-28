@@ -13,11 +13,9 @@ import java.util.List;
 public class OrderDTO {
 
     @NotBlank
-    @Size(min = 0, max = 32)
     private String firstName;
 
     @NotBlank
-    @Size(min = 0, max = 32)
     private String lastName;
 
     @Email
