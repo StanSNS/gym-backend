@@ -126,7 +126,7 @@ public class OrderService {
 
         double totalWeight;
 
-        if (deliveryPriceDTOReq.getTotalWeight() == null || deliveryPriceDTOReq.getTotalWeight() == 0.0) {
+        if (deliveryPriceDTOReq.getTotalWeight() == 0.0) {
             totalWeight = 0.100;
         } else {
             totalWeight = deliveryPriceDTOReq.getTotalWeight();

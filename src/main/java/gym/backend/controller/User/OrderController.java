@@ -2,10 +2,13 @@ package gym.backend.controller.User;
 
 import gym.backend.models.DTO.Order.DeliveryPriceReqDTO;
 import gym.backend.models.DTO.Order.OrderDTO;
-import gym.backend.models.DTO.Order.SpeedyApi.DeliveryPriceMainResDTO;
 import gym.backend.models.DTO.SpeedyOffices.CitySpeedyDTO;
 import gym.backend.service.OrderService;
 import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +27,12 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping(RECEIVE_ORDER)
-    public ResponseEntity<Long> receiveOrder(@RequestBody OrderDTO orderDTO) throws MessagingException {
+    public ResponseEntity<Long> receiveOrder(@Valid @RequestBody OrderDTO orderDTO) throws MessagingException {
         return new ResponseEntity<>(orderService.addOrder(orderDTO), HttpStatus.OK);
     }
 
     @PostMapping(GET_DELIVERY_PRICE)
-    public ResponseEntity<?> getDeliveryPrice(@RequestBody DeliveryPriceReqDTO deliveryPriceDTOReq) {
+    public ResponseEntity<?> getDeliveryPrice(@Valid @RequestBody DeliveryPriceReqDTO deliveryPriceDTOReq) {
         return orderService.getDeliveryPrice(deliveryPriceDTOReq);
     }
 
@@ -39,12 +42,19 @@ public class OrderController {
     }
 
     @GetMapping(RECOVER_ALL_ORDER_INFO)
-    public ResponseEntity<String> recoverAllOrderInfo(@RequestParam String email) throws MessagingException {
+    @Valid
+    public ResponseEntity<String> recoverAllOrderInfo(@Email @NotBlank @RequestParam String email) throws MessagingException {
         return orderService.recoverOrdersAndSendEmail(email);
     }
 
     @GetMapping(FIND_ORDER_BY_NUMBER)
-    public ResponseEntity<String> findOrderByNumber(@RequestParam Long number) throws MessagingException {
-        return orderService.findOrderAndSendEmail(number);
+    @Valid
+    public ResponseEntity<String> findOrderByNumber(@Positive @RequestParam Long number) {
+        try {
+            return orderService.findOrderAndSendEmail(number);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
     }
 }

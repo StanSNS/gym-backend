@@ -23,7 +23,7 @@ public class OtherController {
             emailService.sendRequestEmail(email, title, content);
             return new ResponseEntity<>(HttpStatus.OK);
         }catch(Exception e) {
-            return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
