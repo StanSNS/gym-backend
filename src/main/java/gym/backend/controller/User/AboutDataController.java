@@ -21,8 +21,7 @@ public class AboutDataController {
     private final AboutDataService aboutDataService;
 
     @GetMapping(ABOUT_DATA)
-    public ResponseEntity<AboutDataDto> getAllAboutData() throws InterruptedException {
-        Thread.sleep(3000);
+    public ResponseEntity<AboutDataDto> getAllAboutData() {
         return new ResponseEntity<>(aboutDataService.getAboutData(), HttpStatus.OK);
     }
 }
