@@ -9,4 +9,5 @@ public class UserControllerUrlPaths {
     public static final String SEND_EMAIL = "/sendEmail";
     public static final String HOME = "/";
     public static final String PRODUCT = "/product";
+    public static final String ABOUT_DATA = "/about-data";
 }

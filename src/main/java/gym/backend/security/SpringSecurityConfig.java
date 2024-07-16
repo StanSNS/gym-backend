@@ -45,7 +45,8 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
                     FIND_ORDER_BY_NUMBER,
                     SEND_EMAIL,
                     HOME,
-                    PRODUCT
+                    PRODUCT,
+                    ABOUT_DATA
             ).permitAll();
 
             authorize.requestMatchers(
