@@ -25,4 +25,20 @@ public class AboutDataService {
 
         return modelMapper.map(firstByOrderByIdAsc.get(), AboutDataDto.class);
     }
+
+    public void modifyAboutData(AboutDataDto aboutDataDto) {
+        Optional<AboutDataEntity> firstByOrderByIdAsc = aboutDataEntityRepository.findFirstByOrderByIdAsc();
+        if (firstByOrderByIdAsc.isEmpty()) {
+            throw new ResourceNotFoundException();
+        }
+        AboutDataEntity aboutDataEntity = firstByOrderByIdAsc.get();
+        aboutDataEntity.setDeliveredProducts(aboutDataDto.getDeliveredProducts());
+        aboutDataEntity.setSavedMoney(aboutDataDto.getSavedMoney());
+        aboutDataEntity.setSoldProducts(aboutDataDto.getSoldProducts());
+        aboutDataEntity.setSatisfiedClients(aboutDataDto.getSatisfiedClients());
+        aboutDataEntityRepository.save(aboutDataEntity);
+
+        System.out.println(aboutDataDto);
+
+    }
 }

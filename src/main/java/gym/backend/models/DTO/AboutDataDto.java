@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class AboutDataDto {
     private Double savedMoney;
-    private Double soldProducts;
-    private Double satisfiedClients;
-    private Double deliveredProducts;
+    private Integer soldProducts;
+    private Integer satisfiedClients;
+    private Integer deliveredProducts;
 }

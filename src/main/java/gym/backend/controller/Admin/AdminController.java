@@ -2,11 +2,13 @@ package gym.backend.controller.Admin;
 
 import gym.backend.init.DeliverySpeedy.FillSpeedyOffices;
 import gym.backend.init.Products.*;
+import gym.backend.models.DTO.AboutDataDto;
 import gym.backend.models.DTO.Admin.Auth.JwtAuthResponseDTO;
 import gym.backend.models.DTO.Admin.Auth.LoginDTO;
 import gym.backend.models.DTO.Admin.Order.AdminOrderDTO;
 import gym.backend.models.DTO.Admin.Order.CreateOrderInSpeedyDTO;
 import gym.backend.models.DTO.Admin.Order.CreateOrderSpeedyApiReqDTO;
+import gym.backend.service.AboutDataService;
 import gym.backend.service.AdminService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static gym.backend.consts.Urls.AdminControllerUrlPaths.*;
+import static gym.backend.consts.Urls.UserControllerUrlPaths.ABOUT_DATA;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +37,18 @@ public class AdminController {
     private final ProductDataFromSheetInit productDataFromSheetInit;
     private final ProductDataFromWebSite productDataFromWebSite;
     private final FillSpeedyOffices fillSpeedyOffices;
+    private final AboutDataService aboutDataService;
+
+    @GetMapping(BASE_ADMIN + ABOUT_DATA)
+    public ResponseEntity<AboutDataDto> getAllAboutData() {
+        return new ResponseEntity<>(aboutDataService.getAboutData(), HttpStatus.OK);
+    }
+
+    @PutMapping(BASE_ADMIN + ABOUT_DATA)
+    public ResponseEntity<String> changeAboutData(@RequestBody AboutDataDto aboutDataDto) {
+        aboutDataService.modifyAboutData(aboutDataDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @PostMapping(AUTH_LOGIN)
     public ResponseEntity<JwtAuthResponseDTO> authenticateUser(@RequestBody LoginDTO loginDTO) {

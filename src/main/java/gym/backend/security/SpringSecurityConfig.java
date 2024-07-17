@@ -50,6 +50,7 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
             ).permitAll();
 
             authorize.requestMatchers(
+                    BASE_ADMIN + ABOUT_DATA,
                     BASE_ADMIN,
                     TASTE_COLOR_EXECUTE,
                     TASTE_DATA_EXECUTE,
