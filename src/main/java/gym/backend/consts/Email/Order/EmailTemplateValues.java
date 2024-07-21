@@ -32,5 +32,6 @@ public class EmailTemplateValues {
     public static final String APPROVED_DISCLAIMER_ONE_TEXT = "Информираме ви, че доставката обикновено отнема между 3 и 5 работни дни. Въпреки стремежа ни да осигурим най-бързата възможна доставка, времето за доставка може да варира в зависимост от текущото натоварване на нашия магазин.";
     public static final String APPROVED_DISCLAIMER_TWO_TEXT = "Ако имате някакви притеснения или въпроси относно вашата поръчка или доставката й, моля, не се колебайте да се свържете с нас по време на работните ни часове. Екипът ни ще бъде на разположение, за да ви помогне и да отговори на всички ваши нужди.";
 
+    public static final String SPEEDY_TRACKING_NUMBER_TABLE = "<td width=\"100%\" style=\"padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;\"><strong><span style=\"color: #00ff93;\">Проследи в Speedy:</span> speedyTrackingNumberValue</strong></td>";
 
 }

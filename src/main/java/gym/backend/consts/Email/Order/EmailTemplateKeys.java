@@ -29,6 +29,7 @@ public class EmailTemplateKeys {
     public static final String REGULAR_PRICE_KEY = "regularPrice";
     public static final String REDUCED_PRICE_KEY = "reducedPrice";
     public static final String SAVED_AMOUNT_KEY = "savedAmount";
-
+    public static final String SPEEDY_TRACKING_NUMBER_FIELD = "speedyTrackingNumberField";
+    public static final String SPEEDY_TRACKING_NUMBER_VALUE = "speedyTrackingNumberValue";
 
 }

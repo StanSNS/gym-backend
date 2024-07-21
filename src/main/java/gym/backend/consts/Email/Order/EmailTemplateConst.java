@@ -199,7 +199,7 @@ public class EmailTemplateConst {
                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                     <tr>
                                                         <td class="pad">
-                                                            <h1 style="margin: 0; color: #f05353; direction: ltr; font-family: Arial, Helvetica, sans-serif; font-size: 50px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 72px;">
+                                                            <h1 style="margin: 0; color: #00ff93; direction: ltr; font-family: Arial, Helvetica, sans-serif; font-size: 50px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 72px;">
                                                                 <span class="tinyMce-placeholder">GymFit</span></h1>
                                                         </td>
                                                     </tr>
@@ -270,9 +270,10 @@ public class EmailTemplateConst {
                                                        cellspacing="0" role="presentation"
                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                     <tr>
+                                                    <tr>
                                                         <td class="pad">
                                                             <h1 style="margin: 0; color: #7747FF; direction: ltr; font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 33.6px;">
-                                                                <span style="color: #ffffff;"><em>Благодарим ви за поръчката.&nbsp;<br><br>Здравейте,<br><br>introductionOrder<br></em></span><br><span
+                                                                <span style="color: #ffffff;"><em>Здравейте,<br><br>introductionOrder<br></em></span><br><span
                                                                     style="color: #ffffff;"><em>Подробностите за вашата поръчка са посочени по-долу: </em></span>
                                                             </h1>
                                                         </td>
@@ -379,7 +380,7 @@ public class EmailTemplateConst {
                                             <td class="pad">
                                                 <h1 style="margin: 0; color: #ffffff; direction: ltr; font-family: Arial, Helvetica, sans-serif; font-size: 30px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 40.8px;">
                                                     <span class="tinyMce-placeholder">Номер за проследяване на вашата поръчка<br><br><span
-                                                            style="color: #f05353;"><span
+                                                            style="color: #00ff93;"><span
                                                             style="color: #ffffff;">№</span>&nbsp; randomGeneratedNumber </span></span>
                                                 </h1>
                                             </td>
@@ -420,8 +421,8 @@ public class EmailTemplateConst {
                                                 <table style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; table-layout: fixed; direction: ltr; background-color: transparent; font-family: Arial, Helvetica, sans-serif; font-weight: 400; color: #ffffff; text-align: left; letter-spacing: 0px;" width="100%">
                                                     <tbody style="vertical-align: top; font-size: 16px; line-height: 120%;">
                                                     <tr>
-                                                        <td width="50%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Име:</span> FirstName<br></strong></td>
-                                                        <td width="50%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Фамилия:</span> LastName</strong></td>
+                                                        <td width="50%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">Име:</span> FirstName<br></strong></td>
+                                                        <td width="50%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">Фамилия:</span> LastName</strong></td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -434,8 +435,8 @@ public class EmailTemplateConst {
                                                 <table style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; table-layout: fixed; direction: ltr; background-color: transparent; font-family: Arial, Helvetica, sans-serif; font-weight: 400; color: #ffffff; text-align: left; letter-spacing: 0px;" width="100%">
                                                      <tbody style="vertical-align: top; font-size: 16px; line-height: 120%;">
                                          					<tr>
-                                         					<td width="50%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Имейл:</span> userEmail</strong></td>
-                                         					<td width="50%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Телефон:</span>&nbsp;phoneNumber</strong></td>
+                                         					<td width="50%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">Имейл:</span> userEmail</strong></td>
+                                         					<td width="50%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">Телефон:</span>&nbsp;phoneNumber</strong></td>
                                          				</tr>
                                          			</tbody>
                                                 </table>
@@ -448,9 +449,9 @@ public class EmailTemplateConst {
                                                 <table style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; table-layout: fixed; direction: ltr; background-color: transparent; font-family: Arial, Helvetica, sans-serif; font-weight: 400; color: #ffffff; text-align: left; letter-spacing: 0px;" width="100%">
                                                     <tbody style="vertical-align: top; font-size: 16px; line-height: 120%;">
                                                     <tr>
-                                                        <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Държава:</span> Country</strong></td>
-                                                        <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Град / село: </span>Town</strong></td>
-                                                        <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">ПК:</span> PostCode</strong></td>
+                                                        <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">Държава:</span> Country</strong></td>
+                                                        <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">Град / село: </span>Town</strong></td>
+                                                        <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">ПК:</span> PostCode</strong></td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -463,8 +464,8 @@ public class EmailTemplateConst {
                                                 <table style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; table-layout: fixed; direction: ltr; background-color: transparent; font-family: Arial, Helvetica, sans-serif; font-weight: 400; color: #ffffff; text-align: left; letter-spacing: 0px;" width="100%">
                                                     <tbody style="vertical-align: top; font-size: 16px; line-height: 120%;">
                                                     <tr>
-                                                        <td width="50%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Куриерска фирма:</span> Courier</strong></td>
-                                                        <td width="50%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Вид на доставка:</span> deliveryType</strong></td>
+                                                        <td width="50%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">Куриерска фирма:</span> Courier</strong></td>
+                                                        <td width="50%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">Вид на доставка:</span> deliveryType</strong></td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -477,7 +478,8 @@ public class EmailTemplateConst {
                                                 <table style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; table-layout: fixed; direction: ltr; background-color: transparent; font-family: Arial, Helvetica, sans-serif; font-weight: 400; color: #ffffff; text-align: left; letter-spacing: 0px;" width="100%">
                                                     <tbody style="vertical-align: top; font-size: 16px; line-height: 120%;">
                                                     <tr>
-                                                        <td width="100%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Адрес:</span> addressLineOne</strong></td>
+                                                        <td width="100%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">Адрес:</span> addressLineOne</strong></td>
+                                                        speedyTrackingNumberField
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -512,9 +514,9 @@ public class EmailTemplateConst {
                                                 <table style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; table-layout: fixed; direction: ltr; background-color: transparent; font-family: Arial, Helvetica, sans-serif; font-weight: 400; color: #ffffff; text-align: center; letter-spacing: 0px;" width="100%">
                                                     <tbody style="vertical-align: top; font-size: 16px; line-height: 120%;">
                                                     <tr>
-                                                        <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Общо продукти:</span> totalProductCount бр</strong></td>
-                                                        <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Тегло:</span> totalWeight кг.</strong></td>
-                                                        <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Доставка:</span>&nbsp;deliveryPrice лв.</strong></td>
+                                                        <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">Общо продукти:</span> totalProductCount бр</strong></td>
+                                                        <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">Тегло:</span> totalWeight кг.</strong></td>
+                                                        <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">Доставка:</span>&nbsp;deliveryPrice лв.</strong></td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -527,7 +529,7 @@ public class EmailTemplateConst {
                                                 <table style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; table-layout: fixed; direction: ltr; background-color: transparent; font-family: Arial, Helvetica, sans-serif; font-weight: 400; color: #ffffff; text-align: center; letter-spacing: 0px;" width="100%">
                                                     <tbody style="vertical-align: top; font-size: 16px; line-height: 120%;">
                                                     <tr>
-                                                        <td width="100%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Спестихте общо:</span> totalSaved лв.</strong></td>
+                                                        <td width="100%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">Спестихте общо:</span> totalSaved лв.</strong></td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -540,7 +542,7 @@ public class EmailTemplateConst {
                                                 <table style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; table-layout: fixed; direction: ltr; background-color: transparent; font-family: Arial, Helvetica, sans-serif; font-weight: 400; color: #ffffff; text-align: center; letter-spacing: 0px;" width="100%">
                                                     <tbody style="vertical-align: top; font-size: 16px; line-height: 120%;">
                                                     <tr>
-                                                        <td width="100%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #fa5a53;">Дължима сума при доставка:</span> totalAmount лв.</strong></td>
+                                                        <td width="100%" style="padding: 10px; word-break: break-word; border-top: 0px solid #ff2828; border-right: 0px solid #ff2828; border-bottom: 0px solid #ff2828; border-left: 0px solid #ff2828;"><strong><span style="color: #00ff93;">Дължима сума при доставка:</span> totalAmount лв.</strong></td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -620,9 +622,9 @@ public class EmailTemplateConst {
                                                           <table style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; table-layout: fixed; direction: ltr; background-color: #2a2a2a; font-family: Arial, Helvetica, sans-serif; font-weight: 400; color: #ffffff; text-align: center; letter-spacing: 0px;" width="100%">
                                                               <tbody style="vertical-align: top; font-size: 16px; line-height: 120%;">
                                                               <tr>
-                                                                  <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px dotted #ff2828; border-right: 0px dotted #ff2828; border-bottom: 0px dotted #ff2828; border-left: 0px dotted #ff2828;"><strong><span style="color: #fa5a53;">Тегло:</span><br></strong></td>
-                                                                  <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px dotted #ff2828; border-right: 0px dotted #ff2828; border-bottom: 0px dotted #ff2828; border-left: 0px dotted #ff2828;"><strong><span style="color: #fa5a53;">Вкус:</span></strong></td>
-                                                                  <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px dotted #ff2828; border-right: 0px dotted #ff2828; border-bottom: 0px dotted #ff2828; border-left: 0px dotted #ff2828;"><span class="tinyMce-placeholder" style="color: #fa5a53;"><strong>Брой:</strong></span></td>
+                                                                  <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px dotted #ff2828; border-right: 0px dotted #ff2828; border-bottom: 0px dotted #ff2828; border-left: 0px dotted #ff2828;"><strong><span style="color: #00ff93;">Тегло:</span><br></strong></td>
+                                                                  <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px dotted #ff2828; border-right: 0px dotted #ff2828; border-bottom: 0px dotted #ff2828; border-left: 0px dotted #ff2828;"><strong><span style="color: #00ff93;">Вкус:</span></strong></td>
+                                                                  <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px dotted #ff2828; border-right: 0px dotted #ff2828; border-bottom: 0px dotted #ff2828; border-left: 0px dotted #ff2828;"><span class="tinyMce-placeholder" style="color: #00ff93;"><strong>Брой:</strong></span></td>
                                                               </tr>
                                                               <tr>
                                                                   <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px dotted #ff2828; border-right: 0px dotted #ff2828; border-bottom: 0px dotted #ff2828; border-left: 0px dotted #ff2828;"><strong>productWeight кг.</strong></td>
@@ -640,9 +642,9 @@ public class EmailTemplateConst {
                                                           <table style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; table-layout: fixed; direction: ltr; background-color: #2a2a2a; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-weight: 700; color: #ffffff; text-align: center; letter-spacing: 0px;" width="100%">
                                                               <tbody style="vertical-align: top; font-size: 16px; line-height: 120%;">
                                                               <tr>
-                                                                  <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px dotted #ff2828; border-right: 0px dotted #ff2828; border-bottom: 0px dotted #ff2828; border-left: 0px dotted #ff2828;"><strong><span style="text-decoration: line-through;"><span style="color: #fa5a53; text-decoration: line-through;">Редовна:</span></span><br></strong></td>
-                                                                  <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px dotted #ff2828; border-right: 0px dotted #ff2828; border-bottom: 0px dotted #ff2828; border-left: 0px dotted #ff2828;"><span class="tinyMce-placeholder" style="color: #fa5a53;"><strong>Намалена:</strong></span></td>
-                                                                  <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px dotted #ff2828; border-right: 0px dotted #ff2828; border-bottom: 0px dotted #ff2828; border-left: 0px dotted #ff2828;"><span class="tinyMce-placeholder" style="color: #fa5a53;">Спестявате:</span></td>
+                                                                  <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px dotted #ff2828; border-right: 0px dotted #ff2828; border-bottom: 0px dotted #ff2828; border-left: 0px dotted #ff2828;"><strong><span style="text-decoration: line-through;"><span style="color: #00ff93; text-decoration: line-through;">Редовна:</span></span><br></strong></td>
+                                                                  <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px dotted #ff2828; border-right: 0px dotted #ff2828; border-bottom: 0px dotted #ff2828; border-left: 0px dotted #ff2828;"><span class="tinyMce-placeholder" style="color: #00ff93;"><strong>Намалена:</strong></span></td>
+                                                                  <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px dotted #ff2828; border-right: 0px dotted #ff2828; border-bottom: 0px dotted #ff2828; border-left: 0px dotted #ff2828;"><span class="tinyMce-placeholder" style="color: #00ff93;">Спестявате:</span></td>
                                                               </tr>
                                                               <tr>
                                                                   <td width="33.333333333333336%" style="padding: 10px; word-break: break-word; border-top: 0px dotted #ff2828; border-right: 0px dotted #ff2828; border-bottom: 0px dotted #ff2828; border-left: 0px dotted #ff2828;"><strong> regularPrice лв.</strong></td>

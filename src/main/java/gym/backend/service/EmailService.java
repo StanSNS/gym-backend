@@ -88,9 +88,9 @@ public class EmailService {
 
     private String fillOrderInfoTemplate(OrderEntity orderEntity) {
         String deliveryType = "До офис";
-        String addressLineOne =orderEntity.getOfficeAddress();
+        String addressLineOne = orderEntity.getOfficeAddress();
 
-        return ORDER_HTML_ALL_INFO
+        String emailTemplateWithData = ORDER_HTML_ALL_INFO
                 .replaceFirst(FIRST_NAME_KEY, orderEntity.getFirstName())
                 .replaceFirst(LAST_NAME_KEY, orderEntity.getLastName())
                 .replaceFirst(USER_EMAIL_KEY, orderEntity.getEmail())
@@ -106,6 +106,16 @@ public class EmailService {
                 .replaceFirst(DELIVERY_PRICE_KEY, String.format("%.2f", orderEntity.getDeliveryPrice()))
                 .replaceFirst(TOTAL_AMOUNT_KEY, String.format("%.2f", orderEntity.getTotalAmount()))
                 .replaceFirst(TOTAL_SAVED_KEY, String.format("%.2f", orderEntity.getTotalSaving()));
+
+        OrderStatus orderStatus = orderEntity.getOrderStatus();
+        if (orderStatus.equals(OrderStatus.PENDING) || orderStatus.equals(OrderStatus.APPROVED) || orderStatus.equals(OrderStatus.CANCELED)) {
+            emailTemplateWithData = emailTemplateWithData.replaceFirst(SPEEDY_TRACKING_NUMBER_FIELD, "");
+        } else {
+            String tableToAdd = SPEEDY_TRACKING_NUMBER_TABLE.replaceFirst(SPEEDY_TRACKING_NUMBER_VALUE, orderEntity.getSpeedyDeliveryId());
+            emailTemplateWithData = emailTemplateWithData.replaceFirst(SPEEDY_TRACKING_NUMBER_FIELD, tableToAdd);
+        }
+
+        return emailTemplateWithData;
     }
 
     private String fillOrderProductTemplate(OrderEntity orderEntity) {
