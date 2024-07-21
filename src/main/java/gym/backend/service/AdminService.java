@@ -190,13 +190,14 @@ public class AdminService {
         return jwtAuthResponse;
     }
 
+    @Transactional
     public void createSpeedyOrderAPI(CreateOrderInSpeedyDTO createOrderInSpeedyDTO) throws MessagingException {
         OrderEntity orderEntity = orderEntityRepository.findByRandomNumber(createOrderInSpeedyDTO.getRandomNumber());
         if (orderEntity == null) {
             throw new ResourceNotFoundException();
         }
 
-        if (!orderEntity.getOrderStatus().equals(OrderStatus.PENDING)) {
+        if (!orderEntity.getOrderStatus().equals(OrderStatus.APPROVED)) {
             throw new DataValidationException();
         }
 
@@ -216,7 +217,7 @@ public class AdminService {
         orderEntity.setSpeedyDeliveryId(createOrderSpeedyApiResDTO.getId());
         orderEntity.setPickupDate(createOrderSpeedyApiResDTO.getPickupDate());
         orderEntity.setDeliveryDeadline(createOrderSpeedyApiResDTO.getDeliveryDeadline());
-        orderEntity.setOrderStatus(OrderStatus.APPROVED);
+        orderEntity.setOrderStatus(OrderStatus.IN_DELIVERY);
 
         orderEntityRepository.save(orderEntity);
 

@@ -818,14 +818,14 @@ public class EmailTemplateConst {
                                                                              xmlns:w="urn:schemas-microsoft-com:office:word"
                                                                              href="https://www.youtube.com/watch?v=8cC6MG0D1vA&list=RDPYzmILOiysE&index=14&ab_channel=%D0%9C%D0%9E%D0%9B%D0%95%D0%A6"
                                                                              style="height:38px;width:170px;v-text-anchor:middle;"
-                                                                             arcsize="27%" stroke="false" fillcolor="#f05353">
+                                                                             arcsize="27%" stroke="false" fillcolor="#00ff93">
                                                                     <w:anchorlock/>
                                                                     <v:textbox inset="0px,0px,0px,0px">
                                                                         <center style="color:#ffffff; font-family:Arial, sans-serif; font-size:16px">
                                                                 <![endif]--><a
                                                                         href="https://www.youtube.com/watch?v=8cC6MG0D1vA&list=RDPYzmILOiysE&index=14&ab_channel=%D0%9C%D0%9E%D0%9B%D0%95%D0%A6"
                                                                         target="_blank"
-                                                                        style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#f05353;border-radius:10px;width:auto;border-top:0px solid transparent;font-weight:400;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:5px;padding-bottom:5px;font-family:Arial, Helvetica, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;"><span
+                                                                        style="text-decoration:none;display:inline-block;color:#333333;background-color:#00ff93;border-radius:10px;width:auto;border-top:0px solid transparent;font-weight:400;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:5px;padding-bottom:5px;font-family:Arial, Helvetica, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;"><span
                                                                         style="padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;letter-spacing:normal;"><span
                                                                         style="word-break: break-word; line-height: 28.8px;"><strong>Свържи се с нас</strong></span></span></a>
                                                                 <!--[if mso]></center></v:textbox></v:roundrect><![endif]--></div>
