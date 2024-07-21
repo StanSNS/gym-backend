@@ -156,7 +156,7 @@ public class EmailService {
     private void sendEmail(String email, String htmlBody, String emailTitle) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-        helper.setFrom(EMAIL_ORIGIN); //fixme this has to be sent from the company email...
+        helper.setFrom(EMAIL_ORIGIN);
         helper.setTo(email);
         helper.setSubject(emailTitle);
         helper.setText(htmlBody, true);
