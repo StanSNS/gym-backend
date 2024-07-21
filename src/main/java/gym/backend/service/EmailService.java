@@ -164,7 +164,7 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
-    public void generateAllOrdersByEmail(List<RetrieveOrderDTO> ordersByEmail) throws MessagingException {
+    public void generateAllOrdersByEmail(List<RetrieveOrderDTO> ordersByEmail, String email) throws MessagingException {
         StringBuilder sb = new StringBuilder();
 
         sb.append(ORDER_HTML_START);
@@ -177,7 +177,7 @@ public class EmailService {
         sb.append(ORDER_HTML_FOOTER);
         sb.append(ORDER_HTML_END);
 
-        sendEmail("stanimirsergevsns@gmail.com", sb.toString(), RETRIEVE_ALL_ORDERS_LIST);
+        sendEmail(email, sb.toString(), RETRIEVE_ALL_ORDERS_LIST);
     }
 
     private String generateTableContent(List<RetrieveOrderDTO> ordersByEmail) {

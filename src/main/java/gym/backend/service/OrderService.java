@@ -107,7 +107,7 @@ public class OrderService {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        emailService.generateAllOrdersByEmail(ordersByEmail);
+        emailService.generateAllOrdersByEmail(ordersByEmail, email);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
