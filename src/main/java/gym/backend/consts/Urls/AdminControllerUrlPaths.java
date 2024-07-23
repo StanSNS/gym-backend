@@ -12,4 +12,6 @@ public class AdminControllerUrlPaths {
     public static final String PRODUCT_DATA_DETAILS_WEB_EXECUTE = "/admin/product-data-details-web-execute";
     public static final String SPEEDY_OFFICES_EXECUTE = "/admin/speedy-offices-execute";
     public static final String ALL_EXECUTE = "/admin/all-execute";
+    public static final String MODIFY_IS_USER_CALLED = "/modifyIsUserCalled";
+    public static final String VALIDATE_ALL_PRODUCTS_AVAILABILITY = "/validateAllProductsAvailability";
 }

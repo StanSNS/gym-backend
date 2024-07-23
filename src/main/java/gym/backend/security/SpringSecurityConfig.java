@@ -59,7 +59,9 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
                     PRODUCT_DATA_DETAILS_SHEET_EXECUTE,
                     PRODUCT_DATA_DETAILS_WEB_EXECUTE,
                     SPEEDY_OFFICES_EXECUTE,
-                    ALL_EXECUTE
+                    ALL_EXECUTE,
+                    BASE_ADMIN + MODIFY_IS_USER_CALLED,
+                    BASE_ADMIN + VALIDATE_ALL_PRODUCTS_AVAILABILITY
             ).authenticated();
 
             authorize.requestMatchers(
@@ -71,7 +73,9 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
                     PRODUCT_DATA_DETAILS_SHEET_EXECUTE,
                     PRODUCT_DATA_DETAILS_WEB_EXECUTE,
                     SPEEDY_OFFICES_EXECUTE,
-                    ALL_EXECUTE
+                    ALL_EXECUTE,
+                    BASE_ADMIN + MODIFY_IS_USER_CALLED,
+                    BASE_ADMIN + VALIDATE_ALL_PRODUCTS_AVAILABILITY
             ).hasRole(ADMIN_C);
 
             authorize.anyRequest().authenticated();

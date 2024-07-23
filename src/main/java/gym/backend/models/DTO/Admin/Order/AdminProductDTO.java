@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class AdminProductDTO {
     private String modelId;
+    private String brandID;
     private String name;
     private String image;
     private String weightKg;

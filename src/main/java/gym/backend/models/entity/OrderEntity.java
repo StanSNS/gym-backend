@@ -79,6 +79,9 @@ public class OrderEntity extends BaseEntity {
     @Column
     private String deliveryDeadline;
 
+    @Column
+    private Boolean isUserCalled;
+
     @ManyToMany
     private List<OrderProductEntity> cartItems;
 

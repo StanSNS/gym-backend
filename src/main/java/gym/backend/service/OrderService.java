@@ -72,6 +72,7 @@ public class OrderService {
         Long randomOrderNumber = generateUniqueOrderNumber();
 
         orderEntity.setRandomNumber(randomOrderNumber);
+        orderEntity.setIsUserCalled(false);
         orderEntityRepository.save(orderEntity);
 
         emailService.generateHTMLContentAndSendEmail(orderEntity);

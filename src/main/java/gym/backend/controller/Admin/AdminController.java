@@ -8,8 +8,10 @@ import gym.backend.models.DTO.Admin.Auth.LoginDTO;
 import gym.backend.models.DTO.Admin.Order.AdminOrderDTO;
 import gym.backend.models.DTO.Admin.Order.CreateOrderInSpeedyDTO;
 import gym.backend.models.DTO.Admin.Order.CreateOrderSpeedyApiReqDTO;
+import gym.backend.models.DTO.Admin.Product.CheckProductAvailableDTO;
 import gym.backend.service.AboutDataService;
 import gym.backend.service.AdminService;
+import gym.backend.service.ProductsService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -48,6 +50,21 @@ public class AdminController {
     public ResponseEntity<String> changeAboutData(@RequestBody AboutDataDto aboutDataDto) {
         aboutDataService.modifyAboutData(aboutDataDto);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping(BASE_ADMIN + MODIFY_IS_USER_CALLED)
+    public ResponseEntity<String> modifyIsUserCalled(@RequestParam Long randomNumber, Boolean isUserCalled) {
+        adminService.changeIsUserLogged(randomNumber, isUserCalled);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping(BASE_ADMIN + VALIDATE_ALL_PRODUCTS_AVAILABILITY)
+    public ResponseEntity<String> validateAllProductsAvailability(@RequestBody List<CheckProductAvailableDTO> checkProductAvailableDTOList) {
+        String stringResponse = adminService.checkIfProductsAreAvailable(checkProductAvailableDTOList);
+        if (stringResponse.equals("All passed")) {
+            return new ResponseEntity<>(stringResponse, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(stringResponse, HttpStatus.ACCEPTED);
     }
 
     @PostMapping(AUTH_LOGIN)

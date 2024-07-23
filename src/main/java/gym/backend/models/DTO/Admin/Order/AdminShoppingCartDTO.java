@@ -9,4 +9,5 @@ public class AdminShoppingCartDTO {
     private AdminProductDTO adminProductDTO;
     private Integer quantity;
     private String selectedTaste;
+    private String selectedTasteID;
 }

@@ -20,4 +20,5 @@ public class AdminOrderDTO {
     private LocalDateTime date;
     private String speedyDeliveryId;
     private Long randomNumber;
+    private Boolean isUserCalled;
 }

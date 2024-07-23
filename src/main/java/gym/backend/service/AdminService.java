@@ -7,6 +7,7 @@ import gym.backend.exception.ResourceNotFoundException;
 import gym.backend.models.DTO.Admin.Auth.JwtAuthResponseDTO;
 import gym.backend.models.DTO.Admin.Auth.LoginDTO;
 import gym.backend.models.DTO.Admin.Order.*;
+import gym.backend.models.DTO.Admin.Product.CheckProductAvailableDTO;
 import gym.backend.models.DTO.Order.SpeedyApi.DeliveryPriceMainReqDTO;
 import gym.backend.models.entity.*;
 import gym.backend.models.enums.OrderStatus;
@@ -53,6 +54,8 @@ public class AdminService {
     private final JwtTokenProvider jwtTokenProvider;
     private final AddressSpeedyEntityRepository addressSpeedyEntityRepository;
     private final Gson gson;
+    private final ProductsService productsService;
+
 
     public List<AdminOrderDTO> getAllOrdersForAdminPage() {
         List<AdminOrderDTO> adminOrderDTOToReturn = new ArrayList<>();
@@ -93,16 +96,20 @@ public class AdminService {
                 adminProductDTO.setWeightKg(productEntity.getWeightKg());
                 adminProductDTO.setRegularPrice(productEntity.getRegularPrice());
                 adminProductDTO.setDiscountedPrice(productEntity.getDiscountedPrice() * 1.4);
+                adminProductDTO.setBrandID(productEntity.getBrandEntity().getBrandID());
 
                 adminShoppingCartDTO.setAdminProductDTO(adminProductDTO);
                 adminShoppingCartDTO.setQuantity(cartItem.getQuantity());
 
                 if (cartItem.getSelectedTasteSilaId() != null) {
-                    Optional<TasteEntity> tasteEntity = tasteEntityRepository.findTasteEntityBySilaTasteID(cartItem.getSelectedTasteSilaId());
-                    if (tasteEntity.isEmpty()) {
+                    Optional<TasteEntity> tasteEntityOptional = tasteEntityRepository.findTasteEntityBySilaTasteID(cartItem.getSelectedTasteSilaId());
+                    if (tasteEntityOptional.isEmpty()) {
                         throw new ResourceNotFoundException();
                     }
-                    adminShoppingCartDTO.setSelectedTaste(tasteEntity.get().getName());
+
+                    TasteEntity tasteEntity = tasteEntityOptional.get();
+                    adminShoppingCartDTO.setSelectedTaste(tasteEntity.getName());
+                    adminShoppingCartDTO.setSelectedTasteID(tasteEntity.getSilaTasteID());
                 } else {
                     adminShoppingCartDTO.setSelectedTaste("");
                 }
@@ -119,6 +126,7 @@ public class AdminService {
             adminOrderDTO.setDate(orderEntity.getDate());
             adminOrderDTO.setRandomNumber(orderEntity.getRandomNumber());
             adminOrderDTO.setSpeedyDeliveryId(orderEntity.getSpeedyDeliveryId());
+            adminOrderDTO.setIsUserCalled(orderEntity.getIsUserCalled());
 
             adminOrderDTOToReturn.add(adminOrderDTO);
         }
@@ -247,6 +255,30 @@ public class AdminService {
 
 
         return createOrderSpeedyApiReqDTO;
+    }
+
+    public void changeIsUserLogged(Long randomNumber, Boolean isUserCalled) {
+        OrderEntity byRandomNumber = orderEntityRepository.findByRandomNumber(randomNumber);
+        if (byRandomNumber == null) {
+            throw new ResourceNotFoundException();
+        }
+        byRandomNumber.setIsUserCalled(isUserCalled);
+        orderEntityRepository.save(byRandomNumber);
+    }
+
+    public String checkIfProductsAreAvailable(List<CheckProductAvailableDTO> checkProductAvailableDTOList) {
+        for (CheckProductAvailableDTO checkProductAvailableDTO : checkProductAvailableDTOList) {
+            boolean isCurrentProductAvailable = productsService.checkIfProductIsAvailable(checkProductAvailableDTO.getBrandId(),
+                    checkProductAvailableDTO.getModelId(),
+                    checkProductAvailableDTO.getSelectedTasteID()
+            );
+
+            if (!isCurrentProductAvailable) {
+                return String.format("Current product with modelID: %s is not available.", checkProductAvailableDTO.getModelId());
+            }
+        }
+
+        return "All passed";
     }
 
 }
