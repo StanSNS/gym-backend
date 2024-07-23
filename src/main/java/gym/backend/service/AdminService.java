@@ -266,7 +266,9 @@ public class AdminService {
         orderEntityRepository.save(byRandomNumber);
     }
 
-    public String checkIfProductsAreAvailable(List<CheckProductAvailableDTO> checkProductAvailableDTOList) {
+    public List<String> checkIfProductsAreAvailable(List<CheckProductAvailableDTO> checkProductAvailableDTOList) {
+        ArrayList<String> errors = new ArrayList<>();
+
         for (CheckProductAvailableDTO checkProductAvailableDTO : checkProductAvailableDTOList) {
             boolean isCurrentProductAvailable = productsService.checkIfProductIsAvailable(checkProductAvailableDTO.getBrandId(),
                     checkProductAvailableDTO.getModelId(),
@@ -274,11 +276,15 @@ public class AdminService {
             );
 
             if (!isCurrentProductAvailable) {
-                return String.format("Current product with modelID: %s is not available.", checkProductAvailableDTO.getModelId());
+                errors.add(checkProductAvailableDTO.getModelId());
             }
         }
 
-        return "All passed";
+        if (errors.isEmpty()) {
+            return "All passed".lines().toList();
+        }
+
+        return errors;
     }
 
 }

@@ -59,12 +59,12 @@ public class AdminController {
     }
 
     @PatchMapping(BASE_ADMIN + VALIDATE_ALL_PRODUCTS_AVAILABILITY)
-    public ResponseEntity<String> validateAllProductsAvailability(@RequestBody List<CheckProductAvailableDTO> checkProductAvailableDTOList) {
-        String stringResponse = adminService.checkIfProductsAreAvailable(checkProductAvailableDTOList);
-        if (stringResponse.equals("All passed")) {
-            return new ResponseEntity<>(stringResponse, HttpStatus.OK);
+    public ResponseEntity<List<String>> validateAllProductsAvailability(@RequestBody List<CheckProductAvailableDTO> checkProductAvailableDTOList) {
+        List<String> stringsResponse = adminService.checkIfProductsAreAvailable(checkProductAvailableDTOList);
+        if (stringsResponse.get(0).equals("All passed")) {
+            return new ResponseEntity<>(stringsResponse, HttpStatus.OK);
         }
-        return new ResponseEntity<>(stringResponse, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(stringsResponse, HttpStatus.ACCEPTED);
     }
 
     @PostMapping(AUTH_LOGIN)
