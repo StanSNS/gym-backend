@@ -6,4 +6,5 @@ public class ErrorConstants {
     public static final String JWT_AUTHENTICATION_FAILURE = "JWT authentication failed. Please provide a valid token.";
     public static final String VALIDATION_FAILED = "Data validation failed.";
     public static final String INTERNAL_ERROR = "An internal error occurred!";
+    public static final String INIT_DATA = "Initialization failed for %s.";
 }

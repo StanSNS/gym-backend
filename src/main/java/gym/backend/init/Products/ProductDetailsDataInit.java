@@ -20,6 +20,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 
@@ -51,10 +52,13 @@ public class ProductDetailsDataInit {
 
                 if (!dataElement.isJsonPrimitive()) {
                     ProductsJSONFromBrand productsJSONFromBrand = gson.fromJson(responseEntity.getBody(), ProductsJSONFromBrand.class);
-                    ProductEntity productEntity = new ProductEntity();
+
+                    ArrayList<ProductEntity> productEntityArrayList = new ArrayList<>();
 
                     for (ProductJSONFromBrand singleProduct : productsJSONFromBrand.getData()) {
-                        if (!productEntityRepository.existsByModelId(singleProduct.getModel_id())) {
+                        ProductEntity productEntity = productEntityRepository.findProductEntityByModelId(singleProduct.getModel_id());
+
+                        if (productEntity == null) {
                             productEntity = modelMapper.map(singleProduct, ProductEntity.class);
                             productEntity.setSku(singleProduct.getId());
                             productEntity.setModelId(singleProduct.getModel_id());
@@ -64,7 +68,6 @@ public class ProductDetailsDataInit {
 
                             addTastesInProductEntity(singleProduct, productEntity);
                         } else {
-                            productEntity = productEntityRepository.findProductEntityByModelId(singleProduct.getModel_id());
                             productEntity.setSku(singleProduct.getId());
                             productEntity.setCategory(singleProduct.getCategory());
                             productEntity.setImage(singleProduct.getImage());
@@ -74,8 +77,10 @@ public class ProductDetailsDataInit {
 
                             addTastesInProductEntity(singleProduct, productEntity);
                         }
-                        productEntityRepository.save(productEntity);
+                        productEntityArrayList.add(productEntity);
                     }
+
+                    productEntityRepository.saveAll(productEntityArrayList);
                 }
             }
         }

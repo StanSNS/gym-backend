@@ -63,9 +63,9 @@ public class MainDataInit {
 
             productDataFromSheetInit.startInit();
 
-            fillSpeedyOffices.startInit();
-
             productDataFromWebSite.startInit();
+
+            fillSpeedyOffices.startInit();
 
             System.out.println("Operation completed.");
         }

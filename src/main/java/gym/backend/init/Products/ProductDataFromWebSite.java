@@ -1,5 +1,6 @@
 package gym.backend.init.Products;
 
+import gym.backend.exception.InitDataException;
 import gym.backend.init.initService.RequestService;
 import gym.backend.models.entity.ProductEntity;
 import gym.backend.repository.ProductEntityRepository;
@@ -32,9 +33,11 @@ public class ProductDataFromWebSite {
         ArrayList<ProductEntity> entitiesToSave = new ArrayList<>();
         for (ProductEntity currentProductEntity : productEntityRepository.findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue()) {
             ProductEntity modifiedProductEntity = extractEnemyPriceFromHTMLAndRatingDataFromHTML(currentProductEntity);
-            if (modifiedProductEntity != null) {
-                entitiesToSave.add(modifiedProductEntity);
+            if (modifiedProductEntity == null) {
+                throw new InitDataException("product-data-details-web-execute");
             }
+
+            entitiesToSave.add(modifiedProductEntity);
         }
 
         productEntityRepository.saveAll(entitiesToSave);

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static gym.backend.utils.TimeUtils.convertMsToTime;
 
@@ -27,6 +28,8 @@ public class TasteColorsInit {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
 
         String line;
+
+        ArrayList<TasteColor> tasteColorsToSave = new ArrayList<>();
         while ((line = bufferedReader.readLine()) != null) {
             String name = line.split(" ")[0];
             String color = line.split(" ")[1];
@@ -35,9 +38,10 @@ public class TasteColorsInit {
                 TasteColor tasteColor = new TasteColor();
                 tasteColor.setName(name);
                 tasteColor.setColor(color);
-                tasteColorEntityRepository.save(tasteColor);
+                tasteColorsToSave.add(tasteColor);
             }
         }
+        tasteColorEntityRepository.saveAll(tasteColorsToSave);
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         System.out.println("END   -> taste-color-execute... " + convertMsToTime(executionTime));

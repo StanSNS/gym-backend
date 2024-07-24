@@ -1,8 +1,12 @@
 package gym.backend.init.Products;
 
 import com.google.gson.Gson;
+import gym.backend.exception.AccessDeniedException;
+import gym.backend.exception.InitDataException;
+import gym.backend.exception.ResourceNotFoundException;
 import gym.backend.init.initService.RequestService;
 import gym.backend.models.entity.ProductEntity;
+import gym.backend.models.entity.TasteEntity;
 import gym.backend.models.json.ProductRequest.Product.ProductJSON;
 import gym.backend.models.json.ProductRequest.Product.ProductsJSON;
 import gym.backend.repository.BrandEntityRepository;
@@ -12,8 +16,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 
 import static gym.backend.utils.TimeUtils.convertMsToTime;
 
@@ -35,20 +42,28 @@ public class ProductDataInit {
         ResponseEntity<String> responseEntity = requestService.getAllProductsData();
 
         if (responseEntity.getStatusCode().toString().startsWith("200")) {
-
             ProductsJSON productsJSON = gson.fromJson(responseEntity.getBody(), ProductsJSON.class);
 
+            ArrayList<ProductEntity> productEntityArrayList = new ArrayList<>();
+
+            if (productEntityRepository.count() > 0) {
+                productEntityArrayList.addAll(productEntityRepository.findAll());
+            }
+
             for (ProductJSON singleProduct : productsJSON.getData()) {
-                ProductEntity productEntity = new ProductEntity();
+                ProductEntity productEntity = findProductByModelIDFromList(productEntityArrayList, singleProduct.getModel_id());
 
-                if (productEntityRepository.existsByModelId(singleProduct.getModel_id())) {
-                    productEntity = productEntityRepository.findProductEntityByModelId(singleProduct.getModel_id());
-
+                if (productEntity != null) {
                     if (singleProduct.getTaste_id() != null) {
-                        productEntity.getTaste().add(tasteEntityRepository.findTasteEntityBySilaTasteID(singleProduct.getTaste_id()).get());
+                        Optional<TasteEntity> tasteEntityBySilaTasteID = tasteEntityRepository.findTasteEntityBySilaTasteID(singleProduct.getTaste_id());
+                        if (tasteEntityBySilaTasteID.isEmpty()) {
+                            throw new ResourceNotFoundException();
+                        }
+                        productEntity.getTaste().add(tasteEntityBySilaTasteID.get());
                     }
 
                 } else {
+                    productEntity = new ProductEntity();
                     productEntity.setModelId(singleProduct.getModel_id());
                     productEntity.setName(singleProduct.getProduct_name());
                     productEntity.setBrandEntity(brandEntityRepository.findByBrandID(singleProduct.getBrand_id()));
@@ -60,11 +75,26 @@ public class ProductDataInit {
                 productEntity.setRatingCount(0);
                 productEntity.setRatingValue(0.0);
 
-                productEntityRepository.save(productEntity);
+                productEntityArrayList.add(productEntity);
+            }
+
+            productEntityRepository.saveAll(productEntityArrayList);
+            long endTime = System.currentTimeMillis();
+            long executionTime = endTime - startTime;
+            System.out.println("END   -> product-data-execute... " + convertMsToTime(executionTime));
+
+        } else {
+            throw new InitDataException("product-data-execute");
+        }
+
+    }
+
+    public static ProductEntity findProductByModelIDFromList(ArrayList<ProductEntity> productEntityArrayList, String modelId) {
+        for (ProductEntity productEntity : productEntityArrayList) {
+            if (productEntity.getModelId().equals(modelId)) {
+                return productEntity;
             }
         }
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
-        System.out.println("END   -> product-data-execute... " + convertMsToTime(executionTime));
+        return null;
     }
 }

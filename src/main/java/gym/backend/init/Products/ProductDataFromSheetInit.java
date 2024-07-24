@@ -1,5 +1,6 @@
 package gym.backend.init.Products;
 
+import gym.backend.exception.InitDataException;
 import gym.backend.init.initService.RequestService;
 import gym.backend.models.entity.ProductEntity;
 import gym.backend.repository.ProductEntityRepository;
@@ -10,6 +11,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static gym.backend.utils.TimeUtils.convertMsToTime;
@@ -29,6 +31,8 @@ public class ProductDataFromSheetInit {
 
         XSSFSheet sheet = requestService.getDistroSheet();
         if (sheet != null) {
+            ArrayList<ProductEntity> productEntityArrayList = new ArrayList<>();
+
             for (int i = sheet.getFirstRowNum() + 1; i <= sheet.getLastRowNum(); i++) {
                 XSSFRow row = sheet.getRow(i);
                 if (row != null) {
@@ -42,13 +46,20 @@ public class ProductDataFromSheetInit {
                         productEntityByModelId.setRegularPrice(regularPrice);
                         productEntityByModelId.setDiscountedPrice(discountedPrice);
                         productEntityByModelId.setIsAvailable(isAvailable);
-                        productEntityRepository.save(productEntityByModelId);
+                        productEntityArrayList.add(productEntityByModelId);
                     }
                 }
             }
+
+            productEntityRepository.saveAll(productEntityArrayList);
+
+            long endTime = System.currentTimeMillis();
+            long executionTime = endTime - startTime;
+            System.out.println("END   -> product-data-details-sheet-execute... " + convertMsToTime(executionTime));
+
+        } else {
+            throw new InitDataException("product-data-details-sheet-execute");
         }
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
-        System.out.println("END   -> product-data-details-sheet-execute... " + convertMsToTime(executionTime));
+
     }
 }

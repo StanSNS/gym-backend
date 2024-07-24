@@ -1,6 +1,7 @@
 package gym.backend.init.Products;
 
 import com.google.gson.Gson;
+import gym.backend.exception.InitDataException;
 import gym.backend.init.initService.RequestService;
 import gym.backend.models.entity.BrandEntity;
 import gym.backend.models.entity.TasteColor;
@@ -14,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 
 import static gym.backend.utils.TimeUtils.convertMsToTime;
 
@@ -36,15 +39,26 @@ public class BrandAndTasteInit {
         if (responseEntity.getStatusCode().toString().startsWith("200")) {
             ProductsJSON productsJSON = gson.fromJson(responseEntity.getBody(), ProductsJSON.class);
 
+            ArrayList<BrandEntity> brandEntityArrayList = new ArrayList<>();
+            ArrayList<TasteEntity> tasteEntityArrayList = new ArrayList<>();
+
+            if (brandEntityRepository.count() > 0) {
+                brandEntityArrayList.addAll(brandEntityRepository.findAll());
+            }
+
+            if(tasteEntityRepository.count() > 0) {
+                tasteEntityArrayList.addAll(tasteEntityRepository.findAll());
+            }
+
             for (ProductJSON singleData : productsJSON.getData()) {
-                if (!brandEntityRepository.existsByBrandID(singleData.getBrand_id())) {
+                if (!existsByBrandIDFromList(brandEntityArrayList, singleData.getBrand_id())) {
                     BrandEntity brandEntity = new BrandEntity();
                     brandEntity.setBrandID(singleData.getBrand_id());
                     brandEntity.setName(singleData.getBrand_name());
-                    brandEntityRepository.save(brandEntity);
+                    brandEntityArrayList.add(brandEntity);
                 }
 
-                if (!tasteEntityRepository.existsBySilaTasteID(singleData.getTaste_id()) && singleData.getTaste_id() != null && singleData.getTaste_name() != null) {
+                if (singleData.getTaste_id() != null && singleData.getTaste_name() != null && !existsBySilaTasteIDFromList(tasteEntityArrayList, singleData.getTaste_id())) {
                     TasteEntity tasteEntity = new TasteEntity();
                     tasteEntity.setColors("");
                     tasteEntity.setColorNames("");
@@ -58,13 +72,39 @@ public class BrandAndTasteInit {
                             tasteEntity.setColorNames(tasteEntity.getColorNames() + tasteColor.getName() + ", ");
                         }
                     }
-                    tasteEntityRepository.save(tasteEntity);
+                    tasteEntityArrayList.add(tasteEntity);
                 }
             }
+
+            brandEntityRepository.saveAll(brandEntityArrayList);
+            tasteEntityRepository.saveAll(tasteEntityArrayList);
+
+            long endTime = System.currentTimeMillis();
+            long executionTime = endTime - startTime;
+            System.out.println("END   -> brand-taste-data-execute... " + convertMsToTime(executionTime));
+
+        } else {
+            throw new InitDataException("brand-taste-data-execute");
         }
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
-        System.out.println("END   -> brand-taste-data-execute... " + convertMsToTime(executionTime));
+
+    }
+
+    private boolean existsByBrandIDFromList(ArrayList<BrandEntity> brandEntityArrayList, String brandID) {
+        for (BrandEntity brandEntity : brandEntityArrayList) {
+            if (brandEntity.getBrandID().equals(brandID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean existsBySilaTasteIDFromList(ArrayList<TasteEntity> tasteEntityArrayList, String tasteID) {
+        for (TasteEntity tasteEntity : tasteEntityArrayList) {
+            if (tasteEntity.getSilaTasteID().equals(tasteID)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
