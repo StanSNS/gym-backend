@@ -12,6 +12,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 import static gym.backend.utils.TimeUtils.convertMsToTime;
 
 @Component
@@ -27,16 +29,22 @@ public class ProductDataFromWebSite {
         System.out.println();
         System.out.println("START -> product-data-details-web-execute...");
 
-        for (ProductEntity productEntity : productEntityRepository.findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue()) {
-            extractEnemyPriceFromHTMLAndRatingDataFromHTML(productEntity);
+        ArrayList<ProductEntity> entitiesToSave = new ArrayList<>();
+        for (ProductEntity currentProductEntity : productEntityRepository.findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue()) {
+            ProductEntity modifiedProductEntity = extractEnemyPriceFromHTMLAndRatingDataFromHTML(currentProductEntity);
+            if (modifiedProductEntity != null) {
+                entitiesToSave.add(modifiedProductEntity);
+            }
         }
+
+        productEntityRepository.saveAll(entitiesToSave);
 
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         System.out.println("END   -> product-data-details-web-execute... " + convertMsToTime(executionTime));
     }
 
-    private void extractEnemyPriceFromHTMLAndRatingDataFromHTML(ProductEntity productEntity) {
+    private ProductEntity extractEnemyPriceFromHTMLAndRatingDataFromHTML(ProductEntity productEntity) {
         ResponseEntity<String> responseEntity = requestService.getHTMLDocumentByModelID(productEntity.getModelId());
         if (responseEntity.getStatusCode().toString().startsWith("200") && responseEntity.getBody() != null) {
             Document doc = Jsoup.parse(responseEntity.getBody());
@@ -108,8 +116,9 @@ public class ProductDataFromWebSite {
                 productEntity.setRatingValue(ratingValue / ratingCount);
             }
 
-            productEntityRepository.save(productEntity);
+            return productEntity;
         }
+        return null;
     }
 
 }
