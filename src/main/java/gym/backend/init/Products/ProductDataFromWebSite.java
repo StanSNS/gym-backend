@@ -34,15 +34,18 @@ public class ProductDataFromWebSite {
             Document doc = Jsoup.parse(responseEntity.getBody());
             Elements scriptElements = doc.getElementsByTag("script");
 
+//            FIXME CURRENT PAGES 63
             for (Element script : scriptElements) {
                 String scriptText = script.html();
                 if (scriptText.contains("gtag(\"event\", \"add_to_cart\"")) {
                     int startIndex = scriptText.indexOf("value:") + "value:".length();
                     int endIndex = scriptText.indexOf(",", startIndex);
                     if (endIndex != -1) {
-                        String value = scriptText.substring(startIndex, endIndex);
-                        if (value.trim().contains(".")) {
-                            productEntity.setEnemyPrice(Double.parseDouble(value.trim()));
+                        String value = scriptText.substring(startIndex, endIndex).trim();
+                        try {
+                            productEntity.setEnemyPrice(Double.parseDouble(value));
+                        } catch (NumberFormatException ignored) {
+
                         }
                     }
                     break;
@@ -94,7 +97,7 @@ public class ProductDataFromWebSite {
                     (4 * productEntity.getFourStarRatingCount()) +
                     (5 * productEntity.getFiveStarRatingCount());
 
-            if(ratingCount != 0 || ratingValue != 0){
+            if (ratingCount != 0 || ratingValue != 0) {
                 productEntity.setRatingValue(ratingValue / ratingCount);
             }
 
