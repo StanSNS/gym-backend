@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static gym.backend.utils.TimeUtils.convertMsToTime;
+
 @RequiredArgsConstructor
 @Component
 public class FillSpeedyOffices {
@@ -27,9 +29,11 @@ public class FillSpeedyOffices {
 
     @CacheEvict(value = "allSpeedyAddresses", allEntries = true)
     public void startInit() {
-        CitiesSpeedyJSON citiesSpeedyJSON = gson.fromJson(requestService.getAllOfficesSpeedy(), CitiesSpeedyJSON.class);
+        long startTime = System.currentTimeMillis();
+        System.out.println();
+        System.out.println("START -> speedy-offices-execute...");
 
-        System.out.println("START speedy-offices-execute...");
+        CitiesSpeedyJSON citiesSpeedyJSON = gson.fromJson(requestService.getAllOfficesSpeedy(), CitiesSpeedyJSON.class);
         for (CitySpeedyJSON office : citiesSpeedyJSON.getOffices()) {
             AddressSpeedyJSON address = office.getAddress();
 
@@ -69,6 +73,8 @@ public class FillSpeedyOffices {
                 citySpeedyEntityRepository.save(citySpeedyEntity);
             }
         }
-        System.out.println("END speedy-offices-execute...");
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        System.out.println("END   -> speedy-offices-execute... " + convertMsToTime(executionTime));
     }
 }

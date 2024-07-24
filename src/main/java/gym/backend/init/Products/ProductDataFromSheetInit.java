@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.Optional;
 
+import static gym.backend.utils.TimeUtils.convertMsToTime;
+
 @Component
 @RequiredArgsConstructor
 public class ProductDataFromSheetInit {
@@ -21,9 +23,11 @@ public class ProductDataFromSheetInit {
 
     @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() throws IOException {
-        XSSFSheet sheet = requestService.getDistroSheet();
+        long startTime = System.currentTimeMillis();
+        System.out.println();
+        System.out.println("START -> product-data-details-sheet-execute...");
 
-        System.out.println("START product-data-details-sheet-execute...");
+        XSSFSheet sheet = requestService.getDistroSheet();
         if (sheet != null) {
             for (int i = sheet.getFirstRowNum() + 1; i <= sheet.getLastRowNum(); i++) {
                 XSSFRow row = sheet.getRow(i);
@@ -43,6 +47,8 @@ public class ProductDataFromSheetInit {
                 }
             }
         }
-        System.out.println("END product-data-details-sheet-execute...");
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        System.out.println("END   -> product-data-details-sheet-execute... " + convertMsToTime(executionTime));
     }
 }

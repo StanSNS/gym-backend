@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static gym.backend.utils.TimeUtils.convertMsToTime;
+
 @Component
 @RequiredArgsConstructor
 public class TasteColorsInit {
@@ -18,7 +20,9 @@ public class TasteColorsInit {
 
     @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() throws IOException {
-        System.out.println("START taste-color-execute...");
+        long startTime = System.currentTimeMillis();
+        System.out.println();
+        System.out.println("START -> taste-color-execute...");
         String filePath = "src/main/resources/TasteColors.txt";
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
 
@@ -34,6 +38,8 @@ public class TasteColorsInit {
                 tasteColorEntityRepository.save(tasteColor);
             }
         }
-        System.out.println("END taste-color-execute...");
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        System.out.println("END   -> taste-color-execute... " + convertMsToTime(executionTime));
     }
 }

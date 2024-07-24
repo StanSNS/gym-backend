@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 
+import static gym.backend.utils.TimeUtils.convertMsToTime;
+
 @Component
 @RequiredArgsConstructor
 public class ProductDataInit {
@@ -27,7 +29,9 @@ public class ProductDataInit {
 
     @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() {
-        System.out.println("START product-data-execute...");
+        long startTime = System.currentTimeMillis();
+        System.out.println();
+        System.out.println("START -> product-data-execute...");
         ResponseEntity<String> responseEntity = requestService.getAllProductsData();
 
         if (responseEntity.getStatusCode().toString().startsWith("200")) {
@@ -59,6 +63,8 @@ public class ProductDataInit {
                 productEntityRepository.save(productEntity);
             }
         }
-        System.out.println("END product-data-execute...");
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        System.out.println("END   -> product-data-execute... " + convertMsToTime(executionTime));
     }
 }

@@ -12,6 +12,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import static gym.backend.utils.TimeUtils.convertMsToTime;
+
 @Component
 @RequiredArgsConstructor
 public class ProductDataFromWebSite {
@@ -21,11 +23,17 @@ public class ProductDataFromWebSite {
 
     @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() {
-        System.out.println("START product-data-details-web-execute...");
+        long startTime = System.currentTimeMillis();
+        System.out.println();
+        System.out.println("START -> product-data-details-web-execute...");
+
         for (ProductEntity productEntity : productEntityRepository.findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue()) {
             extractEnemyPriceFromHTMLAndRatingDataFromHTML(productEntity);
         }
-        System.out.println("END product-data-details-web-execute...");
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        System.out.println("END   -> product-data-details-web-execute... " + convertMsToTime(executionTime));
     }
 
     private void extractEnemyPriceFromHTMLAndRatingDataFromHTML(ProductEntity productEntity) {
@@ -34,7 +42,6 @@ public class ProductDataFromWebSite {
             Document doc = Jsoup.parse(responseEntity.getBody());
             Elements scriptElements = doc.getElementsByTag("script");
 
-//            FIXME CURRENT PAGES 63
             for (Element script : scriptElements) {
                 String scriptText = script.html();
                 if (scriptText.contains("gtag(\"event\", \"add_to_cart\"")) {

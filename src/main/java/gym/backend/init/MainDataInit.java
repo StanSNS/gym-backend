@@ -91,7 +91,6 @@ public class MainDataInit {
             System.out.println("Admin has been created");
         }
 
-
     }
 }
 
