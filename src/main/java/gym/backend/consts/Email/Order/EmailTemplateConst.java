@@ -816,14 +816,14 @@ public class EmailTemplateConst {
                                                             <div class="alignment" align="center"><!--[if mso]>
                                                                 <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
                                                                              xmlns:w="urn:schemas-microsoft-com:office:word"
-                                                                             href="https://www.youtube.com/watch?v=8cC6MG0D1vA&list=RDPYzmILOiysE&index=14&ab_channel=%D0%9C%D0%9E%D0%9B%D0%95%D0%A6"
+                                                                             href="#"
                                                                              style="height:38px;width:170px;v-text-anchor:middle;"
                                                                              arcsize="27%" stroke="false" fillcolor="#00ff93">
                                                                     <w:anchorlock/>
                                                                     <v:textbox inset="0px,0px,0px,0px">
                                                                         <center style="color:#ffffff; font-family:Arial, sans-serif; font-size:16px">
                                                                 <![endif]--><a
-                                                                        href="https://www.youtube.com/watch?v=8cC6MG0D1vA&list=RDPYzmILOiysE&index=14&ab_channel=%D0%9C%D0%9E%D0%9B%D0%95%D0%A6"
+                                                                        href="#"
                                                                         target="_blank"
                                                                         style="text-decoration:none;display:inline-block;color:#333333;background-color:#00ff93;border-radius:10px;width:auto;border-top:0px solid transparent;font-weight:400;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:5px;padding-bottom:5px;font-family:Arial, Helvetica, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;"><span
                                                                         style="padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;letter-spacing:normal;"><span
@@ -880,7 +880,7 @@ public class EmailTemplateConst {
                                                                             <!--<![endif]-->
                                                                             <tr>
                                                                                 <td style="vertical-align: middle; text-align: center; padding-top: 15px; padding-bottom: 15px; padding-left: 15px; padding-right: 15px;">
-                                                                                    <a href="https://www.youtube.com/watch?v=8cC6MG0D1vA&list=RDPYzmILOiysE&index=14&ab_channel=%D0%9C%D0%9E%D0%9B%D0%95%D0%A6"
+                                                                                    <a href="#"
                                                                                        target="_blank"
                                                                                        style="text-decoration: none;"><img
                                                                                             class="icon" alt="Facebook"
@@ -891,7 +891,7 @@ public class EmailTemplateConst {
                                                                             </tr>
                                                                             <tr>
                                                                                 <td style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 700; color: #ffffff; vertical-align: middle; letter-spacing: undefined; text-align: center;">
-                                                                                    <a href="https://www.youtube.com/watch?v=8cC6MG0D1vA&list=RDPYzmILOiysE&index=14&ab_channel=%D0%9C%D0%9E%D0%9B%D0%95%D0%A6"
+                                                                                    <a href="#"
                                                                                        target="_blank"
                                                                                        style="color: #ffffff; text-decoration: none;">Facebook</a>
                                                                                 </td>
@@ -929,7 +929,7 @@ public class EmailTemplateConst {
                                                                             <!--<![endif]-->
                                                                             <tr>
                                                                                 <td style="vertical-align: middle; text-align: center; padding-top: 15px; padding-bottom: 15px; padding-left: 15px; padding-right: 15px;">
-                                                                                    <a href="https://www.youtube.com/watch?v=8cC6MG0D1vA&list=RDPYzmILOiysE&index=14&ab_channel=%D0%9C%D0%9E%D0%9B%D0%95%D0%A6"
+                                                                                    <a href="#"
                                                                                        target="_blank"
                                                                                        style="text-decoration: none;"><img
                                                                                             class="icon" alt="Instagram"
@@ -940,7 +940,7 @@ public class EmailTemplateConst {
                                                                             </tr>
                                                                             <tr>
                                                                                 <td style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 700; color: #ffffff; vertical-align: middle; letter-spacing: undefined; text-align: center;">
-                                                                                    <a href="https://www.youtube.com/watch?v=8cC6MG0D1vA&list=RDPYzmILOiysE&index=14&ab_channel=%D0%9C%D0%9E%D0%9B%D0%95%D0%A6"
+                                                                                    <a href="#"
                                                                                        target="_blank"
                                                                                        style="color: #ffffff; text-decoration: none;">Instagram</a>
                                                                                 </td>
@@ -978,7 +978,7 @@ public class EmailTemplateConst {
                                                                             <!--<![endif]-->
                                                                             <tr>
                                                                                 <td style="vertical-align: middle; text-align: center; padding-top: 15px; padding-bottom: 15px; padding-left: 15px; padding-right: 15px;">
-                                                                                    <a href="https://www.youtube.com/watch?v=8cC6MG0D1vA&list=RDPYzmILOiysE&index=14&ab_channel=%D0%9C%D0%9E%D0%9B%D0%95%D0%A6"
+                                                                                    <a href="#"
                                                                                        target="_blank"
                                                                                        style="text-decoration: none;"><img
                                                                                             class="icon" alt="tik tok"
@@ -989,7 +989,7 @@ public class EmailTemplateConst {
                                                                             </tr>
                                                                             <tr>
                                                                                 <td style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 700; color: #ffffff; vertical-align: middle; letter-spacing: undefined; text-align: center;">
-                                                                                    <a href="https://www.youtube.com/watch?v=8cC6MG0D1vA&list=RDPYzmILOiysE&index=14&ab_channel=%D0%9C%D0%9E%D0%9B%D0%95%D0%A6"
+                                                                                    <a href="#"
                                                                                        target="_blank"
                                                                                        style="color: #ffffff; text-decoration: none;">Tik
                                                                                         Tok</a></td>
@@ -1027,7 +1027,7 @@ public class EmailTemplateConst {
                                                                             <!--<![endif]-->
                                                                             <tr>
                                                                                 <td style="vertical-align: middle; text-align: center; padding-top: 15px; padding-bottom: 15px; padding-left: 15px; padding-right: 15px;">
-                                                                                    <a href="https://www.youtube.com/watch?v=8cC6MG0D1vA&list=RDPYzmILOiysE&index=14&ab_channel=%D0%9C%D0%9E%D0%9B%D0%95%D0%A6"
+                                                                                    <a href="#"
                                                                                        target="_blank"
                                                                                        style="text-decoration: none;"><img
                                                                                             class="icon" alt="Twitter(X)"
@@ -1038,7 +1038,7 @@ public class EmailTemplateConst {
                                                                             </tr>
                                                                             <tr>
                                                                                 <td style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 700; color: #ffffff; vertical-align: middle; letter-spacing: undefined; text-align: center;">
-                                                                                    <a href="https://www.youtube.com/watch?v=8cC6MG0D1vA&list=RDPYzmILOiysE&index=14&ab_channel=%D0%9C%D0%9E%D0%9B%D0%95%D0%A6"
+                                                                                    <a href="#"
                                                                                        target="_blank"
                                                                                        style="color: #ffffff; text-decoration: none;">Twitter(X)</a>
                                                                                 </td>
