@@ -31,6 +31,6 @@ jobs:
       with:
         app-name: AWWA-BS
         slot-name: Production
-        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D13B141105C34AA999ED61B11339BEFA }}
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_39F0A8A7E6F74E478987FC72904A3F0F }}
         package: ${{ github.workspace }}/target/*.jar
 
