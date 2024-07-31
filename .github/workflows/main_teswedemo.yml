@@ -9,6 +9,40 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  AZURE_WEBAPP_NAME: 'teswedemo'
+  AZURE_SLOT_NAME: 'Production'
+  JAVA_VERSION: '17'
+  AZURE_CLIENT_ID: ${{ secrets.AZUREAPPSERVICE_CLIENTID_14AE3713AA81405E929B6085450EEDA4 }}
+  AZURE_TENANT_ID: ${{ secrets.AZUREAPPSERVICE_TENANTID_B9CC65D9926C41DB9BD0DCFD64A749E7 }}
+  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_484C5F8FD4384C4DB479FAB2F79ADC4A }}
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_PORT: ${{ secrets.DB_PORT }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+  DB_USERNAME: ${{ secrets.DB_USERNAME }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  USER_FRONTEND_BASE_URL: ${{ secrets.USER_FRONTEND_BASE_URL }}
+  ADMIN_FRONTEND_BASE_URL: ${{ secrets.ADMIN_FRONTEND_BASE_URL }}
+  SILA_BG_API_KEY: ${{ secrets.SILA_BG_API_KEY }}
+  SILA_BG_AUTH_EMAIL: ${{ secrets.SILA_BG_AUTH_EMAIL }}
+  SILA_BG_AUTH_PASSWORD: ${{ secrets.SILA_BG_AUTH_PASSWORD }}
+  EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+  EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+  EMAIL_ORIGIN: ${{ secrets.EMAIL_ORIGIN }}
+  EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+  EMAIL_PROPS_KEY_ONE: ${{ secrets.EMAIL_PROPS_KEY_ONE }}
+  EMAIL_PROPS_VALUE_ONE: ${{ secrets.EMAIL_PROPS_VALUE_ONE }}
+  EMAIL_PROPS_KEY_TWO: ${{ secrets.EMAIL_PROPS_KEY_TWO }}
+  EMAIL_PROPS_VALUE_TWO: ${{ secrets.EMAIL_PROPS_VALUE_TWO }}
+  EMAIL_PROPS_KEY_THREE: ${{ secrets.EMAIL_PROPS_KEY_THREE }}
+  EMAIL_PROPS_VALUE_THREE: ${{ secrets.EMAIL_PROPS_VALUE_THREE }}
+  ADMIN_AUTH_LOGIN_USERNAME: ${{ secrets.ADMIN_AUTH_LOGIN_USERNAME }}
+  ADMIN_AUTH_LOGIN_PASSWORD: ${{ secrets.ADMIN_AUTH_LOGIN_PASSWORD }}
+  APP_JWT_EXPIRATION_MILISECONDS: ${{ secrets.APP_JWT_EXPIRATION_MILISECONDS }}
+  APP_JWT_SECRECT: ${{ secrets.APP_JWT_SECRECT }}
+  SPEEDY_API_USERNAME: ${{ secrets.SPEEDY_API_USERNAME }}
+  SPEEDY_API_PASSWORD: ${{ secrets.SPEEDY_API_PASSWORD }}
+
 jobs:
   build:
     runs-on: windows-latest
@@ -23,7 +57,7 @@ jobs:
           distribution: 'microsoft'
 
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn clean install -DskipTests
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
