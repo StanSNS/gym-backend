@@ -50,30 +50,32 @@ public class MainDataInit {
                 && tasteEntityRepository.count() == 0
                 && citySpeedyEntityRepository.count() == 0;
 
-        if (isDBHasData) {
-            System.out.println("Start adding fresh data...");
-
-            tasteColorsInit.startInit();
-
-            simpleDataInit.startInit();
-
-            productDataInit.startInit();
-
-            productDetailsDataInit.startInit();
-
-            productDataFromSheetInit.startInit();
-
-            productDataFromWebSite.startInit();
-
-            fillSpeedyOffices.startInit();
-
-            System.out.println("Operation completed.");
-        }
-
         if (roleRepository.count() == 0) {
             roleRepository.save(new RoleEntity(ADMIN_C));
             roleRepository.save(new RoleEntity(USER_C));
         }
+
+        if (isDBHasData) {
+            System.out.println("Start adding fresh data...");
+
+//            tasteColorsInit.startInit();
+
+//            simpleDataInit.startInit();
+
+//            productDataInit.startInit();
+
+//            productDetailsDataInit.startInit();
+
+//            productDataFromSheetInit.startInit();
+
+//            productDataFromWebSite.startInit();
+
+//            fillSpeedyOffices.startInit();
+
+            System.out.println("Operation completed.");
+        }
+
+
 
         if (adminEntityRepository.count() == 0) {
             AdminEntity adminEntity = new AdminEntity();

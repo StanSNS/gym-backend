@@ -37,8 +37,5 @@ public class AboutDataService {
         aboutDataEntity.setSoldProducts(aboutDataDto.getSoldProducts());
         aboutDataEntity.setSatisfiedClients(aboutDataDto.getSatisfiedClients());
         aboutDataEntityRepository.save(aboutDataEntity);
-
-        System.out.println(aboutDataDto);
-
     }
 }
