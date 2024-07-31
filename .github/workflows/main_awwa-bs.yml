@@ -21,7 +21,7 @@ jobs:
     - name: Set up Java version
       uses: actions/setup-java@v1
       with:
-        java-version: '3.2.5'
+        java-version: '17'
 
     - name: Build with Maven
       run: mvn clean install
@@ -31,6 +31,6 @@ jobs:
       with:
         app-name: AWWA-BS
         slot-name: Production
-        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0E80B4EA3C91492D8E1AB358A29B7704 }}
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5C91AEDAF3244E9C8A45FCD58D36F90F }}
         package: ${{ github.workspace }}/target/*.jar
 
