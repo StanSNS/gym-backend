@@ -31,6 +31,6 @@ jobs:
       with:
         app-name: gymfitbulgaria-api
         slot-name: Production
-        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0EC7C6B52D3F436B824D707339550EA5 }}
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7E015DCA8B6240F786F5860BF55D9653 }}
         package: ${{ github.workspace }}/target/*.jar
 
