@@ -1,0 +1,13 @@
+name: Deployment Trigger Test
+
+on:
+  deployment:
+    types: [created]
+
+jobs:
+  deployment-trigger-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Echo Deployment Trigger'
+        run: echo "Deployment event has been triggered!"
