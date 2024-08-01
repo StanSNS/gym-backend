@@ -37,7 +37,7 @@ jobs:
       # Execute Terraform Destroy targeting specific resources
       - name: Terraform Destroy Targeting Specific Resources
         working-directory: terraform
-        run: terraform destroy -auto-approve -target=azurerm_windows_web_app.awwabs
+        run: terraform destroy -auto-approve -target=azurerm_resource_group.rgbs
 
 #  build-and-deploy:
 #    runs-on: windows-latest
