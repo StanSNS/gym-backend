@@ -1,7 +1,7 @@
 name: Deployment Trigger Test
 
 on:
-  deployment:
+  deployment_status:
     types: [created]
 
 jobs:
