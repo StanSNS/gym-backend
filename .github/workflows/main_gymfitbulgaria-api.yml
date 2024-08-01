@@ -9,28 +9,61 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
-    runs-on: windows-latest
+  terraform-destroy:
+    runs-on: ubuntu-latest
 
     steps:
-    # checkout the repo
-    - name: 'Checkout Github Action'
-      uses: actions/checkout@master
+      # Checkout the different repository with the main.tf file
+      - name: 'Checkout Terraform Repo'
+        uses: actions/checkout@v2
+        with:
+          repository: StanSNS/Gym-infra
+#          path: terraform
 
+      # Set up Terraform
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 3.113
 
-    - name: Set up Java version
-      uses: actions/setup-java@v1
-      with:
-        java-version: '17'
+      # Initialize Terraform
+      - name: Terraform Init
+        working-directory: terraform
+        run: terraform init
 
-    - name: Build with Maven
-      run: mvn clean install
+      # Execute Terraform Destroy targeting specific resources
+      - name: Terraform Destroy Targeting Specific Resources
+        working-directory: .
+        run: terraform destroy -auto-approve -target=azurerm_windows_web_app.awwabs
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
-    - name: Run Azure webapp deploy action using publish profile credentials
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: gymfitbulgaria-api
-        slot-name: Production
-        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0EC7C6B52D3F436B824D707339550EA5 }}
-        package: ${{ github.workspace }}/target/*.jar
+#  build-and-deploy:
+#    runs-on: windows-latest
+#    needs: terraform-destroy
+#
+#    steps:
+#    # checkout the repo
+#    - name: 'Checkout Github Action'
+#      uses: actions/checkout@master
+#
+#
+#    - name: Set up Java version
+#      uses: actions/setup-java@v1
+#      with:
+#        java-version: '17'
+#
+#    - name: Build with Maven
+#      run: mvn clean install
+#
+#    - name: Run Azure webapp deploy action using publish profile credentials
+#      uses: azure/webapps-deploy@v2
+#      with:
+#        app-name: gymfitbulgaria-api
+#        slot-name: Production
+#        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0EC7C6B52D3F436B824D707339550EA5 }}
+#        package: ${{ github.workspace }}/target/*.jar
 
