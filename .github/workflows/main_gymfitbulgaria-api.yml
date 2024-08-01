@@ -36,7 +36,7 @@ jobs:
 
       # Execute Terraform Destroy targeting specific resources
       - name: Terraform Destroy Targeting Specific Resources
-        working-directory: .
+        working-directory: terraform
         run: terraform destroy -auto-approve -target=azurerm_resource_group.rgbs
 
 #  build-and-deploy:
