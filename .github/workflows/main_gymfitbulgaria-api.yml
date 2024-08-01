@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: StanSNS/Gym-infra
-#          path: terraform
+          path: terraform
 
       # Set up Terraform
       - name: Set up Terraform
