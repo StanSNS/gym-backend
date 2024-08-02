@@ -36,6 +36,11 @@ jobs:
         working-directory: ./infra
         run: terraform destroy -auto-approve -target=azurerm_windows_web_app.awwabs
 
+      # Execute Terraform Apply targeting specific resources
+      - name: Terraform Destroy Targeting Specific Resources
+        working-directory: ./infra
+        run: terraform apply -auto-approve -target=azurerm_windows_web_app.awwabs
+
       # Configure Git
       - name: Set up Git
         run: |
