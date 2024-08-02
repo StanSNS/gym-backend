@@ -13,8 +13,9 @@ jobs:
       - name: 'Checkout Terraform Folder'
         uses: actions/checkout@v2
 
-      - name: "Create Text File"
-        run: echo "This is the content of the tex22t file" > newfile2.txt
+      - name: Generate random number and create text file
+        run: |
+          echo $RANDOM > randomNumber.txt
 
       - name: "Set up Git"
         run: |
