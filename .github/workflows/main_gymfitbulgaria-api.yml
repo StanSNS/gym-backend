@@ -37,7 +37,7 @@ jobs:
         run: terraform destroy -auto-approve -target=azurerm_windows_web_app.awwabs
 
       # Execute Terraform Apply targeting specific resources
-      - name: Terraform Destroy Targeting Specific Resources
+      - name: Terraform Apply Targeting Specific Resources
         working-directory: ./infra
         run: terraform apply -auto-approve -target=azurerm_windows_web_app.awwabs
 
@@ -55,6 +55,26 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+
+      - name: Set up Java version
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+
+      - name: Build with Maven
+        run: mvn clean install
+
+#      - name: Run Azure webapp deploy action using publish profile credentials
+#        uses: azure/webapps-deploy@v2
+#        with:
+#          app-name: gymfitbulgaria-api
+#          slot-name: Production
+#          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0EC7C6B52D3F436B824D707339550EA5 }}
+#          package: ${{ github.workspace }}/target/*.jar
+
+
+
+
 
 #  build-and-deploy:
 #    runs-on: windows-latest
