@@ -23,17 +23,25 @@ jobs:
         with:
           terraform_version: 1.3.7
 
-      - name: "Terraform Init"
+      - name: "Terraform Init -Main"
         working-directory: ./infra
         run: terraform init
 
-      - name: "Terraform Destroy Targeting Specific Resources"
+      - name: "Terraform Destroy Targeting Specific Resources -Main"
         working-directory: ./infra
         run: terraform destroy -auto-approve -target=azurerm_windows_web_app.awwabs
 
-      - name: "Terraform Apply Targeting Specific Resources"
+      - name: "Terraform Apply Targeting Specific Resources -Main"
         working-directory: ./infra
         run: terraform apply -auto-approve -target=azurerm_windows_web_app.awwabs
+
+      - name: "Terraform Init -Firewall Rules"
+        working-directory: ./infra/firewallRules
+        run: terraform init
+
+      - name: "Terraform Apply Targeting Specific Resources -Firewall Rules"
+        working-directory: ./infra/firewallRules
+        run: terraform apply -auto-approve -target=azurerm_postgresql_flexible_server_firewall_rule.firewall_rules
 
       - name: "Set up Git"
         run: |
@@ -43,7 +51,7 @@ jobs:
       - name: "Commit and Push State File"
         run: |
           git add .
-          git commit -m "Update terraform.tfstate after destroy"
+          git commit -m "Update terraform.tfstate files after modifications"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}

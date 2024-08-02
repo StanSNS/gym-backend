@@ -40,13 +40,6 @@ resource "azurerm_postgresql_flexible_server_database" "apfsdpgsql" {
   charset   = "UTF8"
 }
 
-resource "azurerm_postgresql_flexible_server_firewall_rule" "apfsfrpgsql" {
-  name             = "APFSFR-BSSNS99"
-  server_id        = azurerm_postgresql_flexible_server.apfspgsql.id
-  start_ip_address = "0.0.0.0"
-  end_ip_address   = "255.255.255.255"
-}
-
 resource "azurerm_postgresql_flexible_server_configuration" "apfscpgsql" {
   name      = "require_secure_transport"
   server_id = azurerm_postgresql_flexible_server.apfspgsql.id
