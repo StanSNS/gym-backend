@@ -29,7 +29,7 @@ jobs:
 
       # Initialize Terraform
       - name: Terraform Init
-        working-directory: terraform
+        working-directory: ./infra
         run: terraform init
 
 #      # Execute Terraform Destroy targeting specific resources
