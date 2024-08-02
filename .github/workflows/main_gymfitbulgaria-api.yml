@@ -39,25 +39,26 @@ jobs:
         working-directory: terraform
         run: terraform destroy -auto-approve -target=azurerm_resource_group.rgbs
 
-      # Print Git version
-      - name: Check Git version
-        run: git --version
+#      # Print Git version
+#      - name: Check Git version
+#        working-directory: .
+#        run: git --version
 
-#      # Configure Git
-#      - name: Set up Git
-#        run: |
-#          git config user.name "github-actions"
-#          git config user.email "actions@github.com"
-#
-#      # Commit and push updated terraform.tfstate
-#      - name: Commit and Push State File
-#        working-directory: terraform
-#        run: |
-#          git add terraform.tfstate
-#          git commit -m "Update terraform.tfstate after destroy"
-#          git push
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.AUTH_TOKEN }}
+      # Configure Git
+      - name: Set up Git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+      # Commit and push updated terraform.tfstate
+      - name: Commit and Push State File
+        working-directory: terraform
+        run: |
+          git add terraform.tfstate
+          git commit -m "Update terraform.tfstate after destroy"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.AUTH_TOKEN }}
 
 #  build-and-deploy:
 #    runs-on: windows-latest
