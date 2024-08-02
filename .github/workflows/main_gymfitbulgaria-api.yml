@@ -32,35 +32,27 @@ jobs:
         working-directory: ./infra
         run: terraform init
 
-#      # Execute Terraform Destroy targeting specific resources
-#      - name: Terraform Destroy Targeting Specific Resources
-#        working-directory: terraform
-#        run: terraform destroy -auto-approve -target=azurerm_resource_group.rgbs
-#
-#      # Configure Git
-#      - name: Set up Git
-#        run: |
-#          git config --global user.name "github-actions[bot]"
-#          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-##          git remote set-url origin https://github.com/StanSNS/Gym-infra.git
+      # Execute Terraform Destroy targeting specific resources
+      - name: Terraform Destroy Targeting Specific Resources
+        working-directory: ./infra
+        run: terraform destroy -auto-approve -target=azurerm_resource_group.rgbs
 
-#      # Debugging Step
-#      - name: Show Git Status
-#        working-directory: terraform
-#        run: git status
-#
-#      - name: Show Git Config
-#        run: git config --list
+      # Configure Git
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+#          git remote set-url origin https://github.com/StanSNS/Gym-infra.git
 
-#      # Commit and push updated terraform.tfstate
-#      - name: Commit and Push State File
-#        working-directory: terraform
-#        run: |
-#          git add terraform.tfstate
-#          git commit -m "Update terraform.tfstate after destroy"
-#          git push
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+      # Commit and push updated terraform.tfstate
+      - name: Commit and Push State File
+        working-directory: terraform
+        run: |
+          git add terraform.tfstate
+          git commit -m "Update terraform.tfstate after destroy"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
 
 #  build-and-deploy:
 #    runs-on: windows-latest
