@@ -27,6 +27,6 @@ public class AboutDataController {
 
     @GetMapping("test-new-data")
     public ResponseEntity<String> testNewController() {
-        return new ResponseEntity<>("This is modified new code again...", HttpStatus.OK);
+        return new ResponseEntity<>("This is modified new code again... v2", HttpStatus.OK);
     }
 }
