@@ -39,11 +39,6 @@ jobs:
         working-directory: terraform
         run: terraform destroy -auto-approve -target=azurerm_resource_group.rgbs
 
-#      # Print Git version
-#      - name: Check Git version
-#        working-directory: .
-#        run: git --version
-
       # Configure Git
       - name: Set up Git
         run: |
@@ -56,7 +51,7 @@ jobs:
         run: |
           git add terraform.tfstate
           git commit -m "Update terraform.tfstate after destroy"
-          git push
+          git push https://$GITHUB_ACTOR:${{ secrets.AUTH_TOKEN }}@github.com/StanSNS/Gym-infra.git HEAD:main
         env:
           GITHUB_TOKEN: ${{ secrets.AUTH_TOKEN }}
 
