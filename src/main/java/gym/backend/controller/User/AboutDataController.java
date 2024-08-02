@@ -24,9 +24,4 @@ public class AboutDataController {
     public ResponseEntity<AboutDataDto> getAllAboutData() {
         return new ResponseEntity<>(aboutDataService.getAboutData(), HttpStatus.OK);
     }
-
-    @GetMapping("test-new-data")
-    public ResponseEntity<String> testNewController() {
-        return new ResponseEntity<>("This is modified new code again... v2", HttpStatus.OK);
-    }
 }
