@@ -37,12 +37,6 @@ jobs:
         working-directory: ./infra
         run: terraform destroy -auto-approve -target=azurerm_resource_group.rgbs
 
-      # Create a new text file in the ./infra directory
-      - name: Create text file
-        working-directory: ./infra
-        run: |
-          echo "This is a new file" > newfile.txt
-
       # Configure Git
       - name: Set up Git
         run: |
