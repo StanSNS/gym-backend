@@ -45,15 +45,24 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      # Commit and push updated terraform.tfstate
-      - name: Commit and Push State File
+      # Debugging Step
+      - name: Show Git Status
         working-directory: terraform
-        run: |
-          git add terraform.tfstate
-          git commit -m "Update terraform.tfstate after destroy"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.AUTH_TOKEN }}
+        run: git status
+
+      - name: Show Git Config
+        run: git config --list
+
+
+#      # Commit and push updated terraform.tfstate
+#      - name: Commit and Push State File
+#        working-directory: terraform
+#        run: |
+#          git add terraform.tfstate
+#          git commit -m "Update terraform.tfstate after destroy"
+#          git push
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.AUTH_TOKEN }}
 
 #  build-and-deploy:
 #    runs-on: windows-latest
