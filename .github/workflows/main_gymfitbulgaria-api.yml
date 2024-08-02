@@ -54,7 +54,7 @@ jobs:
       # Commit and push the new file
       - name: Commit and Push New File
         run: |
-          git add newfile.txt
+          git add .
           git commit -m "Add new text file"
           git push
         env:
