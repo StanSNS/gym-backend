@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Checkout Terraform Repo'
+      - name: 'Checkout Terraform Folder'
         uses: actions/checkout@v2
 
       - name: "Create Text File"
