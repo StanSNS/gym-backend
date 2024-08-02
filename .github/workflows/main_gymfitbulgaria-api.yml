@@ -50,9 +50,10 @@ jobs:
 
       - name: "Commit and Push State File"
         run: |
+          git pull origin main
           git add .
           git commit -m "Update terraform.tfstate files after modifications"
-          git push
+          git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.LOGIN_AUTH_TOKEN}}
 
