@@ -51,7 +51,7 @@ jobs:
         run: |
           git add terraform.tfstate
           git commit -m "Update terraform.tfstate after destroy"
-          git push https://$GITHUB_ACTOR:${{ secrets.AUTH_TOKEN }}@github.com/StanSNS/Gym-infra.git HEAD:main
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.AUTH_TOKEN }}
 
