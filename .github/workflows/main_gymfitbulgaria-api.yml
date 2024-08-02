@@ -20,41 +20,41 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # Set up Terraform
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.3.7
+#      # Set up Terraform
+#      - name: Set up Terraform
+#        uses: hashicorp/setup-terraform@v2
+#        with:
+#          terraform_version: 1.3.7
+#
+#      # Initialize Terraform
+#      - name: Terraform Init
+#        working-directory: ./infra
+#        run: terraform init
+#
+#      # Execute Terraform Destroy targeting specific resources
+#      - name: Terraform Destroy Targeting Specific Resources
+#        working-directory: ./infra
+#        run: terraform destroy -auto-approve -target=azurerm_windows_web_app.awwabs
 
-      # Initialize Terraform
-      - name: Terraform Init
-        working-directory: ./infra
-        run: terraform init
-
-      # Execute Terraform Destroy targeting specific resources
-      - name: Terraform Destroy Targeting Specific Resources
-        working-directory: ./infra
-        run: terraform destroy -auto-approve -target=azurerm_windows_web_app.awwabs
-
-      # Execute Terraform Apply targeting specific resources
-      - name: Terraform Apply Targeting Specific Resources
-        working-directory: ./infra
-        run: terraform apply -auto-approve -target=azurerm_windows_web_app.awwabs
-
-      # Configure Git
-      - name: Set up Git
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-      # Commit and push updated terraform.tfstate
-      - name: Commit and Push State File
-        run: |
-          git add .
-          git commit -m "Update terraform.tfstate after destroy"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+#      # Execute Terraform Apply targeting specific resources
+#      - name: Terraform Apply Targeting Specific Resources
+#        working-directory: ./infra
+#        run: terraform apply -auto-approve -target=azurerm_windows_web_app.awwabs
+#
+#      # Configure Git
+#      - name: Set up Git
+#        run: |
+#          git config --global user.name "github-actions[bot]"
+#          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+#
+#      # Commit and push updated terraform.tfstate
+#      - name: Commit and Push State File
+#        run: |
+#          git add .
+#          git commit -m "Update terraform.tfstate after destroy"
+#          git push
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
 
       - name: Set up Java version
         uses: actions/setup-java@v1
@@ -78,7 +78,7 @@ jobs:
         with:
           app-name: 'gymfitbulgaria-api'
           slot-name: 'Production'
-          package: './target/*.jar'
+          package: 'target/*.jar'
           publish-profile: ${{ steps.fetch-publish-profile.outputs.publish_profile }}
 
 #      - name: Run Azure webapp deploy action using publish profile credentials
