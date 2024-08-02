@@ -13,15 +13,13 @@ jobs:
       # Checkout the different repository with the main.tf file
       - name: 'Checkout Terraform Repo'
         uses: actions/checkout@v2
-        with:
-          repository: StanSNS/Gym-infra
-          path: terraform
 
-      # Set up Azure CLI
-      - name: 'Login to Azure'
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+#      # Set up Azure CLI
+#      - name: 'Login to Azure'
+#        uses: azure/login@v1
+#        with:
+#          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       # Set up Terraform
       - name: Set up Terraform
@@ -34,17 +32,17 @@ jobs:
         working-directory: terraform
         run: terraform init
 
-      # Execute Terraform Destroy targeting specific resources
-      - name: Terraform Destroy Targeting Specific Resources
-        working-directory: terraform
-        run: terraform destroy -auto-approve -target=azurerm_resource_group.rgbs
-
-      # Configure Git
-      - name: Set up Git
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-#          git remote set-url origin https://github.com/StanSNS/Gym-infra.git
+#      # Execute Terraform Destroy targeting specific resources
+#      - name: Terraform Destroy Targeting Specific Resources
+#        working-directory: terraform
+#        run: terraform destroy -auto-approve -target=azurerm_resource_group.rgbs
+#
+#      # Configure Git
+#      - name: Set up Git
+#        run: |
+#          git config --global user.name "github-actions[bot]"
+#          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+##          git remote set-url origin https://github.com/StanSNS/Gym-infra.git
 
 #      # Debugging Step
 #      - name: Show Git Status
@@ -54,15 +52,15 @@ jobs:
 #      - name: Show Git Config
 #        run: git config --list
 
-      # Commit and push updated terraform.tfstate
-      - name: Commit and Push State File
-        working-directory: terraform
-        run: |
-          git add terraform.tfstate
-          git commit -m "Update terraform.tfstate after destroy"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+#      # Commit and push updated terraform.tfstate
+#      - name: Commit and Push State File
+#        working-directory: terraform
+#        run: |
+#          git add terraform.tfstate
+#          git commit -m "Update terraform.tfstate after destroy"
+#          git push
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
 
 #  build-and-deploy:
 #    runs-on: windows-latest
