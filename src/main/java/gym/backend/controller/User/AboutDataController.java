@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 import static gym.backend.consts.Urls.UserControllerUrlPaths.ABOUT_DATA;
@@ -35,10 +32,14 @@ public class AboutDataController {
     @GetMapping("test")
     public ResponseEntity<?> testFile() {
         try {
-            String filePath = "src/main/resources/TasteColors.txt";
-            String line;
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("TasteColors.txt");
+            if (inputStream == null) {
+                return new ResponseEntity<>("File not found.", HttpStatus.OK);
+            }
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             ArrayList<TasteColor> tasteColorsToSave = new ArrayList<>();
+            String line;
 
             while ((line = bufferedReader.readLine()) != null) {
                 String name = line.split(" ")[0];
@@ -49,11 +50,8 @@ public class AboutDataController {
                 tasteColorsToSave.add(tasteColor);
             }
             return new ResponseEntity<>(tasteColorsToSave, HttpStatus.OK);
-        } catch (FileNotFoundException e) {
-            return new ResponseEntity<>("Reading file failed.", HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>("Reading file lines failed.", HttpStatus.OK);
         }
-
     }
 }
