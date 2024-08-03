@@ -46,13 +46,6 @@ resource "azurerm_postgresql_flexible_server_configuration" "apfscpgsql" {
   value     = "off"
 }
 
-resource "azurerm_postgresql_flexible_server_firewall_rule" "firewall_rules" {
-  name             = "fw-rule-ALLOW-ALL"
-  server_id        = azurerm_postgresql_flexible_server.apfspgsql.id
-  start_ip_address = "0.0.0.0"
-  end_ip_address   = "255.255.255.255"
-}
-
 
 //BACKEND SERVER
 resource "azurerm_resource_group" "rgbs" {
@@ -65,7 +58,7 @@ resource "azurerm_service_plan" "aspbs" {
   resource_group_name = azurerm_resource_group.rgbs.name
   location            = azurerm_resource_group.rgbs.location
   os_type             = "Windows"
-  sku_name            = "F1"
+  sku_name            = "D1"
 }
 
 resource "azurerm_windows_web_app" "awwabs" {
@@ -92,7 +85,7 @@ resource "azurerm_windows_web_app" "awwabs" {
     DB_PASSWORD = azurerm_postgresql_flexible_server.apfspgsql.administrator_password
 
     USER_FRONTEND_BASE_URL         = "https://gymfitbulgaria.azurewebsites.net/"
-    ADMIN_FRONTEND_BASE_URL        = "*"
+    ADMIN_FRONTEND_BASE_URL        = "https://gymfitbulgaria-admin.azurewebsites.net/"
     SILA_BG_API_KEY                = "Y1nVBIx7QV7aSlHyf1xHXdEmr3G4b64U3b1PCpFR0CfXUGRa64SFPYpD05MsGiflgaoH61CkqkplIZAy"
     SILA_BG_AUTH_EMAIL             = "stanimirsergev159@gmail.com"
     SILA_BG_AUTH_PASSWORD          = "bymejuh"
