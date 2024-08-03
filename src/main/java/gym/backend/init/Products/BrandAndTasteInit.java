@@ -18,8 +18,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
-import static gym.backend.utils.TimeUtils.convertMsToTime;
-
 @Component
 @RequiredArgsConstructor
 public class BrandAndTasteInit {
@@ -32,9 +30,6 @@ public class BrandAndTasteInit {
 
     @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() {
-        long startTime = System.currentTimeMillis();
-        System.out.println();
-        System.out.println("START -> brand-taste-data-execute...");
         ResponseEntity<String> responseEntity = requestService.getAllProductsData();
         if (responseEntity.getStatusCode().toString().startsWith("200")) {
             ProductsJSON productsJSON = gson.fromJson(responseEntity.getBody(), ProductsJSON.class);
@@ -46,7 +41,7 @@ public class BrandAndTasteInit {
                 brandEntityArrayList.addAll(brandEntityRepository.findAll());
             }
 
-            if(tasteEntityRepository.count() > 0) {
+            if (tasteEntityRepository.count() > 0) {
                 tasteEntityArrayList.addAll(tasteEntityRepository.findAll());
             }
 
@@ -75,14 +70,8 @@ public class BrandAndTasteInit {
                     tasteEntityArrayList.add(tasteEntity);
                 }
             }
-
             brandEntityRepository.saveAll(brandEntityArrayList);
             tasteEntityRepository.saveAll(tasteEntityArrayList);
-
-            long endTime = System.currentTimeMillis();
-            long executionTime = endTime - startTime;
-            System.out.println("END   -> brand-taste-data-execute... " + convertMsToTime(executionTime));
-
         } else {
             throw new InitDataException("brand-taste-data-execute");
         }

@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 
-import static gym.backend.utils.TimeUtils.convertMsToTime;
-
 @Component
 @RequiredArgsConstructor
 public class ProductDetailsDataInit {
@@ -39,9 +37,6 @@ public class ProductDetailsDataInit {
 
     @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() {
-        long startTime = System.currentTimeMillis();
-        System.out.println();
-        System.out.println("START -> product-data-details-execute...");
         for (BrandEntity brandEntity : brandEntityRepository.findAll()) {
             ResponseEntity<String> responseEntity = requestService.getProductDataByBrandID(brandEntity.getBrandID());
 
@@ -84,9 +79,6 @@ public class ProductDetailsDataInit {
                 }
             }
         }
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
-        System.out.println("END   -> product-data-details-execute... " + convertMsToTime(executionTime));
     }
 
     private void addTastesInProductEntity(ProductJSONFromBrand singleProduct, ProductEntity productEntity) {

@@ -1,17 +1,15 @@
 package gym.backend.init;
 
-import gym.backend.init.DeliverySpeedy.FillSpeedyOffices;
-import gym.backend.init.Products.*;
 import gym.backend.models.entity.AdminEntity;
 import gym.backend.models.entity.RoleEntity;
-import gym.backend.repository.*;
+import gym.backend.repository.AdminEntityRepository;
+import gym.backend.repository.RoleEntityRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.HashSet;
 
 import static gym.backend.consts.Auth.RoleConst.ADMIN_C;
@@ -21,18 +19,6 @@ import static gym.backend.consts.Auth.RoleConst.USER_C;
 @Component
 @RequiredArgsConstructor
 public class MainDataInit {
-
-    private final BrandAndTasteInit simpleDataInit;
-    private final ProductDataInit productDataInit;
-    private final ProductDetailsDataInit productDetailsDataInit;
-    private final ProductDataFromSheetInit productDataFromSheetInit;
-    private final ProductDataFromWebSite productDataFromWebSite;
-    private final BrandEntityRepository brandEntityRepository;
-    private final ProductEntityRepository productEntityRepository;
-    private final TasteEntityRepository tasteEntityRepository;
-    private final CitySpeedyEntityRepository citySpeedyEntityRepository;
-    private final TasteColorsInit tasteColorsInit;
-    private final FillSpeedyOffices fillSpeedyOffices;
     private final AdminEntityRepository adminEntityRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleEntityRepository roleRepository;
@@ -44,38 +30,11 @@ public class MainDataInit {
     private String ADMIN_AUTH_LOGIN_PASSWORD;
 
     @PostConstruct
-    public void dataInit() throws IOException {
-        boolean isDBHasData = brandEntityRepository.count() == 0
-                && productEntityRepository.count() == 0
-                && tasteEntityRepository.count() == 0
-                && citySpeedyEntityRepository.count() == 0;
-
+    public void dataInit() {
         if (roleRepository.count() == 0) {
             roleRepository.save(new RoleEntity(ADMIN_C));
             roleRepository.save(new RoleEntity(USER_C));
         }
-
-        if (isDBHasData) {
-            System.out.println("Start adding fresh data...");
-
-//            tasteColorsInit.startInit();
-
-//            simpleDataInit.startInit();
-
-//            productDataInit.startInit();
-
-//            productDetailsDataInit.startInit();
-
-//            productDataFromSheetInit.startInit();
-
-//            productDataFromWebSite.startInit();
-
-//            fillSpeedyOffices.startInit();
-
-            System.out.println("Operation completed.");
-        }
-
-
 
         if (adminEntityRepository.count() == 0) {
             AdminEntity adminEntity = new AdminEntity();
@@ -90,7 +49,6 @@ public class MainDataInit {
             }
 
             adminEntityRepository.save(adminEntity);
-            System.out.println("Admin has been created");
         }
 
     }

@@ -12,9 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Optional;
-
-import static gym.backend.utils.TimeUtils.convertMsToTime;
 
 @Component
 @RequiredArgsConstructor
@@ -25,10 +22,6 @@ public class ProductDataFromSheetInit {
 
     @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() throws IOException {
-        long startTime = System.currentTimeMillis();
-        System.out.println();
-        System.out.println("START -> product-data-details-sheet-execute...");
-
         XSSFSheet sheet = requestService.getDistroSheet();
         if (sheet != null) {
             ArrayList<ProductEntity> productEntityArrayList = new ArrayList<>();
@@ -50,13 +43,7 @@ public class ProductDataFromSheetInit {
                     }
                 }
             }
-
             productEntityRepository.saveAll(productEntityArrayList);
-
-            long endTime = System.currentTimeMillis();
-            long executionTime = endTime - startTime;
-            System.out.println("END   -> product-data-details-sheet-execute... " + convertMsToTime(executionTime));
-
         } else {
             throw new InitDataException("product-data-details-sheet-execute");
         }

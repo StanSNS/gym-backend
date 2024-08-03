@@ -1,7 +1,6 @@
 package gym.backend.init.Products;
 
 import com.google.gson.Gson;
-import gym.backend.exception.AccessDeniedException;
 import gym.backend.exception.InitDataException;
 import gym.backend.exception.ResourceNotFoundException;
 import gym.backend.init.initService.RequestService;
@@ -16,13 +15,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
-
-import static gym.backend.utils.TimeUtils.convertMsToTime;
 
 @Component
 @RequiredArgsConstructor
@@ -36,9 +32,6 @@ public class ProductDataInit {
 
     @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() {
-        long startTime = System.currentTimeMillis();
-        System.out.println();
-        System.out.println("START -> product-data-execute...");
         ResponseEntity<String> responseEntity = requestService.getAllProductsData();
 
         if (responseEntity.getStatusCode().toString().startsWith("200")) {
@@ -79,10 +72,6 @@ public class ProductDataInit {
             }
 
             productEntityRepository.saveAll(productEntityArrayList);
-            long endTime = System.currentTimeMillis();
-            long executionTime = endTime - startTime;
-            System.out.println("END   -> product-data-execute... " + convertMsToTime(executionTime));
-
         } else {
             throw new InitDataException("product-data-execute");
         }

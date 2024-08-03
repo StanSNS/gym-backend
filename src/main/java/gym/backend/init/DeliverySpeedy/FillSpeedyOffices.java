@@ -29,10 +29,6 @@ public class FillSpeedyOffices {
 
     @CacheEvict(value = "allSpeedyAddresses", allEntries = true)
     public void startInit() {
-        long startTime = System.currentTimeMillis();
-        System.out.println();
-        System.out.println("START -> speedy-offices-execute...");
-
         CitiesSpeedyJSON citiesSpeedyJSON = gson.fromJson(requestService.getAllOfficesSpeedy(), CitiesSpeedyJSON.class);
         for (CitySpeedyJSON office : citiesSpeedyJSON.getOffices()) {
             AddressSpeedyJSON address = office.getAddress();
@@ -73,8 +69,5 @@ public class FillSpeedyOffices {
                 citySpeedyEntityRepository.save(citySpeedyEntity);
             }
         }
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
-        System.out.println("END   -> speedy-offices-execute... " + convertMsToTime(executionTime));
     }
 }

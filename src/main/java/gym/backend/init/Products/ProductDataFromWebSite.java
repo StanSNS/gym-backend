@@ -26,10 +26,6 @@ public class ProductDataFromWebSite {
 
     @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() {
-        long startTime = System.currentTimeMillis();
-        System.out.println();
-        System.out.println("START -> product-data-details-web-execute...");
-
         ArrayList<ProductEntity> entitiesToSave = new ArrayList<>();
         for (ProductEntity currentProductEntity : productEntityRepository.findProductEntitiesByDiscountedPriceNotNullAndIsAvailableTrue()) {
             ProductEntity modifiedProductEntity = extractEnemyPriceFromHTMLAndRatingDataFromHTML(currentProductEntity);
@@ -39,12 +35,7 @@ public class ProductDataFromWebSite {
 
             entitiesToSave.add(modifiedProductEntity);
         }
-
         productEntityRepository.saveAll(entitiesToSave);
-
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
-        System.out.println("END   -> product-data-details-web-execute... " + convertMsToTime(executionTime));
     }
 
     private ProductEntity extractEnemyPriceFromHTMLAndRatingDataFromHTML(ProductEntity productEntity) {

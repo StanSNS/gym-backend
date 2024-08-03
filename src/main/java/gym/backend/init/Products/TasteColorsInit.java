@@ -1,5 +1,6 @@
 package gym.backend.init.Products;
 
+import gym.backend.exception.ResourceNotFoundException;
 import gym.backend.models.entity.TasteColor;
 import gym.backend.repository.TasteColorEntityRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,11 +8,10 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-
-import static gym.backend.utils.TimeUtils.convertMsToTime;
 
 @Component
 @RequiredArgsConstructor
@@ -21,15 +21,15 @@ public class TasteColorsInit {
 
     @CacheEvict(value = "allSellableProducts", allEntries = true)
     public void startInit() throws IOException {
-        long startTime = System.currentTimeMillis();
-        System.out.println();
-        System.out.println("START -> taste-color-execute...");
-        String filePath = "src/main/resources/TasteColors.txt";
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("TasteColors.txt");
+        if (inputStream == null) {
+            throw new ResourceNotFoundException();
+        }
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        ArrayList<TasteColor> tasteColorsToSave = new ArrayList<>();
 
         String line;
-
-        ArrayList<TasteColor> tasteColorsToSave = new ArrayList<>();
         while ((line = bufferedReader.readLine()) != null) {
             String name = line.split(" ")[0];
             String color = line.split(" ")[1];
@@ -42,8 +42,5 @@ public class TasteColorsInit {
             }
         }
         tasteColorEntityRepository.saveAll(tasteColorsToSave);
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
-        System.out.println("END   -> taste-color-execute... " + convertMsToTime(executionTime));
     }
 }
