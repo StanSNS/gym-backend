@@ -47,7 +47,7 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
                     HOME,
                     PRODUCT,
                     ABOUT_DATA,
-                    "test-new-data"
+                    "test"
             ).permitAll();
 
             authorize.requestMatchers(
