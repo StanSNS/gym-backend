@@ -46,6 +46,14 @@ resource "azurerm_postgresql_flexible_server_configuration" "apfscpgsql" {
   value     = "off"
 }
 
+resource "azurerm_postgresql_flexible_server_firewall_rule" "firewall_rules" {
+  name             = "fw-rule-ALLOW ALL"
+  server_id        = azurerm_postgresql_flexible_server.apfspgsql.id
+  start_ip_address = "0.0.0.0"
+  end_ip_address   = "255.255.255.255"
+}
+
+
 //BACKEND SERVER
 resource "azurerm_resource_group" "rgbs" {
   name     = "RG-BS"

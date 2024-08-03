@@ -35,13 +35,13 @@ jobs:
         working-directory: ./infra
         run: terraform apply -auto-approve -target=azurerm_windows_web_app.awwabs
 
-      - name: "Terraform Init -Firewall Rules"
-        working-directory: ./infra/firewallRules
-        run: terraform init
-
-      - name: "Terraform Apply Targeting Specific Resources -Firewall Rules"
-        working-directory: ./infra/firewallRules
-        run: terraform apply -auto-approve -target=azurerm_postgresql_flexible_server_firewall_rule.firewall_rules
+#      - name: "Terraform Init -Firewall Rules"
+#        working-directory: ./infra/firewallRules
+#        run: terraform init
+#
+#      - name: "Terraform Apply Targeting Specific Resources -Firewall Rules"
+#        working-directory: ./infra/firewallRules
+#        run: terraform apply -auto-approve -target=azurerm_postgresql_flexible_server_firewall_rule.firewall_rules
 
       - name: "Set up Git"
         run: |
